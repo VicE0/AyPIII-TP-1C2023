@@ -38,14 +38,12 @@ public class EventoTest
         // Act
         String titulo = evento.obtenerTitulo();
         String descripcion = evento.obtenerDescripcion();
-        String repetir = evento.obtenerRepetir();
-        int frecuencia = evento.obtenerFrecuencia();
+
 
         // Assert
         assertEquals("Evento sin titulo",titulo);
         assertEquals("-", descripcion);
-        assertEquals("Diario", repetir);
-        assertEquals(1, frecuencia);
+
         assertEquals(LocalDateTime.now().toLocalDate(), evento.obtenerFechaInicio().toLocalDate());
         assertEquals(LocalDateTime.now().plusDays(1).toLocalDate(), evento.obtenerFechaFin().toLocalDate());
     }
@@ -58,17 +56,14 @@ public class EventoTest
         String descripcion = "Semana de examenes";
         var fechaInicio = LocalDateTime.of(2023, 4, 1, 12, 30);
         var fechaFin = LocalDateTime.of(2023, 4, 8, 12, 30);
-        String repetir = "Semanal";
-        int frecuencia = 2;
 
-        var evento = new Evento(titulo, descripcion,fechaInicio, fechaFin, repetir, frecuencia);
+        var evento = new Evento(titulo, descripcion,fechaInicio, fechaFin);
 
         assertEquals("Examenes", evento.obtenerTitulo());
         assertEquals("Semana de examenes", evento.obtenerDescripcion());
         assertEquals(fechaInicio, evento.obtenerFechaInicio());
         assertEquals(fechaFin, evento.obtenerFechaFin());
-        assertEquals(repetir, evento.obtenerRepetir());
-        assertEquals(frecuencia, evento.obtenerFrecuencia());
+
     }
 
 }

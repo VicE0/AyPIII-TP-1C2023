@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0950ebdb-872c-4eb3-9494-228a982e1e68" name="Changes" comment="Arranco con las clases de Evento y tarea y sus tests (a cambiar)">
+    <list default="true" id="0950ebdb-872c-4eb3-9494-228a982e1e68" name="Changes" comment="Agrego los metodos para frecuencia y repeticios. Cambio los test un poco">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Evento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Evento.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/EventoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/EventoTest.java" afterDir="false" />
@@ -17,8 +17,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="JUnit4 Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -74,7 +74,23 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="tp-algoIII" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DiaTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="tp-algoIII" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="DiaTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="EventoTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="tp-algoIII" />
       <option name="PACKAGE_NAME" value="" />
@@ -86,6 +102,8 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.DiaTest" />
         <item itemvalue="JUnit.EventoTest" />
       </list>
     </recent_temporary>
@@ -113,7 +131,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680821080365</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Agrego los metodos para frecuencia y repeticios. Cambio los test un poco">
+      <created>1680973404561</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1680973404561</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -121,7 +146,13 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="false" />
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -129,6 +160,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Arranco con las clases de Evento y tarea y sus tests (a cambiar)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Arranco con las clases de Evento y tarea y sus tests (a cambiar)" />
+    <MESSAGE value="Agrego los metodos para frecuencia y repeticios. Cambio los test un poco" />
+    <option name="LAST_COMMIT_MESSAGE" value="Agrego los metodos para frecuencia y repeticios. Cambio los test un poco" />
   </component>
 </project>
