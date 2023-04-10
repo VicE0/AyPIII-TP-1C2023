@@ -1,4 +1,3 @@
-//import java.util.Date;
 import java.time.LocalDateTime;
 
 public class Evento
@@ -7,7 +6,7 @@ public class Evento
     private String descripcion;
     private LocalDateTime fechaInicio;
     private LocalDateTime fechaFin;
-
+    private int repetirCada;
 
 
     public Evento() //Constructor default
@@ -16,6 +15,7 @@ public class Evento
         this.descripcion = "-";
         this.fechaInicio = LocalDateTime.now();
         this.fechaFin = this.fechaInicio.plusDays(1);
+        this.repetirCada = 0;
 
     }
 
@@ -25,14 +25,16 @@ public class Evento
         this.descripcion = descripcion;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
-
+        //RepetirCada deberia ir aca, estoy probando aun y lo voy a agregar al final. Por ahora solo lo seteo en main/tests :)
     }
+
 //GETTERS
     public String obtenerTitulo() {return titulo;}
 
     public String obtenerDescripcion() {return descripcion;}
     public LocalDateTime obtenerFechaInicio() {return fechaInicio;}
     public LocalDateTime obtenerFechaFin() {return fechaFin;}
+    public int obtenerRepetirCada(){return repetirCada;}
 
 
 
@@ -45,13 +47,13 @@ public class Evento
     public void establecerDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-
     public void establecerFechaInicio(LocalDateTime fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
     public void establecerFechaFin(LocalDateTime fechaFin) {
         this.fechaFin = fechaFin;
     }
+    public void establecerRepetirCada(int repetirCada){this.repetirCada = repetirCada;}
 }
 
 

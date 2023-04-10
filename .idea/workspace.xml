@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0950ebdb-872c-4eb3-9494-228a982e1e68" name="Changes" comment="Agrego los metodos para frecuencia y repeticios. Cambio los test un poco">
+    <list default="true" id="0950ebdb-872c-4eb3-9494-228a982e1e68" name="Changes" comment="Clase Dia agregada, misma logica seria para Semana-Año. No le des bola al main, es para darme una idea de las cositas">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Dia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Dia.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Evento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Evento.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/EventoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/EventoTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/DiaTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/DiaTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -138,7 +140,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680973404561</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Clase Dia agregada, misma logica seria para Semana-Año. No le des bola al main, es para darme una idea de las cositas">
+      <created>1681077081921</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1681077081921</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -161,6 +170,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Arranco con las clases de Evento y tarea y sus tests (a cambiar)" />
     <MESSAGE value="Agrego los metodos para frecuencia y repeticios. Cambio los test un poco" />
-    <option name="LAST_COMMIT_MESSAGE" value="Agrego los metodos para frecuencia y repeticios. Cambio los test un poco" />
+    <MESSAGE value="Clase Dia agregada, misma logica seria para Semana-Año. No le des bola al main, es para darme una idea de las cositas" />
+    <option name="LAST_COMMIT_MESSAGE" value="Clase Dia agregada, misma logica seria para Semana-Año. No le des bola al main, es para darme una idea de las cositas" />
   </component>
 </project>

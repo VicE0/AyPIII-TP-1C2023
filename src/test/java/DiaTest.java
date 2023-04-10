@@ -1,6 +1,9 @@
+import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 public class DiaTest
@@ -55,14 +58,16 @@ public class DiaTest
 
         var evento2 = new Evento("Evento 2", "Descripción evento 2",
                 LocalDateTime.of(2023, 4, 8, 14, 0),
-                LocalDateTime.of(2023, 4, 8, 16, 0));
+                LocalDateTime.of(2023, 4, 18, 16, 0));
 
 
         dia.agregarEvento(evento1);
         dia.agregarEvento(evento2);
+
         dia.eliminarEvento(evento1);
 
         assertEquals(1, dia.obtenerEventos().size());
+
         assertFalse(dia.obtenerEventos().contains(evento1));
         assertTrue(dia.obtenerEventos().contains(evento2));
     }
@@ -84,5 +89,31 @@ public class DiaTest
 
         dia.limpiarEventos();
         assertEquals(0, dia.obtenerEventos().size());
+    }
+
+    @Test
+    public void testChequearEventosPorDia()
+    {
+        var dia = new Dia(LocalDate.of(2023, 4, 9));
+
+        var evento1 = new Evento(null, null,
+                LocalDateTime.of(2023, 4, 9, 10, 0),
+                LocalDateTime.of(2023, 4, 10, 12, 0));
+
+        var evento2 = new Evento("Evento 2", "Descripción evento 2",
+                LocalDateTime.of(2023, 4, 12, 14, 0),
+                LocalDateTime.of(2023, 4, 26, 16, 0));
+
+        dia.agregarEvento(evento1);
+        dia.agregarEvento(evento2);
+
+        for (Evento evento : dia.obtenerEventos())
+        {
+           if (evento.obtenerFechaInicio().toLocalDate() != dia.obtenerFecha())
+           {
+               dia.eliminarEvento(evento);
+           }
+        }
+        assertEquals(1, dia.obtenerEventos().size());
     }
 }
