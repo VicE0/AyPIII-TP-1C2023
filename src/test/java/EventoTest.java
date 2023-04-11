@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 import java.time.LocalDateTime;
 public class EventoTest
 {
-
+    //Testeo el constructor Principal
     @Test
     public void eventoSinTitulo()
     {
@@ -26,21 +26,18 @@ public class EventoTest
         assertEquals("-", descripcion);
     }
 
-
-
-    //testeo el constructor default
    @Test
     public void testEventoEnBlanco() //En este caso, el evento esta en blanco y es de dia completo
     {
-        // Arrange
+        //ARRANGE
         var evento = new Evento();
 
-        // Act
+        //ACT
         String titulo = evento.obtenerTitulo();
         String descripcion = evento.obtenerDescripcion();
 
 
-        // Assert
+        //ASSERT
         assertEquals("Evento sin titulo",titulo);
         assertEquals("-", descripcion);
         assertEquals(LocalDateTime.now().toLocalDate(), evento.obtenerFechaInicio().toLocalDate());

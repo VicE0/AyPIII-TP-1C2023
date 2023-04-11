@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0950ebdb-872c-4eb3-9494-228a982e1e68" name="Changes" comment="Arranco la logica para la repeticion del evento (A cambiar y poner mejor, aplicar para semana, mes y año). IGNORAR MAIN!!">
+    <list default="true" id="0950ebdb-872c-4eb3-9494-228a982e1e68" name="Changes" comment="Sigo con los intervalos. Añado clase EventoDiario y su primer test. (A cambiar)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Dia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Dia.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Evento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Evento.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/EventoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/EventoTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -164,7 +160,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681106596673</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Sigo con los intervalos. Añado clase EventoDiario y su primer test. (A cambiar)">
+      <created>1681237959773</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1681237959773</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -225,6 +228,7 @@
     <MESSAGE value="Agrego los metodos para frecuencia y repeticios. Cambio los test un poco" />
     <MESSAGE value="Clase Dia agregada, misma logica seria para Semana-Año. No le des bola al main, es para darme una idea de las cositas" />
     <MESSAGE value="Arranco la logica para la repeticion del evento (A cambiar y poner mejor, aplicar para semana, mes y año). IGNORAR MAIN!!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Arranco la logica para la repeticion del evento (A cambiar y poner mejor, aplicar para semana, mes y año). IGNORAR MAIN!!" />
+    <MESSAGE value="Sigo con los intervalos. Añado clase EventoDiario y su primer test. (A cambiar)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Sigo con los intervalos. Añado clase EventoDiario y su primer test. (A cambiar)" />
   </component>
 </project>

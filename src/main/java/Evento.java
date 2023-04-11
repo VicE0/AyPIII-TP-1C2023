@@ -7,7 +7,7 @@ public class Evento
     private String descripcion;
     private LocalDateTime fechaInicio;
     private LocalDateTime fechaFin;
-    private int repetirCada;
+//    private int repetirCada;
 
 
     public Evento() //Constructor default
@@ -16,7 +16,7 @@ public class Evento
         this.descripcion = "-";
         this.fechaInicio = LocalDateTime.now();
         this.fechaFin = this.fechaInicio.plusDays(1);
-//        this.repetirCada = 0;
+//       this.repetirCada = 0;
 
     }
 
@@ -25,7 +25,7 @@ public class Evento
         this.descripcion = descripcion;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
-//        this.repetirCada = repetirCada;
+//       this.repetirCada = repetirCada;
     }
 
 //GETTERS
@@ -34,7 +34,7 @@ public class Evento
     public String obtenerDescripcion() {return descripcion;}
     public LocalDateTime obtenerFechaInicio() {return fechaInicio;}
     public LocalDateTime obtenerFechaFin() {return fechaFin;}
-//    public int obtenerRepetirCada(){return repetirCada;}
+//   public int obtenerRepetirCada(){return repetirCada;}
 
 //SETTERS
     public void establecerTitulo(String titulo) {
@@ -49,7 +49,7 @@ public class Evento
     public void establecerFechaFin(LocalDateTime fechaFin) {
         this.fechaFin = fechaFin;
     }
-//    public void establecerRepetirCada(int repetirCada){this.repetirCada = repetirCada;}
+//   public void establecerRepetirCada(int repetirCada){this.repetirCada = repetirCada;}
 }
 
 

@@ -117,3 +117,4 @@ public class DiaTest
         assertEquals(1, dia.obtenerEventos().size());
     }
 }
+//Seguro elimine esta clase cuando terminemos con la logica de eventoDiario

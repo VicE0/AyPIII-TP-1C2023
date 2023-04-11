@@ -20,5 +20,5 @@ public class EventoDiarioTest
 
         assertEquals(nuevaFechaEsperada, nuevaFechaActual);
     }
-
+    //Agregar mas tests con intervalos mas largos y uno nulo
 }

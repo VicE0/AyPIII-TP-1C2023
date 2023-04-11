@@ -17,5 +17,6 @@ public class EventoDiario extends Evento
         return obtenerFechaInicio().plus(intervaloDeDias, ChronoUnit.DAYS);
     }
 }
+//Podria usarse para tareas
 
 
