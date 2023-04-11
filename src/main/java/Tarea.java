@@ -17,12 +17,12 @@ public class Tarea
 
     }
 
-    public Tarea(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin)
+    public Tarea(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int repetirCada)
     {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.fechaInicio = fechaInicio;
-        //RepetirCada deberia ir aca, estoy probando aun y lo voy a agregar al final. Por ahora solo lo seteo en main/tests :)
+        this.repetirCada = repetirCada;
     }
 
     //GETTERS
