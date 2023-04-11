@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0950ebdb-872c-4eb3-9494-228a982e1e68" name="Changes" comment="Clase Dia agregada, misma logica seria para Semana-Año. No le des bola al main, es para darme una idea de las cositas">
+    <list default="true" id="0950ebdb-872c-4eb3-9494-228a982e1e68" name="Changes" comment="Arranco la logica para la repeticion del evento (A cambiar y poner mejor, aplicar para semana, mes y año). IGNORAR MAIN!!">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Dia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Dia.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Evento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Evento.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/DiaTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/DiaTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/EventoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/EventoTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,8 +19,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JUnit4 Test Class" />
         <option value="Class" />
+        <option value="JUnit4 Test Class" />
       </list>
     </option>
   </component>
@@ -76,7 +76,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="JUnit.EventoDiarioTest">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="tp-algoIII" />
@@ -93,6 +93,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="EventoDiarioTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="tp-algoIII" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="EventoDiarioTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="EventoTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="tp-algoIII" />
       <option name="PACKAGE_NAME" value="" />
@@ -104,6 +113,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.EventoDiarioTest" />
         <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.DiaTest" />
         <item itemvalue="JUnit.EventoTest" />
@@ -147,7 +157,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681077081921</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Arranco la logica para la repeticion del evento (A cambiar y poner mejor, aplicar para semana, mes y año). IGNORAR MAIN!!">
+      <created>1681106596673</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1681106596673</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -158,10 +175,46 @@
             <State>
               <option name="CUSTOM_BOOLEAN_PROPERTIES">
                 <map>
-                  <entry key="Show.Git.Branches" value="false" />
+                  <entry key="Show.Git.Branches" value="true" />
+                </map>
+              </option>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/master" />
+                      </list>
+                    </value>
+                  </entry>
                 </map>
               </option>
             </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="master" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="HEAD" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="origin/master" />
+                </option>
+              </RecentGroup>
+            </list>
           </value>
         </entry>
       </map>
@@ -171,6 +224,7 @@
     <MESSAGE value="Arranco con las clases de Evento y tarea y sus tests (a cambiar)" />
     <MESSAGE value="Agrego los metodos para frecuencia y repeticios. Cambio los test un poco" />
     <MESSAGE value="Clase Dia agregada, misma logica seria para Semana-Año. No le des bola al main, es para darme una idea de las cositas" />
-    <option name="LAST_COMMIT_MESSAGE" value="Clase Dia agregada, misma logica seria para Semana-Año. No le des bola al main, es para darme una idea de las cositas" />
+    <MESSAGE value="Arranco la logica para la repeticion del evento (A cambiar y poner mejor, aplicar para semana, mes y año). IGNORAR MAIN!!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Arranco la logica para la repeticion del evento (A cambiar y poner mejor, aplicar para semana, mes y año). IGNORAR MAIN!!" />
   </component>
 </project>

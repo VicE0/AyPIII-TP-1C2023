@@ -1,4 +1,5 @@
 import java.time.LocalDateTime;
+import java.time.DayOfWeek;
 
 public class Evento
 {
@@ -15,17 +16,16 @@ public class Evento
         this.descripcion = "-";
         this.fechaInicio = LocalDateTime.now();
         this.fechaFin = this.fechaInicio.plusDays(1);
-        this.repetirCada = 0;
+//        this.repetirCada = 0;
 
     }
 
-    public Evento(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin)
-    {
+    public Evento(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
-        //RepetirCada deberia ir aca, estoy probando aun y lo voy a agregar al final. Por ahora solo lo seteo en main/tests :)
+//        this.repetirCada = repetirCada;
     }
 
 //GETTERS
@@ -34,11 +34,7 @@ public class Evento
     public String obtenerDescripcion() {return descripcion;}
     public LocalDateTime obtenerFechaInicio() {return fechaInicio;}
     public LocalDateTime obtenerFechaFin() {return fechaFin;}
-    public int obtenerRepetirCada(){return repetirCada;}
-
-
-
-
+//    public int obtenerRepetirCada(){return repetirCada;}
 
 //SETTERS
     public void establecerTitulo(String titulo) {
@@ -53,7 +49,7 @@ public class Evento
     public void establecerFechaFin(LocalDateTime fechaFin) {
         this.fechaFin = fechaFin;
     }
-    public void establecerRepetirCada(int repetirCada){this.repetirCada = repetirCada;}
+//    public void establecerRepetirCada(int repetirCada){this.repetirCada = repetirCada;}
 }
 
 

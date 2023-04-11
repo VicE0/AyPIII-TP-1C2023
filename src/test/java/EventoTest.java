@@ -43,9 +43,9 @@ public class EventoTest
         // Assert
         assertEquals("Evento sin titulo",titulo);
         assertEquals("-", descripcion);
-
         assertEquals(LocalDateTime.now().toLocalDate(), evento.obtenerFechaInicio().toLocalDate());
         assertEquals(LocalDateTime.now().plusDays(1).toLocalDate(), evento.obtenerFechaFin().toLocalDate());
+
     }
 
     //Testeo el constructor principal
