@@ -6,9 +6,9 @@ public class EventoDiario extends Evento
 {
     private long intervaloDeDias;
 
-    public EventoDiario(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, long intervaloDeDias) {
+    public EventoDiario(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin,Frecuencia frecuencia, long intervaloDeDias) {
 
-        super(titulo, descripcion,fechaInicio,fechaFin);
+        super(titulo, descripcion,fechaInicio,fechaFin, frecuencia);
         this.intervaloDeDias = intervaloDeDias;
     }
 
@@ -38,7 +38,8 @@ public class EventoDiario extends Evento
             proximaFecha = obtenerProximoInicio(proximaFecha);
             proximosEventos.add(proximaFecha);
         }
-        return proximosEventos;
+
+       return proximosEventos;
     }
 }
 
