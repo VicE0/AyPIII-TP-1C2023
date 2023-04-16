@@ -8,7 +8,7 @@ public class EventoDiario extends Evento
 
     public EventoDiario(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin,Frecuencia frecuencia, long intervaloDeDias) {
 
-        super(titulo, descripcion,fechaInicio,fechaFin, frecuencia);
+        super(titulo, descripcion,fechaInicio,fechaFin, frecuencia, null);
         this.intervaloDeDias = intervaloDeDias;
     }
 

@@ -1,8 +1,12 @@
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.LocalDate;
+import java.util.List;
+
 public class EventoTest
 {
     //Testeo el constructor Principal
@@ -57,7 +61,7 @@ public class EventoTest
         var fechaFin = LocalDateTime.of(2023, 4, 8, 12, 30);
         Frecuencia frecuencia = Frecuencia.DIARIA;
 
-        var evento = new Evento(titulo, descripcion,fechaInicio, fechaFin,frecuencia);
+        var evento = new Evento(titulo, descripcion,fechaInicio, fechaFin,frecuencia, null);
 
         assertEquals("Examenes", evento.obtenerTitulo());
         assertEquals("Semana de examenes", evento.obtenerDescripcion());
@@ -75,7 +79,7 @@ public class EventoTest
         var fechaFin = LocalDateTime.of(2023, 4, 8, 12, 30);
         Frecuencia frecuencia = Frecuencia.DIARIA;
 
-        var evento = new Evento(titulo, descripcion,fechaInicio, fechaFin,frecuencia);
+        var evento = new Evento(titulo, descripcion,fechaInicio, fechaFin,frecuencia, null);
 
         LocalDate fechaDiariaEsperada = LocalDate.of(2023, 4, 2);
         LocalDate fechaDiariaActual = evento.obtenerSiguienteOcurrencia(fechaInicio.toLocalDate());
@@ -108,7 +112,7 @@ public class EventoTest
         int intervaloDias = 3;
         frecuencia.establecerIntervalo(intervaloDias);
 
-        var evento = new Evento(titulo, descripcion, fechaInicio, fechaFin, frecuencia);
+        var evento = new Evento(titulo, descripcion, fechaInicio, fechaFin, frecuencia, null);
 
         LocalDate fechaDiariaEsperada = LocalDate.of(2023, 4, 4);
         LocalDate fechaDiariaActual = evento.obtenerSiguienteOcurrencia(fechaInicio.toLocalDate());
@@ -119,15 +123,24 @@ public class EventoTest
     public void TestEventoSemanal() {
 
         String titulo = "Evento Semanal";
-        String descripcion = "Se repite todos los martes y jueves";
-        var fechaInicio = LocalDateTime.of(2023, 4, 1, 12, 30);
+        String descripcion = "Se repite todos los Lunes y Viernes";
+
+        var fechaInicio = LocalDateTime.of(2023, 4, 3, 12, 30); //Comienzo el lunes 3 / 04
         var fechaFin = LocalDateTime.of(2023, 4, 8, 12, 30);
+
         Frecuencia frecuencia = Frecuencia.SEMANAL;
+        List<DayOfWeek>  diasSemanaEventos = List.of(DayOfWeek.MONDAY, DayOfWeek.FRIDAY);
 
-        var evento = new Evento(titulo, descripcion, fechaInicio, fechaFin, frecuencia);
+        var evento = new Evento(titulo, descripcion, fechaInicio, fechaFin, frecuencia, diasSemanaEventos);
 
-        LocalDate fechaDiariaEsperada = LocalDate.of(2023, 4, 4);
-        LocalDate fechaDiariaActual = evento.obtenerSiguienteOcurrencia(fechaInicio.toLocalDate());
-        assertEquals(fechaDiariaEsperada, fechaDiariaActual);
+        assertEquals(diasSemanaEventos.size(),2);
+
+        LocalDate fechaViernesEsperada = LocalDate.of(2023, 4, 7); //Espero que la siguiente fecha sea el viernes 7/04
+        LocalDate fechaViernesActual = evento.obtenerSiguienteOcurrencia(fechaInicio.toLocalDate());
+        assertEquals(fechaViernesEsperada, fechaViernesActual);
+
+        LocalDate fechaLunesEsperada = LocalDate.of(2023, 4, 10); // Espero que la siguiente fecha a partir del viernes 7/04 sea el lunes 10/04
+        LocalDate fechaLunesActual = evento.obtenerSiguienteOcurrencia(fechaViernesActual);
+        assertEquals(fechaLunesEsperada, fechaLunesActual);
     }
 }
