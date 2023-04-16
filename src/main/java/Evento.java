@@ -43,6 +43,9 @@ public class Evento
         switch (frecuencia) {
 
             case DIARIA:
+                if (frecuencia.obtenerIntervalo() > 1) {
+                    fecha = fecha.plusDays(frecuencia.obtenerIntervalo() - 1);
+                }
                 return fecha.plusDays(1);
 
             case SEMANAL:

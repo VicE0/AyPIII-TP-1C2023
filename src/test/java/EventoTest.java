@@ -67,7 +67,7 @@ public class EventoTest
     }
 
     @Test
-    public void obtenerSiguienteOcurrencia() {
+    public void TestobtenerSiguienteOcurrencia() {
 
         String titulo = "Test de ocurrencias";
         String descripcion = "Ocurrencias";
@@ -97,4 +97,37 @@ public class EventoTest
         assertEquals(fechaAnualEsperada, fechaAnualActual);
     }
 
+    @Test
+    public void TestEventoCadaTresDias() {
+
+        String titulo = "Evento Diario";
+        String descripcion = "Se repite cada 3 dias";
+        var fechaInicio = LocalDateTime.of(2023, 4, 1, 12, 30);
+        var fechaFin = LocalDateTime.of(2023, 4, 8, 12, 30);
+        Frecuencia frecuencia = Frecuencia.DIARIA;
+        int intervaloDias = 3;
+        frecuencia.establecerIntervalo(intervaloDias);
+
+        var evento = new Evento(titulo, descripcion, fechaInicio, fechaFin, frecuencia);
+
+        LocalDate fechaDiariaEsperada = LocalDate.of(2023, 4, 4);
+        LocalDate fechaDiariaActual = evento.obtenerSiguienteOcurrencia(fechaInicio.toLocalDate());
+        assertEquals(fechaDiariaEsperada, fechaDiariaActual);
+    }
+
+    @Test
+    public void TestEventoSemanal() {
+
+        String titulo = "Evento Semanal";
+        String descripcion = "Se repite todos los martes y jueves";
+        var fechaInicio = LocalDateTime.of(2023, 4, 1, 12, 30);
+        var fechaFin = LocalDateTime.of(2023, 4, 8, 12, 30);
+        Frecuencia frecuencia = Frecuencia.SEMANAL;
+
+        var evento = new Evento(titulo, descripcion, fechaInicio, fechaFin, frecuencia);
+
+        LocalDate fechaDiariaEsperada = LocalDate.of(2023, 4, 4);
+        LocalDate fechaDiariaActual = evento.obtenerSiguienteOcurrencia(fechaInicio.toLocalDate());
+        assertEquals(fechaDiariaEsperada, fechaDiariaActual);
+    }
 }

@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0950ebdb-872c-4eb3-9494-228a982e1e68" name="Changes" comment="Creo la clase Calendario y su test. Agrego comentarios en la clase Evento.java. Elimino Dia porque la logica fue a Calendario">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="0950ebdb-872c-4eb3-9494-228a982e1e68" name="Changes" comment="SIGO CON FRECUENCIA, creo que ahora si es por ahí. Creo ENUM y añado los test. No hice mas cambios relevantes">
       <change beforePath="$PROJECT_DIR$/src/main/java/Evento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Evento.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/EventoDiario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/EventoDiario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/EventoDiarioTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/EventoDiarioTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/EventoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/EventoTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Frecuencia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Frecuencia.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -194,7 +191,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681598453658</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="SIGO CON FRECUENCIA, creo que ahora si es por ahí. Creo ENUM y añado los test. No hice mas cambios relevantes">
+      <created>1681614021325</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1681614021325</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -258,6 +262,7 @@
     <MESSAGE value="Sigo con los intervalos. Añado clase EventoDiario y su primer test. (A cambiar)" />
     <MESSAGE value="Agrego funcion obtenerProximosEventos a EventoDiario. Sigo con los tests." />
     <MESSAGE value="Creo la clase Calendario y su test. Agrego comentarios en la clase Evento.java. Elimino Dia porque la logica fue a Calendario" />
-    <option name="LAST_COMMIT_MESSAGE" value="Creo la clase Calendario y su test. Agrego comentarios en la clase Evento.java. Elimino Dia porque la logica fue a Calendario" />
+    <MESSAGE value="SIGO CON FRECUENCIA, creo que ahora si es por ahí. Creo ENUM y añado los test. No hice mas cambios relevantes" />
+    <option name="LAST_COMMIT_MESSAGE" value="SIGO CON FRECUENCIA, creo que ahora si es por ahí. Creo ENUM y añado los test. No hice mas cambios relevantes" />
   </component>
 </project>
