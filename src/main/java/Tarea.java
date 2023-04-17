@@ -8,7 +8,13 @@ public class Tarea
     private LocalDateTime fechaVencimiento;
     private Boolean estaCompleta;
 
-
+    public Tarea(){
+        this.titulo = "Tarea sin nombre";
+        this.descripcion = "";
+        this.fechaInicio = LocalDateTime.now();
+        this.fechaVencimiento = this.fechaInicio.plusDays(1);
+        this.estaCompleta = false;
+    }
 
     public Tarea(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaVencimiento, Boolean tareaCompleta)
     {
