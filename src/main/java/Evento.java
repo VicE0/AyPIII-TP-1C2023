@@ -77,6 +77,7 @@ public abstract class Evento
 //    }
 
 
+
 //SETTERS
     public void establecerTitulo(String titulo) {
         this.titulo = titulo;

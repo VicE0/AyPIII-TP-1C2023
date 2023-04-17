@@ -32,8 +32,6 @@ public class EventoDiario extends Evento {
 
 
 
-
-
 //    LO DEJO POR AHI POR SI SE USA DESPUES
 //    public ArrayList<LocalDateTime> obtenerProximosEventos(LocalDateTime Inicio, LocalDateTime Fin) {
 //
