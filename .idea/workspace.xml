@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0950ebdb-872c-4eb3-9494-228a982e1e68" name="Changes" comment="Sigo con los intervalos. Añado clase EventoDiario y su primer test. (A cambiar)">
+    <list default="true" id="0950ebdb-872c-4eb3-9494-228a982e1e68" name="Changes" comment="Añado la funcionalidad para repetir el evento diario segun intervalo de dias">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Evento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Evento.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/EventoDiario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/EventoDiario.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/EventoDiarioTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/EventoDiarioTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/EventoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/EventoTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +21,8 @@
       <list>
         <option value="Class" />
         <option value="JUnit4 Test Class" />
+        <option value="Interface" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -75,7 +78,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="JUnit.EventoTest">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="tp-algoIII" />
@@ -112,9 +115,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.EventoTest" />
         <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.EventoDiarioTest" />
-        <item itemvalue="JUnit.EventoTest" />
         <item itemvalue="JUnit.DiaTest" />
       </list>
     </recent_temporary>
@@ -177,7 +180,35 @@
       <option name="project" value="LOCAL" />
       <updated>1681238732126</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Agrego funcion obtenerProximosEventos a EventoDiario. Sigo con los tests.">
+      <created>1681446632108</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1681446632108</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Creo la clase Calendario y su test. Agrego comentarios en la clase Evento.java. Elimino Dia porque la logica fue a Calendario">
+      <created>1681598453658</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1681598453658</updated>
+    </task>
+    <task id="LOCAL-00010" summary="SIGO CON FRECUENCIA, creo que ahora si es por ahí. Creo ENUM y añado los test. No hice mas cambios relevantes">
+      <created>1681614021325</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1681614021325</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Añado la funcionalidad para repetir el evento diario segun intervalo de dias">
+      <created>1681620003520</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1681620003520</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -239,6 +270,10 @@
     <MESSAGE value="Clase Dia agregada, misma logica seria para Semana-Año. No le des bola al main, es para darme una idea de las cositas" />
     <MESSAGE value="Arranco la logica para la repeticion del evento (A cambiar y poner mejor, aplicar para semana, mes y año). IGNORAR MAIN!!" />
     <MESSAGE value="Sigo con los intervalos. Añado clase EventoDiario y su primer test. (A cambiar)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Sigo con los intervalos. Añado clase EventoDiario y su primer test. (A cambiar)" />
+    <MESSAGE value="Agrego funcion obtenerProximosEventos a EventoDiario. Sigo con los tests." />
+    <MESSAGE value="Creo la clase Calendario y su test. Agrego comentarios en la clase Evento.java. Elimino Dia porque la logica fue a Calendario" />
+    <MESSAGE value="SIGO CON FRECUENCIA, creo que ahora si es por ahí. Creo ENUM y añado los test. No hice mas cambios relevantes" />
+    <MESSAGE value="Añado la funcionalidad para repetir el evento diario segun intervalo de dias" />
+    <option name="LAST_COMMIT_MESSAGE" value="Añado la funcionalidad para repetir el evento diario segun intervalo de dias" />
   </component>
 </project>
