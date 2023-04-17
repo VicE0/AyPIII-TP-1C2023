@@ -5,43 +5,43 @@ public class Tarea
     private String titulo;
     private String descripcion;
     private LocalDateTime fechaInicio;
-    private int repetirCada;
+    private LocalDateTime fechaVencimiento;
+    private Boolean estaCompleta;
 
-
-    public Tarea()
-    {
-        this.titulo = "Tarea sin titulo";
-        this.descripcion = "-";
+    public Tarea(){
+        this.titulo = "Tarea sin nombre";
+        this.descripcion = "";
         this.fechaInicio = LocalDateTime.now();
-        this.repetirCada = 0;
-
+        this.fechaVencimiento = this.fechaInicio.plusDays(1);
+        this.estaCompleta = false;
     }
 
-    public Tarea(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int repetirCada)
+    public Tarea(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaVencimiento, Boolean tareaCompleta)
     {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.fechaInicio = fechaInicio;
-        this.repetirCada = repetirCada;
+        this.fechaVencimiento = fechaVencimiento;
+        this.estaCompleta = tareaCompleta;
     }
 
-    //GETTERS
+
     public String obtenerTitulo() {
         return titulo;
     }
 
-    public String obtenerDescripcion()
-    {return descripcion;
+    public String obtenerDescripcion() {
+        return descripcion;
     }
     public LocalDateTime obtenerFechaInicio() {
         return fechaInicio;
     }
-    public int obtenerRepetirCada(){
-        return repetirCada;}
-
-
-
-
+    public LocalDateTime obtenerFechaVencimiento(){
+        return fechaVencimiento;
+    }
+    public Boolean estaCompleta(){
+        return estaCompleta;
+    }
 
 
     public void establecerTitulo(String titulo) {
@@ -53,9 +53,11 @@ public class Tarea
     public void establecerFechaInicio(LocalDateTime fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
-
-    public void establecerRepetirCada(int repetirCada){
-        this.repetirCada = repetirCada;
+    public void establecerRepetirCada(Boolean estaCompleta){
+        this.estaCompleta = estaCompleta;
+    }
+    public void tareaCompletada(){
+        this.estaCompleta = true;
     }
 }
 
