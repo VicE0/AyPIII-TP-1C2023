@@ -56,5 +56,8 @@ public class Tarea
     public void establecerRepetirCada(Boolean estaCompleta){
         this.estaCompleta = estaCompleta;
     }
+    public void tareaCompletada(){
+        this.estaCompleta = true;
+    }
 }
 
