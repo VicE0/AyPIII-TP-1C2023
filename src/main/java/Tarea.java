@@ -1,4 +1,5 @@
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class Tarea
 {
@@ -7,6 +8,8 @@ public class Tarea
     private LocalDateTime fechaInicio;
     private LocalDateTime fechaVencimiento;
     private Boolean estaCompleta;
+    private ArrayList<Alarma> alarmas;
+
 
     public Tarea(){
         this.titulo = "Tarea sin nombre";
