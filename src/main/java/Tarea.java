@@ -10,13 +10,13 @@ public class Tarea
 
 
 
-    public Tarea(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaVencimiento, Boolean estaCompleta)
+    public Tarea(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaVencimiento, Boolean tareaCompleta)
     {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.fechaInicio = fechaInicio;
         this.fechaVencimiento = fechaVencimiento;
-        this.estaCompleta = estaCompleta;
+        this.estaCompleta = tareaCompleta;
     }
 
 
