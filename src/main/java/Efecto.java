@@ -1,3 +1,3 @@
 public interface Efecto {
-    void reproducir();
+    void reproducirEfecto();
 }

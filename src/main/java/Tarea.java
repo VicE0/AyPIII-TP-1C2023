@@ -64,7 +64,6 @@ public class Tarea
     }
     public void activarAlarma(Alarma alarma){
         alarmas.add(alarma);
-
     }
     public void desactivarAlarma(Alarma alarma){
         alarmas.remove(alarma);
