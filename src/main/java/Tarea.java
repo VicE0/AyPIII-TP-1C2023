@@ -62,5 +62,12 @@ public class Tarea
     public void tareaCompletada(){
         this.estaCompleta = true;
     }
+    public void activarAlarma(Alarma alarma){
+        alarmas.add(alarma);
+
+    }
+    public void desactivarAlarma(Alarma alarma){
+        alarmas.remove(alarma);
+    }
 }
 
