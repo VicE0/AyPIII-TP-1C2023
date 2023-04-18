@@ -19,13 +19,13 @@ public class Tarea
         this.estaCompleta = false;
     }
 
-    public Tarea(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaVencimiento, Boolean tareaCompleta)
+    public Tarea(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaVencimiento)
     {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.fechaInicio = fechaInicio;
         this.fechaVencimiento = fechaVencimiento;
-        this.estaCompleta = tareaCompleta;
+        this.estaCompleta = false;
     }
 
 
@@ -56,10 +56,10 @@ public class Tarea
     public void establecerFechaInicio(LocalDateTime fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
-    public void establecerRepetirCada(Boolean estaCompleta){
+    public void establecerEstaCompleta(Boolean estaCompleta){
         this.estaCompleta = estaCompleta;
     }
-    public void tareaCompletada(){
+    public void marcarComoCompleta(){
         this.estaCompleta = true;
     }
     public void activarAlarma(Alarma alarma){
