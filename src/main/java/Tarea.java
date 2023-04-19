@@ -17,6 +17,7 @@ public class Tarea
         this.fechaInicio = LocalDateTime.now();
         this.fechaVencimiento = this.fechaInicio.plusDays(1);
         this.estaCompleta = false;
+        this.alarmas = new ArrayList<Alarma>();
     }
 
     public Tarea(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaVencimiento)
@@ -26,6 +27,7 @@ public class Tarea
         this.fechaInicio = fechaInicio;
         this.fechaVencimiento = fechaVencimiento;
         this.estaCompleta = false;
+        this.alarmas = new ArrayList<Alarma>();
     }
 
 
@@ -62,7 +64,7 @@ public class Tarea
     public void marcarComoCompleta(){
         this.estaCompleta = true;
     }
-    public void activarAlarma(Alarma alarma){
+    public void agregarAlarma(Alarma alarma){
         alarmas.add(alarma);
     }
     public void desactivarAlarma(Alarma alarma){

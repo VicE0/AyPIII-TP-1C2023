@@ -8,6 +8,17 @@ public class Alarma {
         this.efecto = efecto;
 
     }
+
+    public void activarAlarma(){
+        boolean encontrada = false;
+        while (encontrada == false){
+            LocalDateTime fechaActual = LocalDateTime.now();
+            if (fechaActual.equals(fechaYHora)){
+                sonarAlarma(this.efecto);
+                encontrada = true;
+            }
+        }
+    }
     public void sonarAlarma(Efecto efecto){
         efecto.reproducirEfecto();
 
