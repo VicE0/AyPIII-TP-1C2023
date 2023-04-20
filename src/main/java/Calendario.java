@@ -1,3 +1,4 @@
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -19,8 +20,7 @@ public class Calendario {
     public void eliminarEvento(Evento eventoOriginal) {
         ArrayList<Evento> eventosAEliminar = new ArrayList<>();
 
-        for (Evento nuevoEvento : this.eventos)
-        {
+        for (Evento nuevoEvento : this.eventos) {
             if (nuevoEvento.getClass().equals(eventoOriginal.getClass()) && nuevoEvento.obtenerTitulo().equals(eventoOriginal.obtenerTitulo())) {
                 eventosAEliminar.add(nuevoEvento);
             }
@@ -31,18 +31,16 @@ public class Calendario {
         }
 
     }
-    public void modificarEvento(Evento eventoOriginal, Evento eventoModificado)
-    {
+
+    public void modificarEvento(Evento eventoOriginal, Evento eventoModificado) {
         ArrayList<Evento> eventosAModificar = new ArrayList<>();
 
-        for (Evento nuevoEvento : this.eventos)
-        {
+        for (Evento nuevoEvento : this.eventos) {
             if (nuevoEvento.getClass().equals(eventoOriginal.getClass()) && nuevoEvento.obtenerTitulo().equals(eventoOriginal.obtenerTitulo())) {
                 eventosAModificar.add(nuevoEvento);
             }
         }
-        for (Evento nuevoEvento : eventosAModificar)
-        {
+        for (Evento nuevoEvento : eventosAModificar) {
             nuevoEvento.establecerTitulo(eventoModificado.obtenerTitulo());
             nuevoEvento.establecerDescripcion(eventoModificado.obtenerDescripcion());
             nuevoEvento.establecerFechaInicio(eventoModificado.obtenerFechaInicio());
@@ -69,21 +67,49 @@ public class Calendario {
     }
 
 
-
-
-
-
-
     public void crearTarea(Tarea tarea) {
         tareas.add(tarea);
     }
 
-    public void modificarTarea(int posicion, Tarea tarea) {
-        tareas.set(posicion, tarea);
+    public void modificarTarea(int id, String nuevo_titulo, String nueva_descripcion, LocalDateTime nueva_fecha_inicio, LocalDateTime nueva_fecha_vencimiento) {
+
+        boolean encontrado = false;
+
+        while (encontrado == false){
+
+            for (Tarea tarea : tareas){
+
+                if (tarea.obtenerId() == id){
+
+                     tarea.establecerTitulo(nuevo_titulo);
+                     tarea.establecerDescripcion(nueva_descripcion);
+                     tarea.establecerFechaInicio(nueva_fecha_inicio);
+                     tarea.establecerFechaVencimiento(nueva_fecha_vencimiento);
+                     encontrado = true;
+                }
+            encontrado = true;
+            }
+        }
     }
 
-    public void eliminarTarea(int posicion) {
-        tareas.remove(posicion);
-    }
+    public void eliminarTarea(int id) {
 
+        boolean encontrado = false;
+
+        while (encontrado == false){
+
+            for (int i=0;i< tareas.size(); i++){
+
+                Tarea tarea = tareas.get(i);
+
+                if (tarea.obtenerId() == id){
+
+                    tareas.remove(i);
+
+                    encontrado = true;
+                }
+            encontrado = true;
+            }
+        }
+    }
 }

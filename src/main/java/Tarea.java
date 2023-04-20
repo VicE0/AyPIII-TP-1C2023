@@ -8,6 +8,9 @@ public class Tarea
     private LocalDateTime fechaInicio;
     private LocalDateTime fechaVencimiento;
     private Boolean estaCompleta;
+    private int id;
+    private static int idSiguiente = 0;
+
     private ArrayList<Alarma> alarmas;
 
 
@@ -17,6 +20,7 @@ public class Tarea
         this.fechaInicio = LocalDateTime.now();
         this.fechaVencimiento = this.fechaInicio.plusDays(1);
         this.estaCompleta = false;
+        this.id = idSiguiente++;
         this.alarmas = new ArrayList<Alarma>();
     }
 
@@ -27,6 +31,7 @@ public class Tarea
         this.fechaInicio = fechaInicio;
         this.fechaVencimiento = fechaVencimiento;
         this.estaCompleta = false;
+        this.id = idSiguiente++;
         this.alarmas = new ArrayList<Alarma>();
     }
 
@@ -48,7 +53,9 @@ public class Tarea
         return estaCompleta;
     }
 
-
+    public int obtenerId(){
+        return id;
+    }
     public void establecerTitulo(String titulo) {
         this.titulo = titulo;
     }
@@ -58,8 +65,14 @@ public class Tarea
     public void establecerFechaInicio(LocalDateTime fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
+    public void establecerFechaVencimiento(LocalDateTime fechaVencimiento){
+        this.fechaVencimiento = fechaVencimiento;
+    }
     public void establecerEstaCompleta(Boolean estaCompleta){
         this.estaCompleta = estaCompleta;
+    }
+    public void establecerId(int id){
+        this.id = id;
     }
     public void marcarComoCompleta(){
         this.estaCompleta = true;
