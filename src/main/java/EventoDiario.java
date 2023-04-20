@@ -1,13 +1,16 @@
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
+import java.time.LocalDate;
 
 public class EventoDiario extends Evento {
     private int intervalo;
 
-    public EventoDiario(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int intervalo) {
-        super(titulo, descripcion, fechaInicio, fechaFin);
+    public EventoDiario() {
+        super();
+        this.intervalo = 1;
+    }
+
+    public EventoDiario(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias,Repeticion tipoRepeticion,int intervalo) {
+        super(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion);
         this.intervalo = intervalo;
     }
 
@@ -20,40 +23,15 @@ public class EventoDiario extends Evento {
     }
 
     @Override
-    public LocalDate obtenerSiguienteOcurrencia(LocalDate fecha) {
+    protected LocalDateTime calcularSiguienteOcurrencia(LocalDateTime fecha) {
         if (intervalo > 1) {
             fecha = fecha.plusDays(intervalo - 1);
+        }
+        else if (intervalo == 0){
+            throw new RuntimeException("Intervalo no valido");
         }
         return fecha.plusDays(1);
     }
 }
-
-
-
-
-
-//    LO DEJO POR AHI POR SI SE USA DESPUES
-//    public ArrayList<LocalDateTime> obtenerProximosEventos(LocalDateTime Inicio, LocalDateTime Fin) {
-//
-//        ArrayList<LocalDateTime> proximosEventos = new ArrayList<>();
-//
-//        // Añade la primera fecha ingresada
-//        proximosEventos.add(Inicio);
-//
-//        LocalDateTime proximaFecha = obtenerProximoInicio(Inicio);
-//
-//        if (proximaFecha.isBefore(Fin)) {
-//            proximosEventos.add(proximaFecha);
-//        }
-//
-//        // Añade todas las demas hata llegar a la fecha Fin
-//       while(proximaFecha.isBefore(Fin)) {
-//            proximaFecha = obtenerProximoInicio(proximaFecha);
-//            proximosEventos.add(proximaFecha);
-//        }
-//
-//       return proximosEventos;
-//    }
-//}
 
 

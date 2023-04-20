@@ -1,58 +1,237 @@
+import org.junit.Assert;
+
 import org.junit.Test;
 import static org.junit.Assert.*;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class EventoDiarioTest {
-//    @Test
-//    public void EventoDiariamente() {
-//
-//        LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 10, 9, 0);
-//        LocalDateTime fechaFin = LocalDateTime.of(2023, 4, 17, 9, 30);
-//        String titulo = "Evento Diario";
-//        String desc = "Evento que se repite todos los dias";
-//        long intervalo = 1;
-//
-//        var eventoDiario = new EventoDiario(titulo, desc, fechaInicio, fechaFin, intervalo);
-//
-//        LocalDateTime FechaEsperada = fechaInicio.plusDays(intervalo);
-//        LocalDateTime FechaActual = eventoDiario.obtenerProximoInicio(fechaInicio);
-//
-//        assertEquals(FechaEsperada, FechaActual);
-//    }
-//
-//    @Test
-//    public void EventoCadaTresDias() {
-//
-//        LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 10, 9, 0);
-//        LocalDateTime fechaFin = LocalDateTime.of(2023, 4, 17, 9, 30);
-//        String titulo = "Evento 2";
-//        String desc = "Evento que se repite cada 3 dias";
-//        long intervalo = 3;
-//
-//        EventoDiario eventoDiario = new EventoDiario(titulo, desc, fechaInicio, fechaFin, intervalo);
-//
-//        LocalDateTime fechaEsperada = fechaInicio.plusDays(3);
-//        LocalDateTime FechaActual = eventoDiario.obtenerProximoInicio(fechaInicio);
-//        assertEquals(fechaEsperada, FechaActual);
-//    }
-//        @Test
-//        public void EventoIntervaloCero()
-//        {
-//            LocalDateTime startDate = LocalDateTime.of(2023, 4, 10, 9, 0);
-//            LocalDateTime endDate = startDate.plusHours(1);
-//
-//            LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 10, 9, 0);
-//            LocalDateTime fechaFin = LocalDateTime.of(2023,4,17,9,30);
-//            long intervalo = 0;
-//
-//            String titulo = "Evento1";
-//            String desc = "AAAA";
-//
-//            EventoDiario eventoDiario = new EventoDiario(titulo,desc,fechaInicio, fechaFin, intervalo);
-//            assertEquals(eventoDiario.obtenerProximoInicio(fechaInicio), fechaInicio);
-//        }
+
+
+    //Testeo constructor default de la clase Evento para eventoDiario
+    @Test
+    public void EventoDiarioDefault() {
+
+        var eventoDiario = new EventoDiario();
+
+        String titulo =  "Evento sin titulo";
+        String descripcion = "-";
+
+        LocalDate fechaInicio = LocalDate.now();
+        LocalDate fechaFin = fechaInicio.plusDays(1);
+
+        int ocurrenciasRealizadas = 0;
+        int maxOcurrencias = 1;
+        Repeticion tipoRepeticion = Repeticion.HASTA_FECHA_FIN;
+
+        int intervalo = 1;
+
+        assertEquals(titulo, eventoDiario.obtenerTitulo());
+        assertEquals(descripcion, eventoDiario.obtenerDescripcion());
+        assertEquals(fechaInicio, eventoDiario.obtenerFechaInicio().toLocalDate());
+        assertEquals(fechaFin, eventoDiario.obtenerFechaFin().toLocalDate());
+        assertEquals(ocurrenciasRealizadas, eventoDiario.obtenerOcurrencias());
+        assertEquals(maxOcurrencias, eventoDiario.obtenerMaxOcurrencias());
+        assertEquals(tipoRepeticion, eventoDiario.obtenerTipoRepeticion());
+        assertEquals(intervalo, eventoDiario.obtenerIntervalo());
+
+        //Para los tests de constructor Default de la clase abstracta Evento se utilizó el metodo .toLocalDate para que el test no falle por milésima de segundos.
 
     }
+    //Creo un EventoDiario Default
+    @Test
+    public void CreacionEventoDiarioDefault() {
+
+        var eventoDiario = new EventoDiario();
+
+        List<LocalDateTime> proximosEventos = eventoDiario.obtenerProximosEventos();
+
+        LocalDateTime primerEventoEnLista = proximosEventos.get(0);
+        LocalDateTime segundoEventoEnLista = proximosEventos.get(1);
+
+        assertEquals(primerEventoEnLista.toLocalDate(), eventoDiario.obtenerFechaInicio().toLocalDate());
+        assertEquals(segundoEventoEnLista.toLocalDate(), eventoDiario.obtenerFechaFin().toLocalDate());
+
+        assertEquals(2, proximosEventos.size());
+    }
+
+    @Test
+    public void obtenerSiguienteOcurrenciaValoresDefault() {
+
+        var eventoDiario = new EventoDiario();
+
+        //Por default, el intervalo = 1
+        LocalDateTime FechaEsperada = eventoDiario.obtenerFechaInicio().plusDays(eventoDiario.obtenerIntervalo());
+        LocalDateTime FechaActual = eventoDiario.calcularSiguienteOcurrencia(eventoDiario.obtenerFechaInicio());
+
+        assertEquals(FechaEsperada, FechaActual);
+
+    }
+    @Test
+    public void obtenerSiguienteOcurrencia() {
+
+        String titulo = "Evento Diario";
+        String descripcion =   "Evento que se repite todos los dias";
+
+        LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 10, 9, 0);
+        LocalDateTime fechaFin =    LocalDateTime.of(2023, 4, 17, 9, 30);
+
+        //Estos dos atributos son testeados correctamento en los siguientes test
+        int maxOcurrencias = 1;
+        Repeticion tipoRepeticion = Repeticion.HASTA_OCURRENCIAS;
+
+
+        int intervalo = 1;
+
+        var eventoDiario = new EventoDiario(titulo, descripcion, fechaInicio, fechaFin,maxOcurrencias, tipoRepeticion ,intervalo);
+
+        LocalDateTime FechaEsperada = fechaInicio.plusDays(intervalo);
+        LocalDateTime FechaActual = eventoDiario.calcularSiguienteOcurrencia(fechaInicio);
+
+        assertEquals(FechaEsperada, FechaActual);
+    }
+
+    @Test
+    public void EventoCadaTresDias() {
+
+        String titulo = "Evento Cada 3 Dias";
+        String descripcion = "Evento que se repite cada 3 dias";
+
+        LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 10, 9, 0);
+        LocalDateTime fechaFin = LocalDateTime.of(2023, 4, 17, 9, 30);
+
+        //Estos dos atributos son testeados correctamento en los siguientes test
+        int maxOcurrencias = 1;
+        Repeticion tipoRepeticion = Repeticion.HASTA_OCURRENCIAS;
+
+        int intervalo = 1;
+
+        var eventoDiario = new EventoDiario(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion ,intervalo);
+        eventoDiario.establecerIntervalo(3);
+
+
+        LocalDateTime fechaEsperada = fechaInicio.plusDays(3);
+        LocalDateTime FechaActual = eventoDiario.calcularSiguienteOcurrencia(fechaInicio);
+
+        assertEquals(fechaEsperada, FechaActual);
+    }
+
+    //Test de EventoDiario con repeticion infinita
+    @Test
+    public void EventoDiarioInfinito() {
+
+        String titulo = "Evento diario infinito";
+        String descripcion = "Evento que se repite cada dia infinitamente";
+
+        LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 10, 9, 0);
+        LocalDateTime fechaFin = LocalDateTime.of(2023, 4, 17, 9, 30);
+
+        //Estos dos atributos son testeados correctamento en los siguientes test
+        int maxOcurrencias = 99; //Seteo un numero alto pero testeable
+        Repeticion tipoRepeticion = Repeticion.INFINITA;
+
+        int intervalo = 1;
+
+        var eventoDiario = new EventoDiario(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion, intervalo);
+
+        List<LocalDateTime> proximosEventos = eventoDiario.obtenerProximosEventos();
+
+        LocalDateTime fechaActual = fechaInicio;
+        for (LocalDateTime fecha : proximosEventos) {
+
+            assertFalse(fechaActual.isAfter(fecha));
+            fechaActual = fecha;
+        }
+
+        assertEquals(99, proximosEventos.size());
+    }
+
+
+   //Test de EventoDiario con repeticion hasta alcanzar fechaFin
+    @Test
+    public void EventoDiarioHastaFecha() {
+
+        String titulo = "Evento diario infinito";
+        String descripcion = "Evento que se repite cada dia infinitamente";
+
+        LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 1, 9, 0);
+        LocalDateTime fechaFin = LocalDateTime.of(2023, 4, 10, 9, 0);
+
+        int maxOcurrencias = 99; //Seteo un numero alto pero testeable
+
+        Repeticion tipoRepeticion = Repeticion.HASTA_FECHA_FIN;
+
+        int intervalo = 0;
+
+        var eventoDiario = new EventoDiario(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion, intervalo);
+        eventoDiario.establecerIntervalo(1);
+
+        List<LocalDateTime> proximosEventos = eventoDiario.obtenerProximosEventos();
+
+        LocalDateTime fechaActual = fechaInicio;
+        for (LocalDateTime fecha : proximosEventos) {
+
+            assertFalse(fechaActual.isAfter(fecha));
+            fechaActual = fecha;
+        }
+
+        assertEquals(10, proximosEventos.size());
+
+    }
+
+    //test de EventoDiario con repeticion hasta que se alcancen 20 ocurrencias
+    @Test
+    public void EventoDiarioHastaOcurrencias() {
+
+        String titulo = "Evento diario infinito";
+        String descripcion = "Evento que se repite cada dia infinitamente";
+
+        LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 1, 9, 0);
+        LocalDateTime fechaFin = LocalDateTime.of(2023, 4, 10, 9, 0);
+
+        int maxOcurrencias = 20;
+
+        Repeticion tipoRepeticion = Repeticion.HASTA_OCURRENCIAS;
+
+        int intervalo = 1;
+
+        var eventoDiario = new EventoDiario(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion, intervalo);
+
+        List<LocalDateTime> proximosEventos = eventoDiario.obtenerProximosEventos();
+
+        LocalDateTime fechaActual = fechaInicio;
+        for (LocalDateTime fecha : proximosEventos) {
+
+            assertFalse(fechaActual.isAfter(fecha));
+            fechaActual = fecha;
+        }
+        assertEquals(20, eventoDiario.obtenerMaxOcurrencias());
+        assertEquals(eventoDiario.obtenerOcurrencias(), proximosEventos.size());
+    }
+
+    @Test
+    public void listaVacia() {
+
+        String titulo = "Evento diario infinito";
+        String descripcion = "Evento que se repite cada dia infinitamente";
+
+        LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 1, 9, 0);
+        LocalDateTime fechaFin = LocalDateTime.of(2023, 4, 10, 9, 0);
+
+        int maxOcurrencias = 20;
+
+        Repeticion tipoRepeticion = null;
+
+        int intervalo = 1;
+
+        var eventoDiario = new EventoDiario(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion, intervalo);
+
+        assertNull(eventoDiario.obtenerTipoRepeticion());
+    }
+
+}
 
 
 

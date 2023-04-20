@@ -4,7 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0950ebdb-872c-4eb3-9494-228a982e1e68" name="Changes" comment="Cambio total a la logica, dejo de usar el enum y uso polimorfismo. Cambiar y completar tests" />
+    <list default="true" id="0950ebdb-872c-4eb3-9494-228a982e1e68" name="Changes" comment="Super tarde todo pero termino logica de frecuencia y los tests de evento">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Evento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Evento.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/EventoAnual.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/EventoDiario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/EventoDiario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/EventoMensual.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/EventoSemanal.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/EventoDiarioTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/EventoDiarioTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/EventoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/EventoTest.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,8 +25,8 @@
       <list>
         <option value="JUnit4 Test Class" />
         <option value="Interface" />
-        <option value="Enum" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -72,7 +82,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.EventoTest">
+  <component name="RunManager" selected="JUnit.EventoDiarioTest">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="tp-algoIII" />
@@ -109,9 +119,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.EventoTest" />
-        <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.EventoDiarioTest" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.EventoTest" />
         <item itemvalue="JUnit.DiaTest" />
       </list>
     </recent_temporary>
@@ -216,7 +226,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681766631199</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Cambio total a la logica, dejo de usar el enum y uso polimorfismo. Cambiar y completar tests">
+      <created>1681767074305</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1681767074305</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -285,5 +302,8 @@
     <MESSAGE value="Agrego la logica para la repeticion semanal y completo su test" />
     <MESSAGE value="Cambio total a la logica, dejo de usar el enum y uso polimorfismo. Cambiar y completar tests" />
     <option name="LAST_COMMIT_MESSAGE" value="Cambio total a la logica, dejo de usar el enum y uso polimorfismo. Cambiar y completar tests" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/tp_algoIII$EventoDiarioTest.ic" NAME="EventoDiarioTest Coverage Results" MODIFIED="1681971152439" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

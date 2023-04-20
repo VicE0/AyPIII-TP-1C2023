@@ -1,5 +1,6 @@
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.ArrayList;
 
 public abstract class Evento
 {
@@ -7,8 +8,10 @@ public abstract class Evento
     private String descripcion;
     private LocalDateTime fechaInicio;
     private LocalDateTime fechaFin;
-//    private Frecuencia frecuencia;
-//    private List<DayOfWeek> diasSemana;
+    private int maxOcurrencias;
+    private int ocurrenciasRealizadas;
+    private Repeticion tipoRepeticion;
+
 
 
     //Constructor default con los valores iniciales
@@ -18,64 +21,35 @@ public abstract class Evento
         this.descripcion = "-";
         this.fechaInicio = LocalDateTime.now();
         this.fechaFin = this.fechaInicio.plusDays(1);
-//        this.frecuencia = null;
-//        this.diasSemana = null;
+        this.maxOcurrencias = 1;
+        this.ocurrenciasRealizadas = 0;
+        this.tipoRepeticion = Repeticion.HASTA_FECHA_FIN;
+
     }
 
     // PRE: Pido los datos necesarios para la creación de un evento
     // POS: Inicializo los valores correctos del evento con los datos disponibles
-    public Evento(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin) {
+    public Evento(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
-//        this.frecuencia = frecuencia;
-//        this.diasSemana = diasSemana;
+        this.maxOcurrencias = maxOcurrencias;
+        this.ocurrenciasRealizadas = 0;
+        this.tipoRepeticion = tipoRepeticion;
+
     }
+
 
 //GETTERS
     public String obtenerTitulo() {return titulo;}
     public String obtenerDescripcion() {return descripcion;}
     public LocalDateTime obtenerFechaInicio() {return fechaInicio;}
     public LocalDateTime obtenerFechaFin() {return fechaFin;}
-//    public Frecuencia obtenerFrecuencia(){return frecuencia;}
 
-
-    //Método para obtener la siguiente ocurrencia del Evento segun la frecuencia que tiene asignada.
-    public abstract LocalDate obtenerSiguienteOcurrencia(LocalDate fecha);
-//        switch (frecuencia) {
-//
-//            case DIARIA:
-//                if (frecuencia.obtenerIntervalo() > 1) {
-//                    fecha = fecha.plusDays(frecuencia.obtenerIntervalo() - 1);
-//                }
-//                return fecha.plusDays(1);
-//
-//            case SEMANAL:
-//                if (diasSemana == null || diasSemana.isEmpty()) {
-//                    return fecha.plusWeeks(1); //Simplemente añade una semana
-//                }
-//                for (int i = 1; i <= 7; i++)
-//                {
-//                    LocalDate siguienteFecha = fecha.plusDays(i);
-//
-//                    DayOfWeek siguienteDia = siguienteFecha.getDayOfWeek();
-//                    if (diasSemana.contains(siguienteDia)) {
-//                        return siguienteFecha;
-//                    }
-//                }
-//
-//            case MENSUAL:
-//                return fecha.plusMonths(1);
-//
-//            case ANUAL:
-//                return fecha.plusYears(1);
-//
-//            default:
-//                return null;
-//        }
-//    }
-
+    public int obtenerMaxOcurrencias() {return maxOcurrencias;}
+    public int obtenerOcurrencias() {return ocurrenciasRealizadas;}
+    public Repeticion obtenerTipoRepeticion() {return tipoRepeticion;}
 
 
 //SETTERS
@@ -91,8 +65,93 @@ public abstract class Evento
     public void establecerFechaFin(LocalDateTime fechaFin) {
         this.fechaFin = fechaFin;
     }
-//    public void establecerFrecuencia(Frecuencia frecuencia) {this.frecuencia = frecuencia;}
-//    public void establecerDiasSemana(List<DayOfWeek> diasSemana) {this.diasSemana = diasSemana;}
+    public void establecerMaxOcurrencias(int maxOcurrencias) {
+        this.maxOcurrencias = maxOcurrencias;
+    }
+    public void establecerTipoRepeticion(Repeticion tipoRepeticion ) {
+        this.tipoRepeticion = tipoRepeticion;
+    }
+
+    //Método para obtener la siguiente ocurrencia del Evento segun la frecuencia que tiene asignada.
+    //Este método lo heredan las subclases EventoDiario, EventoSemana y EventoAnual
+    protected abstract LocalDateTime calcularSiguienteOcurrencia(LocalDateTime fecha);
+
+
+    public List<LocalDateTime> obtenerProximosEventos()
+    {
+       List<LocalDateTime> proximosEventos = new ArrayList<>();
+
+        // Añade la primera fecha ingresada
+        proximosEventos.add(fechaInicio);
+        sumarOcurrencias();
+
+        LocalDateTime proximaFecha = calcularSiguienteOcurrencia(fechaInicio);
+
+        return switchCaseRepeticion(proximaFecha, proximosEventos);
+    }
+
+    protected   List<LocalDateTime> switchCaseRepeticion(LocalDateTime proximaFecha,List<LocalDateTime>  proximosEventos)
+    {
+        switch (tipoRepeticion) {
+
+            case INFINITA:
+
+                //Un evento infinito no tiene fecha final.
+                fechaFin = null;
+
+                //Por temas de testeo, el while se deja funcionando a base de las ocurrencias
+                while (fechaFinNula() && ocurrenciasRealizadas < maxOcurrencias)
+                {
+                    proximaFecha = calcularSiguienteOcurrencia(proximaFecha);
+                    proximosEventos.add(proximaFecha);
+                    sumarOcurrencias();
+                }
+                return proximosEventos;
+
+            case HASTA_FECHA_FIN:
+//                proximosEventos.add(proximaFecha);
+
+                if ( !fechaFinNula() ) {
+                    proximosEventos.add(proximaFecha);
+                }
+
+                while(proximaFecha.isBefore(fechaFin)) {
+
+                    proximaFecha = calcularSiguienteOcurrencia(proximaFecha);
+                    proximosEventos.add(proximaFecha);
+
+                }
+                return proximosEventos;
+
+            case HASTA_OCURRENCIAS:
+
+                proximosEventos.add(proximaFecha);
+                sumarOcurrencias();
+
+                while (ocurrenciasRealizadas < maxOcurrencias)
+                {
+                    proximaFecha = calcularSiguienteOcurrencia(proximaFecha);
+                    proximosEventos.add(proximaFecha);
+                    sumarOcurrencias();
+                }
+                return proximosEventos;
+
+            default:
+                return proximosEventos;
+        }
+    }
+
+   public boolean fechaFinNula()
+   {
+       if (fechaFin != null) {
+           return false;
+       }
+       return true;
+   }
+
+    public void sumarOcurrencias(){
+        ocurrenciasRealizadas++;
+    }
 }
 
 

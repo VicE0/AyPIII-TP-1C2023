@@ -8,26 +8,38 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 
-//        String titulo = "Evento Semanal";
-//        String descripcion = "Se repite todos los Lunes y Viernes";
-//
-//        var fechaInicio = LocalDateTime.of(2023, 4, 3, 12, 30); //Domingo
-//        var fechaFin = LocalDateTime.of(2023, 4, 30, 12, 30);
-//
-//        Frecuencia frecuencia = Frecuencia.SEMANAL;
-//        List<DayOfWeek> diasSemanaEventos = List.of(DayOfWeek.MONDAY, DayOfWeek.FRIDAY);
-//
-//        var evento = new Evento(titulo, descripcion, fechaInicio, fechaFin, frecuencia, diasSemanaEventos);
-//        ArrayList<LocalDate> proximosEventos = new ArrayList<>();
-//
-//        LocalDate proximaFecha = evento.obtenerSiguienteOcurrencia(fechaInicio.toLocalDate());
-//        proximosEventos.add(proximaFecha);
+        //Evento Diario que se repite cada tres dias de forma infinita. God bless my pc
+//        var dailyEvent = new EventoDiario();
 //
 //
-//        while(proximaFecha.isBefore(fechaFin.toLocalDate())) {
-//            proximaFecha = evento.obtenerSiguienteOcurrencia(proximaFecha);
-//            proximosEventos.add(proximaFecha);
-//        }
-//        System.out.println(proximosEventos);
+//        System.out.println(dailyEvent.obtenerProximosEventos());
+
+
+
+        //Evento Diario que se repite cada tres dias de forma infinita. God bless my pc
+        String titulo = "Evento diario infinito";
+        String descripcion = "Evento que se repite cada dia infinitamente";
+
+        LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 1, 9, 0);
+        LocalDateTime fechaFin = LocalDateTime.of(2023, 4, 10, 9, 0);
+
+        int maxOcurrencias = 20; //Seteo un numero alto pero testeable
+
+        Repeticion tipoRepeticion = Repeticion.HASTA_OCURRENCIAS;
+
+        int intervalo =1;
+
+        var eventoDiario = new EventoDiario(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion, intervalo);
+
+        List<LocalDateTime> proximosEventos = eventoDiario.obtenerProximosEventos();
+
+
+        System.out.println(eventoDiario.obtenerTitulo());
+        System.out.println(proximosEventos);
+
+
+
+        System.out.println(eventoDiario.obtenerOcurrencias());
+//        System.out.println(dailyEvent.obtenerFechaFin());
     }
 }

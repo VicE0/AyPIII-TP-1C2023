@@ -1,4 +1,3 @@
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.DayOfWeek;
 import java.util.List;
@@ -6,8 +5,8 @@ import java.util.List;
 public class EventoSemanal extends Evento {
     private List<DayOfWeek> diasSemana;
 
-    public EventoSemanal(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, List<DayOfWeek> diasSemana) {
-        super(titulo, descripcion, fechaInicio, fechaFin);
+    public EventoSemanal(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin,int maxOcurrencias,Repeticion tipoRepeticion ,List<DayOfWeek> diasSemana) {
+        super(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias,tipoRepeticion);;
         this.diasSemana = diasSemana;
     }
 
@@ -20,12 +19,12 @@ public class EventoSemanal extends Evento {
     }
 
     @Override
-    public LocalDate obtenerSiguienteOcurrencia(LocalDate fecha) {
+    protected LocalDateTime calcularSiguienteOcurrencia(LocalDateTime fecha) {
         if (diasSemana == null || diasSemana.isEmpty()) {
             return fecha.plusWeeks(1);
         }
         for (int i = 1; i <= 7; i++) {
-            LocalDate siguienteFecha = fecha.plusDays(i);
+            LocalDateTime siguienteFecha = fecha.plusDays(i);
             DayOfWeek siguienteDia = siguienteFecha.getDayOfWeek();
             if (diasSemana.contains(siguienteDia)) {
                 return siguienteFecha;
