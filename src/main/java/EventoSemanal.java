@@ -5,6 +5,11 @@ import java.util.List;
 public class EventoSemanal extends Evento {
     private List<DayOfWeek> diasSemana;
 
+    public EventoSemanal() {
+        super();
+        this.diasSemana = null;
+    }
+
     public EventoSemanal(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin,int maxOcurrencias,Repeticion tipoRepeticion ,List<DayOfWeek> diasSemana) {
         super(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias,tipoRepeticion);;
         this.diasSemana = diasSemana;
@@ -21,6 +26,8 @@ public class EventoSemanal extends Evento {
     @Override
     protected LocalDateTime calcularSiguienteOcurrencia(LocalDateTime fecha) {
         if (diasSemana == null || diasSemana.isEmpty()) {
+
+            this.establecerFechaFin(fecha.plusWeeks(1));
             return fecha.plusWeeks(1);
         }
         for (int i = 1; i <= 7; i++) {

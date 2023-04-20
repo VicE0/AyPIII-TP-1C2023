@@ -14,32 +14,24 @@ public class Main {
 //
 //        System.out.println(dailyEvent.obtenerProximosEventos());
 
+        String titulo = "Evento Semanal";
+        String descripcion = "Evento que se repite cada martes y jueves infinitamente";
+
+        LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 10, 9, 0);
+        LocalDateTime fechaFin = LocalDateTime.of(2023, 4, 17, 9, 30);
 
 
-        //Evento Diario que se repite cada tres dias de forma infinita. God bless my pc
-        String titulo = "Evento diario infinito";
-        String descripcion = "Evento que se repite cada dia infinitamente";
+        int maxOcurrencias = 5; //ingreso un numero grande pero testeable
+        Repeticion tipoRepeticion = Repeticion.INFINITA;
 
-        LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 1, 9, 0);
-        LocalDateTime fechaFin = LocalDateTime.of(2023, 4, 10, 9, 0);
+        List<DayOfWeek> diasSemana = List.of(DayOfWeek.TUESDAY, DayOfWeek.THURSDAY);
 
-        int maxOcurrencias = 20; //Seteo un numero alto pero testeable
+        var eventoSemanal = new EventoSemanal(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion ,diasSemana);
 
-        Repeticion tipoRepeticion = Repeticion.HASTA_OCURRENCIAS;
+        List<LocalDateTime> proximosEventos = eventoSemanal.obtenerProximosEventos();
 
-        int intervalo =1;
-
-        var eventoDiario = new EventoDiario(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion, intervalo);
-
-        List<LocalDateTime> proximosEventos = eventoDiario.obtenerProximosEventos();
-
-
-        System.out.println(eventoDiario.obtenerTitulo());
         System.out.println(proximosEventos);
 
-
-
-        System.out.println(eventoDiario.obtenerOcurrencias());
-//        System.out.println(dailyEvent.obtenerFechaFin());
+        System.out.println(eventoSemanal.obtenerFechaFin());
     }
 }

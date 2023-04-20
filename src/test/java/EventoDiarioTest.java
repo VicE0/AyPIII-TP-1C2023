@@ -12,7 +12,7 @@ public class EventoDiarioTest {
 
     //Testeo constructor default de la clase Evento para eventoDiario
     @Test
-    public void EventoDiarioDefault() {
+    public void testEventoDiarioDefault() {
 
         var eventoDiario = new EventoDiario();
 
@@ -42,7 +42,7 @@ public class EventoDiarioTest {
     }
     //Creo un EventoDiario Default
     @Test
-    public void CreacionEventoDiarioDefault() {
+    public void testCreacionEventoDiarioDefault() {
 
         var eventoDiario = new EventoDiario();
 
@@ -58,7 +58,7 @@ public class EventoDiarioTest {
     }
 
     @Test
-    public void obtenerSiguienteOcurrenciaValoresDefault() {
+    public void testObtenerSiguienteOcurrenciaValoresDefault() {
 
         var eventoDiario = new EventoDiario();
 
@@ -70,7 +70,7 @@ public class EventoDiarioTest {
 
     }
     @Test
-    public void obtenerSiguienteOcurrencia() {
+    public void testObtenerSiguienteOcurrencia() {
 
         String titulo = "Evento Diario";
         String descripcion =   "Evento que se repite todos los dias";
@@ -94,7 +94,7 @@ public class EventoDiarioTest {
     }
 
     @Test
-    public void EventoCadaTresDias() {
+    public void testEventoCadaTresDias() {
 
         String titulo = "Evento Cada 3 Dias";
         String descripcion = "Evento que se repite cada 3 dias";
@@ -120,7 +120,7 @@ public class EventoDiarioTest {
 
     //Test de EventoDiario con repeticion infinita
     @Test
-    public void EventoDiarioInfinito() {
+    public void testEventoDiarioInfinito() {
 
         String titulo = "Evento diario infinito";
         String descripcion = "Evento que se repite cada dia infinitamente";
@@ -146,15 +146,16 @@ public class EventoDiarioTest {
         }
 
         assertEquals(99, proximosEventos.size());
+        assertEquals(null, eventoDiario.obtenerFechaFin());
     }
 
 
    //Test de EventoDiario con repeticion hasta alcanzar fechaFin
     @Test
-    public void EventoDiarioHastaFecha() {
+    public void testEventoDiarioHastaFecha() {
 
-        String titulo = "Evento diario infinito";
-        String descripcion = "Evento que se repite cada dia infinitamente";
+        String titulo = "Evento diario";
+        String descripcion = "Evento que se repite hasta llegar a una fecha";
 
         LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 1, 9, 0);
         LocalDateTime fechaFin = LocalDateTime.of(2023, 4, 10, 9, 0);
@@ -183,10 +184,10 @@ public class EventoDiarioTest {
 
     //test de EventoDiario con repeticion hasta que se alcancen 20 ocurrencias
     @Test
-    public void EventoDiarioHastaOcurrencias() {
+    public void testEventoDiarioHastaOcurrencias() {
 
-        String titulo = "Evento diario infinito";
-        String descripcion = "Evento que se repite cada dia infinitamente";
+        String titulo = "Evento diario";
+        String descripcion = "Evento que se repite hasta alcanzar 20 ocurrencias";
 
         LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 1, 9, 0);
         LocalDateTime fechaFin = LocalDateTime.of(2023, 4, 10, 9, 0);
@@ -212,10 +213,10 @@ public class EventoDiarioTest {
     }
 
     @Test
-    public void listaVacia() {
+    public void testlistaVacia() {
 
-        String titulo = "Evento diario infinito";
-        String descripcion = "Evento que se repite cada dia infinitamente";
+        String titulo = "Evento diario ";
+        String descripcion = "Lista Vacia";
 
         LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 1, 9, 0);
         LocalDateTime fechaFin = LocalDateTime.of(2023, 4, 10, 9, 0);
