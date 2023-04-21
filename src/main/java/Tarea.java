@@ -1,12 +1,15 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class Tarea
+public abstract class Tarea
 {
     private String titulo;
     private String descripcion;
-    private LocalDateTime fechaInicio;
-    private LocalDateTime fechaVencimiento;
+    public abstract LocalDateTime obtenerFechaInicio();
+    public abstract LocalDateTime obtenerFechaVencimiento();
+
+    public abstract void establecerFechaInicio(LocalDateTime fechaInicio);
+    public abstract void establecerFechaVencimiento(LocalDateTime fechaVencimiento);
     private Boolean estaCompleta;
     private int id;
     private static int idSiguiente = 0;
@@ -17,19 +20,15 @@ public class Tarea
     public Tarea(){
         this.titulo = "Tarea sin titulo";
         this.descripcion = "";
-        this.fechaInicio = LocalDateTime.now();
-        this.fechaVencimiento = this.fechaInicio.plusDays(1);
         this.estaCompleta = false;
         this.id = idSiguiente++;
         this.alarmas = new ArrayList<Alarma>();
     }
 
-    public Tarea(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaVencimiento)
+    public Tarea(String titulo, String descripcion)
     {
         this.titulo = titulo;
         this.descripcion = descripcion;
-        this.fechaInicio = fechaInicio;
-        this.fechaVencimiento = fechaVencimiento;
         this.estaCompleta = false;
         this.id = idSiguiente++;
         this.alarmas = new ArrayList<Alarma>();
@@ -43,12 +42,7 @@ public class Tarea
     public String obtenerDescripcion() {
         return descripcion;
     }
-    public LocalDateTime obtenerFechaInicio() {
-        return fechaInicio;
-    }
-    public LocalDateTime obtenerFechaVencimiento(){
-        return fechaVencimiento;
-    }
+
     public Boolean estaCompleta(){
         return estaCompleta;
     }
@@ -65,12 +59,7 @@ public class Tarea
     public void establecerDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    public void establecerFechaInicio(LocalDateTime fechaInicio) {
-        this.fechaInicio = fechaInicio;
-    }
-    public void establecerFechaVencimiento(LocalDateTime fechaVencimiento){
-        this.fechaVencimiento = fechaVencimiento;
-    }
+
     public void marcarComoCompleta(){
         this.estaCompleta = true;
     }
