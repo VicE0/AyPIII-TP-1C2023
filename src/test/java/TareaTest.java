@@ -10,8 +10,11 @@ public class TareaTest {
     @Test
     public void testTareaSinTitulo(){
         var tarea = new TareaConVencimiento();
+        var tareaDos = new TareaDiaCompleto();
         String titulo = tarea.obtenerTitulo();
+        String tituloDos = tareaDos.obtenerTitulo();
         assertEquals("Tarea sin titulo", titulo);
+        assertEquals("Tarea sin titulo",tituloDos);
 
     }
 
@@ -52,12 +55,16 @@ public class TareaTest {
 
     @Test
     public void testTareasTienenDistintoId(){
+        var tarea = new TareaDiaCompleto();
         var tarea_uno = new TareaConVencimiento("Tarea", "Descripcion", LocalDateTime.of(2023, 4, 17, 10, 0), LocalDateTime.of(2023, 4, 17, 18, 0));
         var tarea_dos = new TareaDiaCompleto("Tarea", "Descripcion", LocalDate.of(2023,4,18));
         var tarea_tres = new TareaConVencimiento("Tarea", "Descripcion", LocalDateTime.of(2023, 4, 18, 10, 0), LocalDateTime.of(2023, 4, 18, 18, 0));
         assertNotEquals(tarea_uno.obtenerId(),tarea_dos.obtenerId());
         assertNotEquals(tarea_uno.obtenerId(),tarea_tres.obtenerId());
         assertNotEquals(tarea_dos.obtenerId(),tarea_tres.obtenerId());
+        assertNotEquals(tarea.obtenerId(),tarea_uno.obtenerId());
+        assertNotEquals(tarea.obtenerId(),tarea_dos.obtenerId());
+        assertNotEquals(tarea.obtenerId(),tarea_tres.obtenerId());
     }
 
     @Test

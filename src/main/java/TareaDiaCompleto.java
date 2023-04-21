@@ -12,6 +12,7 @@ public class TareaDiaCompleto extends Tarea {
     }
 
     public TareaDiaCompleto(String titulo, String descripcion, LocalDate fechaInicio){
+        super(titulo,descripcion);
         this.fechaInicio = fechaInicio.atTime(0,0,0);
         this.fechaVencimiento = fechaInicio.atTime(23,59,59);
     }

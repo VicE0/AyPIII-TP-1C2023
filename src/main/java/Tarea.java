@@ -11,19 +11,11 @@ public abstract class Tarea
     public abstract void establecerFechaInicio(LocalDateTime fechaInicio);
     public abstract void establecerFechaVencimiento(LocalDateTime fechaVencimiento);
     private Boolean estaCompleta;
-    private int id;
+    private final int id;
     private static int idSiguiente = 0;
 
-    private ArrayList<Alarma> alarmas;
+    private final ArrayList<Alarma> alarmas;
 
-
-    public Tarea(){
-        this.titulo = "Tarea sin titulo";
-        this.descripcion = "";
-        this.estaCompleta = false;
-        this.id = idSiguiente++;
-        this.alarmas = new ArrayList<Alarma>();
-    }
 
     public Tarea(String titulo, String descripcion)
     {
@@ -31,7 +23,7 @@ public abstract class Tarea
         this.descripcion = descripcion;
         this.estaCompleta = false;
         this.id = idSiguiente++;
-        this.alarmas = new ArrayList<Alarma>();
+        this.alarmas = new ArrayList<>();
     }
 
 
