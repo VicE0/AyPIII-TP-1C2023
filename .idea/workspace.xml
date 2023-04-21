@@ -4,12 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0950ebdb-872c-4eb3-9494-228a982e1e68" name="Changes" comment="Super tarde todo pero termino logica de frecuencia y los tests de eventoDiario tienen ~90% cobertura">
+    <list default="true" id="0950ebdb-872c-4eb3-9494-228a982e1e68" name="Changes" comment="Cobertura testEventoSemanal ~80% (a completar)">
+      <change afterPath="$PROJECT_DIR$/src/test/java/EventoAnualTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Calendario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Calendario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Evento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Evento.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/EventoAnual.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/EventoAnual.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/EventoDiario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/EventoDiario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/EventoSemanal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/EventoSemanal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/EventoMensual.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/EventoMensual.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/EventoDiarioTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/EventoDiarioTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/EventoSemanalTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/EventoSemanalTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/EventoTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +84,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.EventoSemanalTest">
+  <component name="RunManager" selected="JUnit.EventoAnualTest">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="tp-algoIII" />
@@ -86,10 +92,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="DiaTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="EventoAnualTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="tp-algoIII" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="DiaTest" />
+      <option name="MAIN_CLASS_NAME" value="EventoAnualTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -104,6 +110,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="EventoMensualTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="tp-algoIII" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="EventoMensualTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="EventoSemanalTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="tp-algoIII" />
       <option name="PACKAGE_NAME" value="" />
@@ -113,22 +128,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="EventoTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="tp-algoIII" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="EventoTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.EventoSemanalTest" />
+        <item itemvalue="JUnit.EventoAnualTest" />
         <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.EventoMensualTest" />
         <item itemvalue="JUnit.EventoDiarioTest" />
-        <item itemvalue="JUnit.EventoTest" />
-        <item itemvalue="JUnit.DiaTest" />
+        <item itemvalue="JUnit.EventoSemanalTest" />
       </list>
     </recent_temporary>
   </component>
@@ -246,7 +252,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681971566188</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Cobertura testEventoSemanal ~80% (a completar)">
+      <created>1681975542227</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1681975542227</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -315,10 +328,12 @@
     <MESSAGE value="Agrego la logica para la repeticion semanal y completo su test" />
     <MESSAGE value="Cambio total a la logica, dejo de usar el enum y uso polimorfismo. Cambiar y completar tests" />
     <MESSAGE value="Super tarde todo pero termino logica de frecuencia y los tests de eventoDiario tienen ~90% cobertura" />
-    <option name="LAST_COMMIT_MESSAGE" value="Super tarde todo pero termino logica de frecuencia y los tests de eventoDiario tienen ~90% cobertura" />
+    <MESSAGE value="Cobertura testEventoSemanal ~80% (a completar)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cobertura testEventoSemanal ~80% (a completar)" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/tp_algoIII$EventoDiarioTest.ic" NAME="EventoDiarioTest Coverage Results" MODIFIED="1681971152439" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-    <SUITE FILE_PATH="coverage/tp_algoIII$EventoSemanalTest.ic" NAME="EventoSemanalTest Coverage Results" MODIFIED="1681975341852" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/tp_algoIII$EventoDiarioTest.ic" NAME="EventoDiarioTest Coverage Results" MODIFIED="1682013906122" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/tp_algoIII$EventoSemanalTest.ic" NAME="EventoSemanalTest Coverage Results" MODIFIED="1682014237659" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/tp_algoIII$EventoMensualTest.ic" NAME="EventoMensualTest Coverage Results" MODIFIED="1682040000098" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

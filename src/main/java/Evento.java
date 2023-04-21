@@ -73,7 +73,7 @@ public abstract class Evento
     }
 
     //Método para obtener la siguiente ocurrencia del Evento segun la frecuencia que tiene asignada.
-    //Este método lo heredan las subclases EventoDiario, EventoSemana y EventoAnual
+    //Este método lo heredan las subclases EventoDiario, EventoSemanal, EventoMensual y EventoAnual
     protected abstract LocalDateTime calcularSiguienteOcurrencia(LocalDateTime fecha);
 
 
@@ -109,8 +109,6 @@ public abstract class Evento
                 return proximosEventos;
 
             case HASTA_FECHA_FIN:
-//                proximosEventos.add(proximaFecha);
-
                 if ( !fechaFinNula() ) {
                     proximosEventos.add(proximaFecha);
                 }

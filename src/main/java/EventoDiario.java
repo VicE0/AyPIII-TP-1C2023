@@ -27,7 +27,11 @@ public class EventoDiario extends Evento {
             fecha = fecha.plusDays(intervalo - 1);
         }
         else if (intervalo == 0){
-            throw new RuntimeException("Intervalo no valido");
+            return fecha;
+        }
+
+        else if (intervalo < 0){
+            throw new RuntimeException("Intervalo de dias negativo");
         }
         return fecha.plusDays(1);
     }
