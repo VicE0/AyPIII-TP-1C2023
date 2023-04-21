@@ -32,7 +32,7 @@ public class EventoSemanalTest {
         assertEquals(ocurrenciasRealizadas, eventoSemanal.obtenerOcurrencias());
         assertEquals(maxOcurrencias, eventoSemanal.obtenerMaxOcurrencias());
         assertEquals(tipoRepeticion, eventoSemanal.obtenerTipoRepeticion());
-        assertEquals(null,eventoSemanal.obtenerDiasSemana());
+        assertNull(eventoSemanal.obtenerDiasSemana());
 
         //Para los tests de constructor Default de la clase abstracta Evento se utilizó el metodo .toLocalDate para que el test no falle por milésima de segundos.
 
@@ -140,9 +140,14 @@ public class EventoSemanalTest {
         int maxOcurrencias = 99; //ingreso un numero grande pero testeable
         Repeticion tipoRepeticion = Repeticion.INFINITA;
 
-        List<DayOfWeek> diasSemana = List.of(DayOfWeek.TUESDAY, DayOfWeek.THURSDAY);
+        List<DayOfWeek> diasSemana = List.of(DayOfWeek.MONDAY, DayOfWeek.FRIDAY);
+        List<DayOfWeek> diasSemanaActualizado = List.of(DayOfWeek.TUESDAY, DayOfWeek.THURSDAY);
 
         var eventoSemanal = new EventoSemanal(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion ,diasSemana);
+
+        //Testeo que el setter funcione
+        eventoSemanal.establecerDiasSemana(List.of(DayOfWeek.TUESDAY, DayOfWeek.THURSDAY));
+
 
         List<LocalDateTime> proximosEventos = eventoSemanal.obtenerProximosEventos();
 
@@ -154,7 +159,9 @@ public class EventoSemanalTest {
         }
 
         assertEquals(99, proximosEventos.size());
-        assertEquals(null, eventoSemanal.obtenerFechaFin());
+        assertNull(eventoSemanal.obtenerFechaFin());
+        assertEquals(diasSemanaActualizado, eventoSemanal.obtenerDiasSemana());
+        assertNotEquals(diasSemana, diasSemanaActualizado);
 
     }
 
@@ -186,9 +193,18 @@ public class EventoSemanalTest {
             assertFalse(fechaActual.isAfter(fecha));
             fechaActual = fecha;
         }
-
         assertEquals(3, proximosEventos.size());
-        //Completar chequeando los dias
+
+        LocalDateTime fecha1 = proximosEventos.get(0);
+        LocalDateTime fecha2 = proximosEventos.get(1);
+        LocalDateTime fecha3 = proximosEventos.get(2);
+
+        LocalDateTime siguienteMiercoes = fechaInicio.plusDays(2); //Se espera que la siguiente ocurrencia despues del 3 de abril sea el miercoles 5 de abril
+        LocalDateTime siguienteLunes = siguienteMiercoes.plusDays(5); //Se espera que la siguiente ocurrencia sea el lunes 10 de abril
+
+        assertEquals(fecha1, fechaInicio);
+        assertEquals(fecha2, siguienteMiercoes);
+        assertEquals(fecha3, siguienteLunes);
 
     }
 

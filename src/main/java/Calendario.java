@@ -7,7 +7,7 @@ public class Calendario {
     private ArrayList<Evento> eventos;
     private ArrayList<Tarea> tareas;
 
-    public Calendario() {
+    public Calendario()  {
         this.eventos = new ArrayList<Evento>();
         this.tareas = new ArrayList<Tarea>();
     }
