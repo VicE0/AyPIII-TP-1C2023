@@ -1,19 +1,18 @@
 import java.time.LocalDateTime;
-public class Alarma {
-    private LocalDateTime fechaYHora;
-    private Efecto efecto;
+public abstract class Alarma {
+    private final Efecto efecto;
+    public abstract LocalDateTime obtenerFechaYHora();
 
-    public Alarma(LocalDateTime fechaYHora, Efecto efecto){
-        this.fechaYHora = fechaYHora;
+    public Alarma(Efecto efecto){
         this.efecto = efecto;
 
     }
 
     public void activarAlarma(){
         boolean encontrada = false;
-        while (encontrada == false){
+        while (!encontrada){
             LocalDateTime fechaActual = LocalDateTime.now();
-            if (fechaActual.equals(fechaYHora)){
+            if (fechaActual.equals(obtenerFechaYHora())){
                 sonarAlarma(this.efecto);
                 encontrada = true;
             }

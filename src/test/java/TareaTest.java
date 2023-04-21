@@ -71,7 +71,7 @@ public class TareaTest {
     public void testActivarAlarma(){
         var tarea = new TareaConVencimiento( "Tarea", "Descripcion", LocalDateTime.of(2023, 4, 17, 10, 0), LocalDateTime.of(2023, 4, 17, 18, 0));
         var Notificacion = new Notificacion();
-        var alarma = new Alarma( LocalDateTime.of(2023, 4, 17, 10, 0),Notificacion);
+        var alarma = new AlarmaFechaAbsoluta(LocalDateTime.of(2023, 4, 17, 10, 0),Notificacion);
         tarea.agregarAlarma(alarma);
         ArrayList<Alarma> listaAlarmas = tarea.obtenerAlarmas();
         assertTrue(listaAlarmas.contains(alarma));
@@ -82,8 +82,8 @@ public class TareaTest {
         var tarea = new TareaConVencimiento("Tarea", "Descripcion", LocalDateTime.of(2023, 4, 17, 10, 0), LocalDateTime.of(2023, 4, 17, 18, 0));
         var notificacion = new Notificacion();
         var sonido = new Sonido();
-        var alarma = new Alarma(tarea.obtenerFechaInicio(),notificacion);
-        var alarma_uno = new Alarma(tarea.obtenerFechaInicio(), sonido);
+        var alarma = new AlarmaFechaAbsoluta(tarea.obtenerFechaInicio(),notificacion);
+        var alarma_uno = new AlarmaFechaAbsoluta(tarea.obtenerFechaInicio(), sonido);
         tarea.agregarAlarma(alarma);
         tarea.agregarAlarma(alarma_uno);
         tarea.desactivarAlarma(alarma);
@@ -99,9 +99,9 @@ public class TareaTest {
         var notificacion = new Notificacion();
         var sonido = new Sonido();
         var mail = new Email();
-        var alarma = new Alarma(tarea.obtenerFechaInicio(),notificacion);
-        var alarma_uno = new Alarma(tarea.obtenerFechaInicio(),sonido);
-        var alarma_dos = new Alarma(tarea.obtenerFechaInicio(),mail);
+        var alarma = new AlarmaFechaAbsoluta(tarea.obtenerFechaInicio(),notificacion);
+        var alarma_uno = new AlarmaFechaAbsoluta(tarea.obtenerFechaInicio(),sonido);
+        var alarma_dos = new AlarmaFechaAbsoluta(tarea.obtenerFechaInicio(),mail);
 
         tarea.agregarAlarma(alarma);
         tarea.agregarAlarma(alarma_uno);
