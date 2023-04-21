@@ -15,7 +15,7 @@ public class Tarea
 
 
     public Tarea(){
-        this.titulo = "Tarea sin nombre";
+        this.titulo = "Tarea sin titulo";
         this.descripcion = "";
         this.fechaInicio = LocalDateTime.now();
         this.fechaVencimiento = this.fechaInicio.plusDays(1);
@@ -56,6 +56,9 @@ public class Tarea
     public int obtenerId(){
         return id;
     }
+    public ArrayList<Alarma> obtenerAlarmas(){
+        return alarmas;
+    }
     public void establecerTitulo(String titulo) {
         this.titulo = titulo;
     }
@@ -67,12 +70,6 @@ public class Tarea
     }
     public void establecerFechaVencimiento(LocalDateTime fechaVencimiento){
         this.fechaVencimiento = fechaVencimiento;
-    }
-    public void establecerEstaCompleta(Boolean estaCompleta){
-        this.estaCompleta = estaCompleta;
-    }
-    public void establecerId(int id){
-        this.id = id;
     }
     public void marcarComoCompleta(){
         this.estaCompleta = true;

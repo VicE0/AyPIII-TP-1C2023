@@ -10,7 +10,7 @@ public class TareaTest {
     public void testTareaSinTitulo(){
         var tarea = new Tarea();
         String titulo = tarea.obtenerTitulo();
-        assertEquals("Tarea sin nombre", titulo);
+        assertEquals("Tarea sin titulo", titulo);
 
     }
 
@@ -60,7 +60,7 @@ public class TareaTest {
 
     @Test
     public void testActivarAlarma(){
-        var tarea = new Tarea("Tarea", "Descripción", LocalDateTime.of(2023, 4, 17, 10, 0), LocalDateTime.of(2023, 4, 17, 18, 0));
+        var tarea = new Tarea("Tarea", "Descripcion", LocalDateTime.of(2023, 4, 17, 10, 0), LocalDateTime.of(2023, 4, 17, 18, 0));
         var Notificacion = new Notificacion();
         var alarma = new Alarma( LocalDateTime.of(2023, 4, 17, 10, 0),Notificacion);
         tarea.agregarAlarma(alarma);
