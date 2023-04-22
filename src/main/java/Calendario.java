@@ -1,3 +1,4 @@
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.time.LocalDate;
@@ -5,18 +6,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Calendario {
+
     private CreadorDeEventos creadorDeEventos;
     private ArrayList<Evento> eventos;
     private ArrayList<Tarea> tareas;
 
     private EventoDiario eventoDiario;
 
+    public  Calendario(){
+        this.tareas = new ArrayList<Tarea>();
+    }
 
-    public Calendario(CreadorDeEventos creadorDeEventos)  {
+
+    public Calendario(CreadorDeEventos creadorDeEventos) {
 
         this.creadorDeEventos = creadorDeEventos;
         this.eventos = new ArrayList<Evento>();
-        this.tareas = new ArrayList<Tarea>();
         this.eventoDiario = new EventoDiario();
     }
 
@@ -86,49 +91,41 @@ public class Calendario {
         this.eventoDiario.establecerIntervalo(intervalo);
     }
 
+
     public void crearTarea(Tarea tarea) {
         tareas.add(tarea);
     }
 
-    public void modificarTarea(int id, String nuevo_titulo, String nueva_descripcion, LocalDateTime nueva_fecha_inicio, LocalDateTime nueva_fecha_vencimiento) {
+    public void modificarTarea(int id, String nuevoTitulo, String nuevaDescripcion, LocalDateTime nuevaFechaInicio, LocalDateTime nuevaFechaVencimiento) {
 
-        boolean encontrado = false;
-
-        while (encontrado == false){
-
-            for (Tarea tarea : tareas){
-
-                if (tarea.obtenerId() == id){
-
-                     tarea.establecerTitulo(nuevo_titulo);
-                     tarea.establecerDescripcion(nueva_descripcion);
-                     tarea.establecerFechaInicio(nueva_fecha_inicio);
-                     tarea.establecerFechaVencimiento(nueva_fecha_vencimiento);
-                     encontrado = true;
-                }
-            encontrado = true;
+        boolean encontrada = false;
+        for (int i=0;i< tareas.size() && !encontrada ; i++){
+            Tarea tarea = tareas.get(i);
+            if (tarea.obtenerId() == id) {
+                tarea.establecerTitulo(nuevoTitulo);
+                tarea.establecerDescripcion(nuevaDescripcion);
+                tarea.establecerFechaInicio(nuevaFechaInicio);
+                tarea.establecerFechaVencimiento(nuevaFechaVencimiento);
+                encontrada = true;
             }
         }
     }
 
     public void eliminarTarea(int id) {
 
-        boolean encontrado = false;
+        boolean encontrada = false;
+        for (int i=0;i< tareas.size() && !encontrada ; i++){
 
-        while (encontrado == false){
+            Tarea tarea = tareas.get(i);
 
-            for (int i=0;i< tareas.size(); i++){
+            if (tarea.obtenerId() == id){
+                tareas.remove(i);
+                encontrada = true;
 
-                Tarea tarea = tareas.get(i);
-
-                if (tarea.obtenerId() == id){
-
-                    tareas.remove(i);
-
-                    encontrado = true;
-                }
-            encontrado = true;
             }
         }
+    }
+    public ArrayList<Tarea> obtenerTareas(){
+        return tareas;
     }
 }
