@@ -11,6 +11,7 @@ public abstract class Evento
     private int maxOcurrencias;
     private int ocurrenciasRealizadas;
     private Repeticion tipoRepeticion;
+    private final ArrayList<Alarma> alarmasEvento;
 
 
 
@@ -24,7 +25,7 @@ public abstract class Evento
         this.maxOcurrencias = 1;
         this.ocurrenciasRealizadas = 0;
         this.tipoRepeticion = Repeticion.HASTA_FECHA_FIN;
-
+        this.alarmasEvento = new ArrayList<>();
     }
 
     // PRE: Pido los datos necesarios para la creación de un evento
@@ -37,6 +38,8 @@ public abstract class Evento
         this.maxOcurrencias = maxOcurrencias;
         this.ocurrenciasRealizadas = 0;
         this.tipoRepeticion = tipoRepeticion;
+        this.alarmasEvento = new ArrayList<>();
+
 
     }
 
@@ -50,7 +53,9 @@ public abstract class Evento
     public int obtenerMaxOcurrencias() {return maxOcurrencias;}
     public int obtenerOcurrencias() {return ocurrenciasRealizadas;}
     public Repeticion obtenerTipoRepeticion() {return tipoRepeticion;}
-
+    public ArrayList<Alarma> obtenerAlarmasEvento(){
+        return alarmasEvento;
+    }
 
 //SETTERS
     public void establecerTitulo(String titulo) {
@@ -65,6 +70,16 @@ public abstract class Evento
     public void establecerFechaFin(LocalDateTime fechaFin) {
         this.fechaFin = fechaFin;
     }
+
+    public void agregarAlarmaEvento(Alarma alarma){
+        alarmasEvento.add(alarma);
+    }
+
+    public void desactivarAlarmaEvento(Alarma alarma){
+        alarmasEvento.remove(alarma);
+    }
+
+
     public void establecerMaxOcurrencias(int maxOcurrencias) {
         this.maxOcurrencias = maxOcurrencias;
     }

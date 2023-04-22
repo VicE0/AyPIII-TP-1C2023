@@ -2,18 +2,26 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Calendario {
+    private CreadorDeEventos creadorDeEventos;
     private ArrayList<Evento> eventos;
     private ArrayList<Tarea> tareas;
 
-    public Calendario()  {
+    private EventoDiario eventoDiario;
+
+
+    public Calendario(CreadorDeEventos creadorDeEventos)  {
+
+        this.creadorDeEventos = creadorDeEventos;
         this.eventos = new ArrayList<Evento>();
         this.tareas = new ArrayList<Tarea>();
+        this.eventoDiario = new EventoDiario();
     }
 
-    public void crearEvento(Evento evento) {
-        this.eventos.add(evento);
+    public void crearEvento(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion, int intervalo) {
+        this.eventos.add(creadorDeEventos.crearEvento(titulo, descripcion, fechaInicio,fechaFin, maxOcurrencias, tipoRepeticion, intervalo));
     }
 
 
@@ -66,6 +74,17 @@ public class Calendario {
         return this.eventos;
     }
 
+
+    public List<LocalDateTime> proximosEventosDiarios(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion, int intervalo)
+    {
+        Evento evento = new EventoDiario( titulo,  descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion,intervalo );
+
+        return evento.obtenerProximosEventos();
+    }
+
+    public void  establecerDias(int intervalo){
+        this.eventoDiario.establecerIntervalo(intervalo);
+    }
 
     public void crearTarea(Tarea tarea) {
         tareas.add(tarea);
