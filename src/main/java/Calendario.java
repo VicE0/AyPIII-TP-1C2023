@@ -1,15 +1,15 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.time.LocalDate;
-import java.util.ArrayList;
+
 
 public class Calendario {
-    private ArrayList<Evento> eventos;
-    private ArrayList<Tarea> tareas;
+    private final ArrayList<Evento> eventos;
+    private final ArrayList<Tarea> tareas;
 
     public Calendario()  {
-        this.eventos = new ArrayList<Evento>();
-        this.tareas = new ArrayList<Tarea>();
+        this.eventos = new ArrayList<>();
+        this.tareas = new ArrayList<>();
     }
 
     public void crearEvento(Evento evento) {
@@ -71,45 +71,36 @@ public class Calendario {
         tareas.add(tarea);
     }
 
-    public void modificarTarea(int id, String nuevo_titulo, String nueva_descripcion, LocalDateTime nueva_fecha_inicio, LocalDateTime nueva_fecha_vencimiento) {
+    public void modificarTarea(int id, String nuevoTitulo, String nuevaDescripcion, LocalDateTime nuevaFechaInicio, LocalDateTime nuevaFechaVencimiento) {
 
-        boolean encontrado = false;
-
-        while (encontrado == false){
-
-            for (Tarea tarea : tareas){
-
-                if (tarea.obtenerId() == id){
-
-                     tarea.establecerTitulo(nuevo_titulo);
-                     tarea.establecerDescripcion(nueva_descripcion);
-                     tarea.establecerFechaInicio(nueva_fecha_inicio);
-                     tarea.establecerFechaVencimiento(nueva_fecha_vencimiento);
-                     encontrado = true;
-                }
-            encontrado = true;
+        boolean encontrada = false;
+        for (int i=0;i< tareas.size() && !encontrada ; i++){
+            Tarea tarea = tareas.get(i);
+            if (tarea.obtenerId() == id) {
+                tarea.establecerTitulo(nuevoTitulo);
+                tarea.establecerDescripcion(nuevaDescripcion);
+                tarea.establecerFechaInicio(nuevaFechaInicio);
+                tarea.establecerFechaVencimiento(nuevaFechaVencimiento);
+                encontrada = true;
             }
         }
     }
 
     public void eliminarTarea(int id) {
 
-        boolean encontrado = false;
+        boolean encontrada = false;
+        for (int i=0;i< tareas.size() && !encontrada ; i++){
 
-        while (encontrado == false){
+            Tarea tarea = tareas.get(i);
 
-            for (int i=0;i< tareas.size(); i++){
+            if (tarea.obtenerId() == id){
+                tareas.remove(i);
+                encontrada = true;
 
-                Tarea tarea = tareas.get(i);
-
-                if (tarea.obtenerId() == id){
-
-                    tareas.remove(i);
-
-                    encontrado = true;
                 }
-            encontrado = true;
             }
-        }
+    }
+    public ArrayList<Tarea> obtenerTareas(){
+        return tareas;
     }
 }
