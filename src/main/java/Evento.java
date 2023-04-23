@@ -2,7 +2,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
 
-public abstract class Evento
+public  class Evento
 {
     private String titulo;
     private String descripcion;
@@ -89,23 +89,25 @@ public abstract class Evento
 
     //Método para obtener la siguiente ocurrencia del Evento segun la frecuencia que tiene asignada.
     //Este método lo heredan las subclases EventoDiario, EventoSemanal, EventoMensual y EventoAnual
-    protected abstract LocalDateTime calcularSiguienteOcurrencia(LocalDateTime fecha);
+    protected  LocalDateTime calcularSiguienteOcurrencia(LocalDateTime fecha){
+        return fecha;
+    }
 
 
-    public List<LocalDateTime> obtenerProximosEventos()
+    public List<Evento> obtenerProximosEventos(Evento evento)
     {
-       List<LocalDateTime> proximosEventos = new ArrayList<>();
+       List<Evento> proximosEventos = new ArrayList<>();
 
         // Añade la primera fecha ingresada
-        proximosEventos.add(fechaInicio);
+        proximosEventos.add(evento);
         sumarOcurrencias();
 
         LocalDateTime proximaFecha = calcularSiguienteOcurrencia(fechaInicio);
 
-        return switchCaseRepeticion(proximaFecha, proximosEventos);
+        return switchCaseRepeticion(proximaFecha, proximosEventos, evento);
     }
 
-    protected   List<LocalDateTime> switchCaseRepeticion(LocalDateTime proximaFecha,List<LocalDateTime>  proximosEventos)
+    protected List<Evento> switchCaseRepeticion(LocalDateTime proximaFecha,List<Evento>  proximosEventos, Evento evento)
     {
         switch (tipoRepeticion) {
 
@@ -113,40 +115,46 @@ public abstract class Evento
 
                 //Un evento infinito no tiene fecha final.
                 fechaFin = null;
-                proximosEventos.add(proximaFecha);
 
                 //Por temas de testeo, el while se deja funcionando a base de las ocurrencias
                 while (fechaFinNula() && ocurrenciasRealizadas < maxOcurrencias)
                 {
                     proximaFecha = calcularSiguienteOcurrencia(proximaFecha);
-                    proximosEventos.add(proximaFecha);
+                    var eventoNuevo = new Evento(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion());
+                    proximosEventos.add(eventoNuevo);
                     sumarOcurrencias();
                 }
                 return proximosEventos;
 
             case HASTA_FECHA_FIN:
                 if ( !fechaFinNula() ) {
-                    proximosEventos.add(proximaFecha);
+                    var eventoSiguiente = new Evento(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion());
+                    proximosEventos.add(eventoSiguiente);
                 }
 
                 while(proximaFecha.isBefore(fechaFin)) {
 
                     proximaFecha = calcularSiguienteOcurrencia(proximaFecha);
-                    proximosEventos.add(proximaFecha);
+                    var eventoNuevo = new Evento(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion());
+                    proximosEventos.add(eventoNuevo);
 
                 }
                 return proximosEventos;
 
             case HASTA_OCURRENCIAS:
 
-                proximosEventos.add(proximaFecha);
+                var eventoSiguiente = new Evento(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion());
+                proximosEventos.add(eventoSiguiente);
                 sumarOcurrencias();
 
                 while (ocurrenciasRealizadas < maxOcurrencias)
                 {
                     proximaFecha = calcularSiguienteOcurrencia(proximaFecha);
-                    proximosEventos.add(proximaFecha);
+
+                    var eventoNuevo = new Evento(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion());
+                    proximosEventos.add(eventoNuevo);
                     sumarOcurrencias();
+
                 }
                 return proximosEventos;
 
@@ -166,6 +174,8 @@ public abstract class Evento
     public void sumarOcurrencias(){
         ocurrenciasRealizadas++;
     }
+
+
 }
 
 

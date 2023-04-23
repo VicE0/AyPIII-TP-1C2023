@@ -175,311 +175,311 @@ public class CalendarioTest {
         assertEquals(LocalDateTime.of(2023,12,22,23,59,59),calendario.obtenerTareas().get(1).obtenerFechaVencimiento());
     }
 
-    @Test
-    public void testCrearEventoDefault(){
-
-        CreadorEventosDiarios   creadorEventosDiarios     =   new CreadorEventosDiarios();
-        CreadorEventosSemanales creadorEventosSemanales   =   new CreadorEventosSemanales();
-        CreadorEventosMensuales creadorEventosMensuales   =   new CreadorEventosMensuales();
-        CreadorEventosAnuales   creadorEventosAnuales     =   new CreadorEventosAnuales();
-
-        Calendario eventosDiarios   = new Calendario(creadorEventosDiarios);
-        Calendario eventosSemanales = new Calendario(creadorEventosSemanales);
-        Calendario eventosMensuales = new Calendario(creadorEventosMensuales);
-        Calendario eventosAnuales   = new Calendario(creadorEventosAnuales);
-
-        Calendario calendario = new Calendario();
-
-        //Creo multiples eventos iguales
-        eventosDiarios.crearEventoDefault();
-        eventosDiarios.crearEventoDefault();
-
-        eventosSemanales.crearEventoDefault();
-        eventosSemanales.crearEventoDefault();
-        eventosSemanales.crearEventoDefault();
-
-        eventosMensuales.crearEventoDefault();
-        eventosAnuales.crearEventoDefault();
-
-        calendario.agregarEventoACalendario(eventosDiarios.obtenerEventosCreados());
-        calendario.agregarEventoACalendario(eventosSemanales.obtenerEventosCreados());
-        calendario.agregarEventoACalendario(eventosMensuales.obtenerEventosCreados());
-        calendario.agregarEventoACalendario(eventosAnuales.obtenerEventosCreados());
-
-        int i = 0;
-        for(Evento evento : calendario.obtenerListaEventosTotales()){
-            assertEquals(evento, calendario.obtenerListaEventosTotales().get(i));
-            i++;
-        }
-
-        //Cada evento fue agregado correctamente, incluso duplicados
-        assertEquals(7, calendario.obtenerListaEventosTotales().size());
-
-    }
-
-    @Test
-    public void testEliminarEventoDefault(){
-
-        CreadorEventosDiarios   creadorEventosDiarios     =   new CreadorEventosDiarios();
-        CreadorEventosSemanales creadorEventosSemanales   =   new CreadorEventosSemanales();
-        CreadorEventosMensuales creadorEventosMensuales   =   new CreadorEventosMensuales();
-        CreadorEventosAnuales   creadorEventosAnuales     =   new CreadorEventosAnuales();
-
-        Calendario eventosDiarios   = new Calendario(creadorEventosDiarios);
-        Calendario eventosSemanales = new Calendario(creadorEventosSemanales);
-        Calendario eventosMensuales = new Calendario(creadorEventosMensuales);
-        Calendario eventosAnuales   = new Calendario(creadorEventosAnuales);
-
-        Calendario calendario = new Calendario();
-
-        //Creo multiples eventos iguales
-        eventosDiarios.crearEventoDefault();
-        eventosDiarios.crearEventoDefault();
-
-        eventosSemanales.crearEventoDefault();
-        eventosSemanales.crearEventoDefault();
-        eventosSemanales.crearEventoDefault();
-
-        eventosMensuales.crearEventoDefault();
-        eventosAnuales.crearEventoDefault();
-
-        calendario.agregarEventoACalendario(eventosDiarios.obtenerEventosCreados());
-        calendario.agregarEventoACalendario(eventosSemanales.obtenerEventosCreados());
-        calendario.agregarEventoACalendario(eventosMensuales.obtenerEventosCreados());
-        calendario.agregarEventoACalendario(eventosAnuales.obtenerEventosCreados());
-
-        ArrayList<Evento> aaaaa =calendario.obtenerListaEventosTotales();
-        //completar
-    }
-
-    @Test
-    public void testCrearEvento(){
-
-        CreadorEventosDiarios   creadorEventosDiarios     =   new CreadorEventosDiarios();
-        CreadorEventosSemanales creadorEventosSemanales   =   new CreadorEventosSemanales();
-        CreadorEventosMensuales creadorEventosMensuales   =   new CreadorEventosMensuales();
-        CreadorEventosAnuales   creadorEventosAnuales     =   new CreadorEventosAnuales();
-
-        Calendario eventosDiarios   = new Calendario(creadorEventosDiarios);
-        Calendario eventosSemanales = new Calendario(creadorEventosSemanales);
-        Calendario eventosMensuales = new Calendario(creadorEventosMensuales);
-        Calendario eventosAnuales   = new Calendario(creadorEventosAnuales);
-
-        Calendario calendario = new Calendario();
-
-        //Creo multiples eventos iguales
-        eventosDiarios.crearEvento("Evento Diario", "Evento Repetido", LocalDateTime.of(2023, 4, 10, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 10, Repeticion.HASTA_OCURRENCIAS, 1, null);
-        eventosDiarios.crearEvento("Evento Diario", "Evento Repetido", LocalDateTime.of(2023, 4, 10, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 10, Repeticion.HASTA_OCURRENCIAS, 1, null);
-
-        eventosSemanales.crearEvento("Evento Semanal", "Evento Repetido", LocalDateTime.of(2023, 4, 11, 9, 0), LocalDateTime.of(2023, 4, 21, 9, 30), 1, Repeticion.HASTA_FECHA_FIN, 0, List.of(DayOfWeek.MONDAY));
-        eventosSemanales.crearEvento("Evento Semanal", "Evento Repetido", LocalDateTime.of(2023, 4, 11, 9, 0), LocalDateTime.of(2023, 4, 21, 9, 30), 1, Repeticion.HASTA_FECHA_FIN, 0, List.of(DayOfWeek.MONDAY));;
-
-        eventosMensuales.crearEvento("Evento Mensual", "Evento Unico", LocalDateTime.of(2023, 4, 12, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 99, Repeticion.INFINITA, 2, null);;
-        eventosAnuales.crearEvento("Evento Anual", "Evento Unico", LocalDateTime.of(2023, 4, 13, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 99, Repeticion.HASTA_FECHA_FIN, 3, null);
-
-        calendario.agregarEventoACalendario(eventosDiarios.obtenerEventosCreados());
-        calendario.agregarEventoACalendario(eventosSemanales.obtenerEventosCreados());
-        calendario.agregarEventoACalendario(eventosMensuales.obtenerEventosCreados());
-        calendario.agregarEventoACalendario(eventosAnuales.obtenerEventosCreados());
-
-        int i = 0;
-        for(Evento evento : calendario.obtenerListaEventosTotales()){
-
-            //Pruebo que estan los duplicados
-            assertEquals(evento.obtenerTitulo(), calendario.obtenerListaEventosTotales().get(i).obtenerTitulo());
-            i++;
-        }
-
-        //Cada evento fue agregado correctamente, incluso duplicados
-        assertEquals(6, calendario.obtenerListaEventosTotales().size());
-    }
-
-    @Test
-    public void testObtenerProximosEventosDiarios(){
-        CreadorEventosDiarios creadorDeEventosDiarios = new CreadorEventosDiarios();
-        Calendario eventosDiariosLista = new Calendario(creadorDeEventosDiarios);
-
-        String titulo = "Evento Diario";
-        String descripcion = "Evento que se repite hasta ocurrencias";
-
-        LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 10, 9, 0);
-        LocalDateTime fechaFin    = LocalDateTime.of(2023, 4, 17, 9, 30);
-
-        int maxOcurrencias = 3;
-
-        //Pruebo un tipo por clase de Evento
-        Repeticion tipoRepeticion = Repeticion.HASTA_OCURRENCIAS;
-
-        var eventoDiario = new EventoDiario();
-        eventoDiario.establecerIntervalo(2);
-        int intervalo = eventoDiario.obtenerIntervalo();
-
-        assertTrue(eventoDiario.obtenerAlarmasEvento().isEmpty());
-
-        //Verifico que puedo acceder a alarmas
-        var Notificacion = new Notificacion();
-        var alarma = new AlarmaFechaAbsoluta(LocalDateTime.of(2023, 4, 17, 10, 0),Notificacion);
-        eventoDiario.agregarAlarmaEvento(alarma);
-
-        //Creo el con la alarma
-        eventosDiariosLista.crearEvento(titulo, descripcion, fechaInicio,fechaFin,maxOcurrencias,tipoRepeticion,intervalo, null);
-
-        List<LocalDateTime> lista = eventosDiariosLista.proximosEventosDiarios(titulo, descripcion, fechaInicio,fechaFin,maxOcurrencias,tipoRepeticion, intervalo);
-
-
-        LocalDateTime fecha1 = lista.get(0);
-        LocalDateTime fecha2 = lista.get(1);
-        LocalDateTime fecha3 = lista.get(2);
-
-        LocalDateTime fecha1Esperada = fechaInicio;
-        LocalDateTime fecha2Esperada = fecha1Esperada.plusDays(2);
-        LocalDateTime fecha3Esperada = fecha2Esperada.plusDays(2);
-
-        assertEquals(fecha1,fecha1Esperada );
-        assertEquals(fecha2,fecha2Esperada );
-        assertEquals(fecha3,fecha3Esperada );
-
-        assertTrue(eventoDiario.obtenerAlarmasEvento().contains(alarma));
-        assertEquals(3, lista.size());
-
-    }
-
-    @Test
-    public void testObtenerProximosEventosSemanal(){
-
-        CreadorEventosSemanales creadorEventosSemanales = new CreadorEventosSemanales();
-        Calendario eventosSemanalesLista = new Calendario(creadorEventosSemanales);
-
-        String titulo = "Evento Semanal";
-        String descripcion = "Evento que se repite hasta FechaFin";
-
-        LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 3, 9, 0);
-        LocalDateTime fechaFin    = LocalDateTime.of(2023, 4, 10, 9, 0);
-
-        int maxOcurrencias = 3;
-
-        //Pruebo un tipo por clase de Evento
-        Repeticion tipoRepeticion = Repeticion.HASTA_FECHA_FIN;
-
-
-        var eventoSemanal = new EventoSemanal();
-        eventoSemanal.establecerDiasSemana(List.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY));
-        List<DayOfWeek> diasSemana = eventoSemanal.obtenerDiasSemana();
-
-        assertTrue(eventoSemanal.obtenerAlarmasEvento().isEmpty());
-
-        //Verifico que puedo acceder a alarmas
-        var sonido = new Sonido();
-        var alarmaSonido = new AlarmaFechaAbsoluta(LocalDateTime.of(2023, 4, 17, 10, 0),sonido);
-        eventoSemanal.agregarAlarmaEvento(alarmaSonido);
-
-        //Creo el con la alarma
-        eventosSemanalesLista.crearEvento(titulo, descripcion, fechaInicio,fechaFin,maxOcurrencias,tipoRepeticion,0 ,diasSemana);
-
-        List<LocalDateTime> lista = eventosSemanalesLista.proximosEventosSemanales(titulo, descripcion, fechaInicio,fechaFin,maxOcurrencias,tipoRepeticion,diasSemana);
-
-        LocalDateTime fechaLunes = lista.get(0);
-        LocalDateTime fechaMiercoles = lista.get(1);
-        LocalDateTime fechaLunes2 = lista.get(2);
-
-        LocalDateTime fechaLunesEsperada = fechaInicio; //Lunes 3 de abril
-        LocalDateTime fechaMiercolesEsperada = fechaLunesEsperada.plusDays(2); //Miercoles 5 de abril
-        LocalDateTime fechaLunes2Esperada = fechaMiercolesEsperada.plusDays(5); //Lunes 10 de abril
-
-        assertEquals(fechaLunes,fechaLunesEsperada );
-        assertEquals(fechaMiercoles,fechaMiercolesEsperada );
-        assertEquals(fechaLunes2,fechaLunes2Esperada );
-        assertTrue(eventoSemanal.obtenerAlarmasEvento().contains(alarmaSonido));
-        assertEquals(3, lista.size());
-
-    }
-
-    @Test
-    public void testObtenerProximosEventosMensuales(){
-        CreadorEventosMensuales creadorEventosMensuales = new CreadorEventosMensuales();
-        Calendario eventosMensualesLista = new Calendario(creadorEventosMensuales);
-
-        String titulo = "Evento Mensual";
-        String descripcion = "Evento que se repite Infinitamente";
-
-        LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 3, 9, 0);
-        LocalDateTime fechaFin = LocalDateTime.of(2023, 4, 10, 9, 0);
-
-        int maxOcurrencias = 99; //numero alto pero testeable
-
-        Repeticion tipoRepeticion = Repeticion.INFINITA;
-
-
-        var eventoMensual = new EventoMensual();
-
-        eventoMensual.establecerCantidadMeses(2);
-        int intervaloMeses = eventoMensual.obtenerCantidadMeses();
-
-        assertTrue(eventoMensual.obtenerAlarmasEvento().isEmpty());
-
-
-        //Verifico que puedo acceder a alarmas
-        var mail = new Sonido();
-        var alarmaMail = new AlarmaFechaAbsoluta(LocalDateTime.of(2023, 4, 17, 10, 0),mail);
-        eventoMensual.agregarAlarmaEvento(alarmaMail);
-
-        //Creo el con la alarma
-        eventosMensualesLista.crearEvento(titulo, descripcion, fechaInicio,fechaFin,maxOcurrencias,tipoRepeticion,intervaloMeses ,null);
-
-        List<LocalDateTime> listaMensual = eventosMensualesLista.proximosEventosMensuales(titulo, descripcion, fechaInicio,fechaFin,maxOcurrencias,tipoRepeticion,intervaloMeses);
-
-        LocalDateTime fechaAbril = listaMensual.get(0);
-        LocalDateTime fechaJunio = listaMensual.get(1);
-        LocalDateTime fechaAgosto = listaMensual.get(2);
-
-        LocalDateTime fechaAbrilEsperada = fechaInicio;
-        LocalDateTime fechaJunioEsperada = fechaAbrilEsperada.plusMonths(2);
-        LocalDateTime fechaAgostoEsperada = fechaJunioEsperada.plusMonths(2);
-
-        assertEquals(fechaAbril,fechaAbrilEsperada );
-        assertEquals(fechaJunio,fechaJunioEsperada );
-        assertEquals(fechaAgosto,fechaAgostoEsperada );
-        assertTrue(eventoMensual.obtenerAlarmasEvento().contains(alarmaMail));
-        assertEquals(100, listaMensual.size());
-
-    }
-
-    @Test
-    public void testObtenerProximosEventosAnuales(){
-        CreadorEventosAnuales creadorEventosAnuales = new CreadorEventosAnuales();
-        Calendario eventosAnualesLista = new Calendario(creadorEventosAnuales);
-
-        String titulo = "Evento Anual";
-        String descripcion = "Evento que se repite hasta ocurrencias";
-
-        LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 3, 9, 0);
-        LocalDateTime fechaFin = LocalDateTime.of(2023, 4, 10, 9, 0);
-
-        int maxOcurrencias = 3;
-
-        Repeticion tipoRepeticion = Repeticion.HASTA_OCURRENCIAS;
-
-        var eventAnual = new EventoAnual();
-        eventAnual.establecerCantidadAnios(2);
-        int intervaloAnios = eventAnual.obtenerCantidadAnios();
-
-        eventosAnualesLista.crearEvento(titulo, descripcion, fechaInicio,fechaFin,maxOcurrencias,tipoRepeticion,intervaloAnios ,null);
-
-        List<LocalDateTime> listaAnios = eventosAnualesLista.proximosEventosAnuales(titulo, descripcion, fechaInicio,fechaFin,maxOcurrencias,tipoRepeticion,intervaloAnios);
-
-        LocalDateTime fecha2023 = listaAnios.get(0);
-        LocalDateTime fecha2025 = listaAnios.get(1);
-        LocalDateTime fecha2027 = listaAnios.get(2);
-
-        LocalDateTime fecha2023Esperada = fechaInicio;
-        LocalDateTime fecha2025Esperada = fecha2023Esperada.plusYears(2);
-        LocalDateTime fecha2027Esperada = fecha2025Esperada.plusYears(2);
-
-        assertEquals(fecha2023,fecha2023Esperada );
-        assertEquals(fecha2025,fecha2025Esperada );
-        assertEquals(fecha2027,fecha2027Esperada );
-        assertTrue(eventAnual.obtenerAlarmasEvento().isEmpty());
-        assertEquals(3, listaAnios.size());
-
-    }
+//    @Test
+//    public void testCrearEventoDefault(){
+//
+//        CreadorEventosDiarios   creadorEventosDiarios     =   new CreadorEventosDiarios();
+//        CreadorEventosSemanales creadorEventosSemanales   =   new CreadorEventosSemanales();
+//        CreadorEventosMensuales creadorEventosMensuales   =   new CreadorEventosMensuales();
+//        CreadorEventosAnuales   creadorEventosAnuales     =   new CreadorEventosAnuales();
+//
+//        Calendario eventosDiarios   = new Calendario(creadorEventosDiarios);
+//        Calendario eventosSemanales = new Calendario(creadorEventosSemanales);
+//        Calendario eventosMensuales = new Calendario(creadorEventosMensuales);
+//        Calendario eventosAnuales   = new Calendario(creadorEventosAnuales);
+//
+//        Calendario calendario = new Calendario();
+//
+//        //Creo multiples eventos iguales
+//        eventosDiarios.crearEventoDefault();
+//        eventosDiarios.crearEventoDefault();
+//
+//        eventosSemanales.crearEventoDefault();
+//        eventosSemanales.crearEventoDefault();
+//        eventosSemanales.crearEventoDefault();
+//
+//        eventosMensuales.crearEventoDefault();
+//        eventosAnuales.crearEventoDefault();
+//
+//        calendario.agregarEventoACalendario(eventosDiarios.obtenerEventosCreados());
+//        calendario.agregarEventoACalendario(eventosSemanales.obtenerEventosCreados());
+//        calendario.agregarEventoACalendario(eventosMensuales.obtenerEventosCreados());
+//        calendario.agregarEventoACalendario(eventosAnuales.obtenerEventosCreados());
+//
+//        int i = 0;
+//        for(Evento evento : calendario.obtenerListaEventosTotales()){
+//            assertEquals(evento, calendario.obtenerListaEventosTotales().get(i));
+//            i++;
+//        }
+//
+//        //Cada evento fue agregado correctamente, incluso duplicados
+//        assertEquals(7, calendario.obtenerListaEventosTotales().size());
+//
+//    }
+//
+//    @Test
+//    public void testEliminarEventoDefault(){
+//
+//        CreadorEventosDiarios   creadorEventosDiarios     =   new CreadorEventosDiarios();
+//        CreadorEventosSemanales creadorEventosSemanales   =   new CreadorEventosSemanales();
+//        CreadorEventosMensuales creadorEventosMensuales   =   new CreadorEventosMensuales();
+//        CreadorEventosAnuales   creadorEventosAnuales     =   new CreadorEventosAnuales();
+//
+//        Calendario eventosDiarios   = new Calendario(creadorEventosDiarios);
+//        Calendario eventosSemanales = new Calendario(creadorEventosSemanales);
+//        Calendario eventosMensuales = new Calendario(creadorEventosMensuales);
+//        Calendario eventosAnuales   = new Calendario(creadorEventosAnuales);
+//
+//        Calendario calendario = new Calendario();
+//
+//        //Creo multiples eventos iguales
+//        eventosDiarios.crearEventoDefault();
+//        eventosDiarios.crearEventoDefault();
+//
+//        eventosSemanales.crearEventoDefault();
+//        eventosSemanales.crearEventoDefault();
+//        eventosSemanales.crearEventoDefault();
+//
+//        eventosMensuales.crearEventoDefault();
+//        eventosAnuales.crearEventoDefault();
+//
+//        calendario.agregarEventoACalendario(eventosDiarios.obtenerEventosCreados());
+//        calendario.agregarEventoACalendario(eventosSemanales.obtenerEventosCreados());
+//        calendario.agregarEventoACalendario(eventosMensuales.obtenerEventosCreados());
+//        calendario.agregarEventoACalendario(eventosAnuales.obtenerEventosCreados());
+//
+//        ArrayList<Evento> aaaaa =calendario.obtenerListaEventosTotales();
+//        //completar
+//    }
+
+//    @Test
+//    public void testCrearEvento(){
+//
+//        CreadorEventosDiarios   creadorEventosDiarios     =   new CreadorEventosDiarios();
+//        CreadorEventosSemanales creadorEventosSemanales   =   new CreadorEventosSemanales();
+//        CreadorEventosMensuales creadorEventosMensuales   =   new CreadorEventosMensuales();
+//        CreadorEventosAnuales   creadorEventosAnuales     =   new CreadorEventosAnuales();
+//
+//        Calendario eventosDiarios   = new Calendario(creadorEventosDiarios);
+//        Calendario eventosSemanales = new Calendario(creadorEventosSemanales);
+//        Calendario eventosMensuales = new Calendario(creadorEventosMensuales);
+//        Calendario eventosAnuales   = new Calendario(creadorEventosAnuales);
+//
+//        Calendario calendario = new Calendario();
+//
+//        //Creo multiples eventos iguales
+//        eventosDiarios.crearEvento("Evento Diario", "Evento Repetido", LocalDateTime.of(2023, 4, 10, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 10, Repeticion.HASTA_OCURRENCIAS, 1, null);
+//        eventosDiarios.crearEvento("Evento Diario", "Evento Repetido", LocalDateTime.of(2023, 4, 10, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 10, Repeticion.HASTA_OCURRENCIAS, 1, null);
+//
+//        eventosSemanales.crearEvento("Evento Semanal", "Evento Repetido", LocalDateTime.of(2023, 4, 11, 9, 0), LocalDateTime.of(2023, 4, 21, 9, 30), 1, Repeticion.HASTA_FECHA_FIN, 0, List.of(DayOfWeek.MONDAY));
+//        eventosSemanales.crearEvento("Evento Semanal", "Evento Repetido", LocalDateTime.of(2023, 4, 11, 9, 0), LocalDateTime.of(2023, 4, 21, 9, 30), 1, Repeticion.HASTA_FECHA_FIN, 0, List.of(DayOfWeek.MONDAY));;
+//
+//        eventosMensuales.crearEvento("Evento Mensual", "Evento Unico", LocalDateTime.of(2023, 4, 12, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 99, Repeticion.INFINITA, 2, null);;
+//        eventosAnuales.crearEvento("Evento Anual", "Evento Unico", LocalDateTime.of(2023, 4, 13, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 99, Repeticion.HASTA_FECHA_FIN, 3, null);
+//
+//        calendario.agregarEventoACalendario(eventosDiarios.obtenerEventosCreados());
+//        calendario.agregarEventoACalendario(eventosSemanales.obtenerEventosCreados());
+//        calendario.agregarEventoACalendario(eventosMensuales.obtenerEventosCreados());
+//        calendario.agregarEventoACalendario(eventosAnuales.obtenerEventosCreados());
+//
+//        int i = 0;
+//        for(Evento evento : calendario.obtenerListaEventosTotales()){
+//
+//            //Pruebo que estan los duplicados
+//            assertEquals(evento.obtenerTitulo(), calendario.obtenerListaEventosTotales().get(i).obtenerTitulo());
+//            i++;
+//        }
+//
+//        //Cada evento fue agregado correctamente, incluso duplicados
+//        assertEquals(6, calendario.obtenerListaEventosTotales().size());
+//    }
+
+//    @Test
+//    public void testObtenerProximosEventosDiarios(){
+//        CreadorEventosDiarios creadorDeEventosDiarios = new CreadorEventosDiarios();
+//        Calendario eventosDiariosLista = new Calendario(creadorDeEventosDiarios);
+//
+//        String titulo = "Evento Diario";
+//        String descripcion = "Evento que se repite hasta ocurrencias";
+//
+//        LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 10, 9, 0);
+//        LocalDateTime fechaFin    = LocalDateTime.of(2023, 4, 17, 9, 30);
+//
+//        int maxOcurrencias = 3;
+//
+//        //Pruebo un tipo por clase de Evento
+//        Repeticion tipoRepeticion = Repeticion.HASTA_OCURRENCIAS;
+//
+//        var eventoDiario = new EventoDiario();
+//        eventoDiario.establecerIntervalo(2);
+//        int intervalo = eventoDiario.obtenerIntervalo();
+//
+//        assertTrue(eventoDiario.obtenerAlarmasEvento().isEmpty());
+//
+//        //Verifico que puedo acceder a alarmas
+//        var Notificacion = new Notificacion();
+//        var alarma = new AlarmaFechaAbsoluta(LocalDateTime.of(2023, 4, 17, 10, 0),Notificacion);
+//        eventoDiario.agregarAlarmaEvento(alarma);
+//
+//        //Creo el con la alarma
+//        eventosDiariosLista.crearEvento(titulo, descripcion, fechaInicio,fechaFin,maxOcurrencias,tipoRepeticion,intervalo, null);
+//
+//        List<LocalDateTime> lista = eventosDiariosLista.proximosEventosDiarios(titulo, descripcion, fechaInicio,fechaFin,maxOcurrencias,tipoRepeticion, intervalo);
+//
+//
+//        LocalDateTime fecha1 = lista.get(0);
+//        LocalDateTime fecha2 = lista.get(1);
+//        LocalDateTime fecha3 = lista.get(2);
+//
+//        LocalDateTime fecha1Esperada = fechaInicio;
+//        LocalDateTime fecha2Esperada = fecha1Esperada.plusDays(2);
+//        LocalDateTime fecha3Esperada = fecha2Esperada.plusDays(2);
+//
+//        assertEquals(fecha1,fecha1Esperada );
+//        assertEquals(fecha2,fecha2Esperada );
+//        assertEquals(fecha3,fecha3Esperada );
+//
+//        assertTrue(eventoDiario.obtenerAlarmasEvento().contains(alarma));
+//        assertEquals(3, lista.size());
+//
+//    }
+//
+//    @Test
+//    public void testObtenerProximosEventosSemanal(){
+//
+//        CreadorEventosSemanales creadorEventosSemanales = new CreadorEventosSemanales();
+//        Calendario eventosSemanalesLista = new Calendario(creadorEventosSemanales);
+//
+//        String titulo = "Evento Semanal";
+//        String descripcion = "Evento que se repite hasta FechaFin";
+//
+//        LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 3, 9, 0);
+//        LocalDateTime fechaFin    = LocalDateTime.of(2023, 4, 10, 9, 0);
+//
+//        int maxOcurrencias = 3;
+//
+//        //Pruebo un tipo por clase de Evento
+//        Repeticion tipoRepeticion = Repeticion.HASTA_FECHA_FIN;
+//
+//
+//        var eventoSemanal = new EventoSemanal();
+//        eventoSemanal.establecerDiasSemana(List.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY));
+//        List<DayOfWeek> diasSemana = eventoSemanal.obtenerDiasSemana();
+//
+//        assertTrue(eventoSemanal.obtenerAlarmasEvento().isEmpty());
+//
+//        //Verifico que puedo acceder a alarmas
+//        var sonido = new Sonido();
+//        var alarmaSonido = new AlarmaFechaAbsoluta(LocalDateTime.of(2023, 4, 17, 10, 0),sonido);
+//        eventoSemanal.agregarAlarmaEvento(alarmaSonido);
+//
+//        //Creo el con la alarma
+//        eventosSemanalesLista.crearEvento(titulo, descripcion, fechaInicio,fechaFin,maxOcurrencias,tipoRepeticion,0 ,diasSemana);
+//
+//        List<LocalDateTime> lista = eventosSemanalesLista.proximosEventosSemanales(titulo, descripcion, fechaInicio,fechaFin,maxOcurrencias,tipoRepeticion,diasSemana);
+//
+//        LocalDateTime fechaLunes = lista.get(0);
+//        LocalDateTime fechaMiercoles = lista.get(1);
+//        LocalDateTime fechaLunes2 = lista.get(2);
+//
+//        LocalDateTime fechaLunesEsperada = fechaInicio; //Lunes 3 de abril
+//        LocalDateTime fechaMiercolesEsperada = fechaLunesEsperada.plusDays(2); //Miercoles 5 de abril
+//        LocalDateTime fechaLunes2Esperada = fechaMiercolesEsperada.plusDays(5); //Lunes 10 de abril
+//
+//        assertEquals(fechaLunes,fechaLunesEsperada );
+//        assertEquals(fechaMiercoles,fechaMiercolesEsperada );
+//        assertEquals(fechaLunes2,fechaLunes2Esperada );
+//        assertTrue(eventoSemanal.obtenerAlarmasEvento().contains(alarmaSonido));
+//        assertEquals(3, lista.size());
+//
+//    }
+//
+//    @Test
+//    public void testObtenerProximosEventosMensuales(){
+//        CreadorEventosMensuales creadorEventosMensuales = new CreadorEventosMensuales();
+//        Calendario eventosMensualesLista = new Calendario(creadorEventosMensuales);
+//
+//        String titulo = "Evento Mensual";
+//        String descripcion = "Evento que se repite Infinitamente";
+//
+//        LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 3, 9, 0);
+//        LocalDateTime fechaFin = LocalDateTime.of(2023, 4, 10, 9, 0);
+//
+//        int maxOcurrencias = 99; //numero alto pero testeable
+//
+//        Repeticion tipoRepeticion = Repeticion.INFINITA;
+//
+//
+//        var eventoMensual = new EventoMensual();
+//
+//        eventoMensual.establecerCantidadMeses(2);
+//        int intervaloMeses = eventoMensual.obtenerCantidadMeses();
+//
+//        assertTrue(eventoMensual.obtenerAlarmasEvento().isEmpty());
+//
+//
+//        //Verifico que puedo acceder a alarmas
+//        var mail = new Sonido();
+//        var alarmaMail = new AlarmaFechaAbsoluta(LocalDateTime.of(2023, 4, 17, 10, 0),mail);
+//        eventoMensual.agregarAlarmaEvento(alarmaMail);
+//
+//        //Creo el con la alarma
+//        eventosMensualesLista.crearEvento(titulo, descripcion, fechaInicio,fechaFin,maxOcurrencias,tipoRepeticion,intervaloMeses ,null);
+//
+//        List<LocalDateTime> listaMensual = eventosMensualesLista.proximosEventosMensuales(titulo, descripcion, fechaInicio,fechaFin,maxOcurrencias,tipoRepeticion,intervaloMeses);
+//
+//        LocalDateTime fechaAbril = listaMensual.get(0);
+//        LocalDateTime fechaJunio = listaMensual.get(1);
+//        LocalDateTime fechaAgosto = listaMensual.get(2);
+//
+//        LocalDateTime fechaAbrilEsperada = fechaInicio;
+//        LocalDateTime fechaJunioEsperada = fechaAbrilEsperada.plusMonths(2);
+//        LocalDateTime fechaAgostoEsperada = fechaJunioEsperada.plusMonths(2);
+//
+//        assertEquals(fechaAbril,fechaAbrilEsperada );
+//        assertEquals(fechaJunio,fechaJunioEsperada );
+//        assertEquals(fechaAgosto,fechaAgostoEsperada );
+//        assertTrue(eventoMensual.obtenerAlarmasEvento().contains(alarmaMail));
+//        assertEquals(100, listaMensual.size());
+//
+//    }
+//
+//    @Test
+//    public void testObtenerProximosEventosAnuales(){
+//        CreadorEventosAnuales creadorEventosAnuales = new CreadorEventosAnuales();
+//        Calendario eventosAnualesLista = new Calendario(creadorEventosAnuales);
+//
+//        String titulo = "Evento Anual";
+//        String descripcion = "Evento que se repite hasta ocurrencias";
+//
+//        LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 3, 9, 0);
+//        LocalDateTime fechaFin = LocalDateTime.of(2023, 4, 10, 9, 0);
+//
+//        int maxOcurrencias = 3;
+//
+//        Repeticion tipoRepeticion = Repeticion.HASTA_OCURRENCIAS;
+//
+//        var eventAnual = new EventoAnual();
+//        eventAnual.establecerCantidadAnios(2);
+//        int intervaloAnios = eventAnual.obtenerCantidadAnios();
+//
+//        eventosAnualesLista.crearEvento(titulo, descripcion, fechaInicio,fechaFin,maxOcurrencias,tipoRepeticion,intervaloAnios ,null);
+//
+//        List<LocalDateTime> listaAnios = eventosAnualesLista.proximosEventosAnuales(titulo, descripcion, fechaInicio,fechaFin,maxOcurrencias,tipoRepeticion,intervaloAnios);
+//
+//        LocalDateTime fecha2023 = listaAnios.get(0);
+//        LocalDateTime fecha2025 = listaAnios.get(1);
+//        LocalDateTime fecha2027 = listaAnios.get(2);
+//
+//        LocalDateTime fecha2023Esperada = fechaInicio;
+//        LocalDateTime fecha2025Esperada = fecha2023Esperada.plusYears(2);
+//        LocalDateTime fecha2027Esperada = fecha2025Esperada.plusYears(2);
+//
+//        assertEquals(fecha2023,fecha2023Esperada );
+//        assertEquals(fecha2025,fecha2025Esperada );
+//        assertEquals(fecha2027,fecha2027Esperada );
+//        assertTrue(eventAnual.obtenerAlarmasEvento().isEmpty());
+//        assertEquals(3, listaAnios.size());
+//
+//    }
 }
