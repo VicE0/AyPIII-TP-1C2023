@@ -3,41 +3,50 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
 
 
+        CreadorEventosDiarios   creadorEventosDiarios     =   new CreadorEventosDiarios();
+        CreadorEventosSemanales creadorEventosSemanales   =   new CreadorEventosSemanales();
+        CreadorEventosMensuales creadorEventosMensuales   =   new CreadorEventosMensuales();
+        CreadorEventosAnuales   creadorEventosAnuales     =   new CreadorEventosAnuales();
+
+        Calendario eventosDiarios   = new Calendario(creadorEventosDiarios);
+        Calendario eventosSemanales = new Calendario(creadorEventosSemanales);
+        Calendario eventosMensuales = new Calendario(creadorEventosMensuales);
+        Calendario eventosAnuales   = new Calendario(creadorEventosAnuales);
+
+        Calendario calendario = new Calendario();
+
+        //Creo multiples eventos iguales
+        eventosDiarios.crearEventoDefault();
+        eventosDiarios.crearEventoDefault();
+
+        eventosSemanales.crearEventoDefault();
+        eventosSemanales.crearEventoDefault();
+        eventosSemanales.crearEventoDefault();
+
+        eventosMensuales.crearEventoDefault();
+        eventosAnuales.crearEventoDefault();
+
+        calendario.agregarEventoACalendario(eventosDiarios.obtenerEventosCreados());
+        calendario.agregarEventoACalendario(eventosSemanales.obtenerEventosCreados());
+        calendario.agregarEventoACalendario(eventosMensuales.obtenerEventosCreados());
+        calendario.agregarEventoACalendario(eventosAnuales.obtenerEventosCreados());
+
+        ArrayList<Evento> aaaaa = calendario.obtenerListaEventosTotales();
+
+        calendario.eliminarEvento(calendario.obtenerListaEventosTotales().get(6));
 
 
-        CreadorEventosDiarios creadorDeEventosDiarios = new CreadorEventosDiarios();
-        Calendario eventosDiariosLista = new Calendario(creadorDeEventosDiarios);
-
-        String titulo = "Evento Diario";
-        String descripcion = "Evento que ingresa un intervalo de dias nulo";
-
-        LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 10, 9, 0);
-        LocalDateTime fechaFin = LocalDateTime.of(2023, 4, 17, 9, 30);
-        //Estos dos atributos son testeados correctamento en los siguientes test
-        int maxOcurrencias = 10;
-
-        Repeticion tipoRepeticion = Repeticion.HASTA_OCURRENCIAS;
-
-        var eventoDiatio = new EventoDiario();
-        eventoDiatio.establecerIntervalo(2);
-        int intervalo = eventoDiatio.obtenerIntervalo();
-
-        eventosDiariosLista.crearEvento(titulo, descripcion, fechaInicio,fechaFin,maxOcurrencias,tipoRepeticion,intervalo);
 
 
-        List<LocalDateTime> lista = eventosDiariosLista.proximosEventosDiarios(titulo, descripcion, fechaInicio,fechaFin,maxOcurrencias,tipoRepeticion, intervalo);
+        System.out.println(aaaaa);
 
-
-        for (LocalDateTime A : lista){
-            System.out.println(A.toLocalDate());
-
-        }
 
     }
 }

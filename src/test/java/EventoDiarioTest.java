@@ -42,7 +42,7 @@ public class EventoDiarioTest {
         assertEquals(maxOcurrencias, eventoDiario.obtenerMaxOcurrencias());
         assertEquals(tipoRepeticion, eventoDiario.obtenerTipoRepeticion());
         assertEquals(intervalo, eventoDiario.obtenerIntervalo());
-
+        assertTrue(eventoDiario.obtenerAlarmasEvento().isEmpty());
         //Para los tests de constructor Default de la clase abstracta Evento se utilizó el metodo .toLocalDate para que el test no falle por milésima de segundos.
 
     }
@@ -199,7 +199,7 @@ public class EventoDiarioTest {
         }
 
         assertEquals(99, proximosEventos.size());
-        assertEquals(null, eventoDiario.obtenerFechaFin());
+        assertNull(eventoDiario.obtenerFechaFin());
     }
 
 
