@@ -165,7 +165,7 @@ public class EventoMensualTest {
 
     //Test de EventoMensual con repeticion infinita
     @Test
-    public void testEventoDiarioInfinito() {
+    public void testEventoMensualInfinito() {
 
         String titulo = "Evento Mensual infinito";
         String descripcion = "Evento que se repite cada mes infinitamente";
@@ -177,7 +177,7 @@ public class EventoMensualTest {
         int maxOcurrencias = 99; //Seteo un numero alto pero testeable
         Repeticion tipoRepeticion = Repeticion.INFINITA;
 
-        int cantidadMeses = 1;
+        int cantidadMeses = 2;
 
         var eventoMensual = new EventoMensual(titulo, descripcion, fechaInicio, fechaFin,maxOcurrencias, tipoRepeticion, cantidadMeses);
 
@@ -190,9 +190,22 @@ public class EventoMensualTest {
             fechaActual = fecha;
         }
 
-        assertEquals(99, proximosEventos.size());
-        assertEquals(null, eventoMensual.obtenerFechaFin());
+        assertEquals(100, proximosEventos.size()); //ya que se añade el dia inicial
+        assertNull(eventoMensual.obtenerFechaFin());
+        LocalDateTime fechaAbril = proximosEventos.get(0);
+        LocalDateTime fechaJunio = proximosEventos.get(1);
+        LocalDateTime fechaAgosto = proximosEventos.get(2);
+
+        LocalDateTime fechaAbrilEsperada = fechaInicio;
+        LocalDateTime fechaJunioEsperada = fechaAbrilEsperada.plusMonths(2);
+        LocalDateTime fechaAgostoEsperada = fechaJunioEsperada.plusMonths(2);
+
+        assertEquals(fechaAbrilEsperada,fechaAbril );
+        assertEquals(fechaJunioEsperada,fechaJunio );
+        assertEquals(fechaAgostoEsperada,fechaAgosto );
+
     }
+
 
 
     //Test de EventoSemanal con repeticion hasta alcanzar fechaFin

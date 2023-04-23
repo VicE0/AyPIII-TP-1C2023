@@ -1,9 +1,11 @@
 
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Iterator;
 
 public class Calendario {
 
@@ -11,39 +13,69 @@ public class Calendario {
     private ArrayList<Evento> eventos;
     private ArrayList<Tarea> tareas;
 
-    private EventoDiario eventoDiario;
-
     public  Calendario(){
-        this.tareas = new ArrayList<Tarea>();
+        this.tareas = new ArrayList<>();
+        this.eventos = new ArrayList<>();
     }
-
 
     public Calendario(CreadorDeEventos creadorDeEventos) {
-
         this.creadorDeEventos = creadorDeEventos;
-        this.eventos = new ArrayList<Evento>();
-        this.eventoDiario = new EventoDiario();
+        this.eventos = new ArrayList<>();
     }
 
-    public void crearEvento(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion, int intervalo) {
-        this.eventos.add(creadorDeEventos.crearEvento(titulo, descripcion, fechaInicio,fechaFin, maxOcurrencias, tipoRepeticion, intervalo));
+    public void crearEvento(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion, int intervalo, List<DayOfWeek> diasSemana) {
+        this.eventos.add(creadorDeEventos.crearEvento(titulo, descripcion, fechaInicio,fechaFin, maxOcurrencias, tipoRepeticion, intervalo,diasSemana));
+    }
+
+    public void crearEventoDefault(){
+        this.eventos.add(creadorDeEventos.crearEventoDefault());
+    }
+
+    public void agregarEventoACalendario(ArrayList<Evento> listaEventos){
+
+        for(Evento eventoEnLista : listaEventos) {
+            this.eventos.add(eventoEnLista);
+        }
+    }
+
+//    public void eliminarEventoDeCalendario(ArrayList<Evento> listaEventos){
+//        for(Evento eventoAEliminar : listaEventos) {
+//            this.eventos.remove(eventoAEliminar);
+//        }
+//    }
+
+
+    public ArrayList<Evento> obtenerListaEventosTotales(){
+        return this.eventos;
     }
 
 
-    public void eliminarEvento(Evento eventoOriginal) {
-        ArrayList<Evento> eventosAEliminar = new ArrayList<>();
+//    public void eliminarEvento(Evento eventoAEliminar) {
+//        ArrayList<Evento> eventosAEliminar = new ArrayList<>();
+//
+//        for (Evento nuevoEvento : this.eventos) {
+//            if (nuevoEvento.getClass().equals(eventoAEliminar.getClass()) && nuevoEvento.obtenerTitulo().equals(eventoAEliminar.obtenerTitulo())) {
+//                eventosAEliminar.add(nuevoEvento);
+//            }
+//        }
+//
+//        for (Evento evento : eventosAEliminar) {
+//            eventosAEliminar.remove(evento);
+//        }
+//    }
 
-        for (Evento nuevoEvento : this.eventos) {
-            if (nuevoEvento.getClass().equals(eventoOriginal.getClass()) && nuevoEvento.obtenerTitulo().equals(eventoOriginal.obtenerTitulo())) {
-                eventosAEliminar.add(nuevoEvento);
+
+    public void eliminarEvento(Evento eventoAEliminar) {
+        Iterator <Evento> it = this.eventos.iterator();
+
+        while (it.hasNext()) {
+            Evento nuevoEvento = it.next();
+            if (nuevoEvento.getClass().equals(eventoAEliminar.getClass()) && nuevoEvento.obtenerTitulo().equals(eventoAEliminar.obtenerTitulo())) {
+                it.remove();
             }
         }
-
-        for (Evento evento : eventosAEliminar) {
-            eventosAEliminar.remove(evento);
-        }
-
     }
+
 
     public void modificarEvento(Evento eventoOriginal, Evento eventoModificado) {
         ArrayList<Evento> eventosAModificar = new ArrayList<>();
@@ -61,34 +93,34 @@ public class Calendario {
         }
     }
 
-    // Método para obtener los eventos correspondientes a una fecha
-    public ArrayList<Evento> obtenerEventosSegunFecha(LocalDate fecha) {
 
-        ArrayList<Evento> eventosEnFecha = new ArrayList<>();
+    public ArrayList<Evento> obtenerEventosCreados() {
+
+        ArrayList<Evento> eventosCreados = new ArrayList<>();
 
         for (Evento evento : this.eventos) {
-            if (evento.obtenerFechaInicio().toLocalDate().equals(fecha) || evento.obtenerFechaFin().toLocalDate().equals(fecha)) {
-                eventosEnFecha.add(evento);
-            }
+            eventosCreados.add(creadorDeEventos.obtenerEventos());
         }
-        return eventosEnFecha;
+        return eventosCreados;
     }
 
-    // Método para obtener todos los eventos del calendario
-    public ArrayList<Evento> obtenerTodosLosEventos() {
-        return this.eventos;
+    public List<LocalDateTime> proximosEventosDiarios(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion, int intervalo) {
+        Evento eventoDiario = new EventoDiario( titulo,  descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion,intervalo );
+        return eventoDiario.obtenerProximosEventos();
     }
 
-
-    public List<LocalDateTime> proximosEventosDiarios(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion, int intervalo)
-    {
-        Evento evento = new EventoDiario( titulo,  descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion,intervalo );
-
-        return evento.obtenerProximosEventos();
+    public List<LocalDateTime> proximosEventosSemanales(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion, List<DayOfWeek> diasSemana) {
+        Evento eventoSemanal = new EventoSemanal( titulo,  descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion,diasSemana );
+        return eventoSemanal.obtenerProximosEventos();
     }
 
-    public void  establecerDias(int intervalo){
-        this.eventoDiario.establecerIntervalo(intervalo);
+    public List<LocalDateTime> proximosEventosMensuales(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion, int intervaloMeses) {
+        Evento eventoMensual = new EventoMensual( titulo,  descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion,intervaloMeses );
+        return eventoMensual.obtenerProximosEventos();
+    }
+    public List<LocalDateTime> proximosEventosAnuales(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion, int intervaloAnios) {
+        Evento eventoAnual = new EventoAnual( titulo,  descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion,intervaloAnios );
+        return eventoAnual.obtenerProximosEventos();
     }
 
 
@@ -128,4 +160,19 @@ public class Calendario {
     public ArrayList<Tarea> obtenerTareas(){
         return tareas;
     }
+
+    //    // Método para obtener los eventos correspondientes a una fecha
+//    public ArrayList<Evento> obtenerEventosSegunFecha(LocalDate fecha) {
+//
+//        ArrayList<Evento> eventosEnFecha = new ArrayList<>();
+//
+//        for (Evento evento : this.eventos) {
+//            if (evento.obtenerFechaInicio().toLocalDate().equals(fecha) || evento.obtenerFechaFin().toLocalDate().equals(fecha)) {
+//                eventosEnFecha.add(evento);
+//            }
+//        }
+//        return eventosEnFecha;
+//    }
+//
+
 }

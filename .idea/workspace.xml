@@ -4,10 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0950ebdb-872c-4eb3-9494-228a982e1e68" name="Changes" comment="Commiteo para que git no joda">
+    <list default="true" id="0950ebdb-872c-4eb3-9494-228a982e1e68" name="Changes" comment="No cambie nada de CalendarioTest, pero git dice que si, asi que aca pusheo">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Calendario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Calendario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/CreadorDeEventos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CreadorDeEventos.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/CreadorEventosDiarios.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CreadorEventosDiarios.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Evento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Evento.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/CalendarioTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/CalendarioTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/EventoDiarioTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/EventoDiarioTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/EventoMensualTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/EventoMensualTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +82,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CalendarioTest">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="tp-algoIII" />
@@ -102,15 +108,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="EventoAnualTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="tp-algoIII" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="EventoAnualTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="EventoDiarioTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="tp-algoIII" />
       <option name="PACKAGE_NAME" value="" />
@@ -120,13 +117,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="EventoMensualTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="tp-algoIII" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="EventoMensualTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.CalendarioTest" />
-        <item itemvalue="JUnit.EventoDiarioTest" />
         <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.CalendarioTest" />
+        <item itemvalue="JUnit.EventoMensualTest" />
+        <item itemvalue="JUnit.EventoDiarioTest" />
         <item itemvalue="JUnit.AlarmaTest" />
-        <item itemvalue="JUnit.EventoAnualTest" />
       </list>
     </recent_temporary>
   </component>
@@ -265,7 +271,21 @@
       <option name="project" value="LOCAL" />
       <updated>1682198411191</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="No cambie nada de CalendarioTest, pero git dice que si, asi que aca pusheo">
+      <created>1682200091789</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1682200091789</updated>
+    </task>
+    <task id="LOCAL-00020" summary="No cambie nada de CalendarioTest, pero git dice que si, asi que aca pusheo">
+      <created>1682200122412</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1682200122412</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -337,7 +357,8 @@
     <MESSAGE value="Cobertura testEventoSemanal ~80% (a completar)" />
     <MESSAGE value="Termino los tests de las demas clases con ~90% cobertura (SIN ALARMAS)" />
     <MESSAGE value="Commiteo para que git no joda" />
-    <option name="LAST_COMMIT_MESSAGE" value="Commiteo para que git no joda" />
+    <MESSAGE value="No cambie nada de CalendarioTest, pero git dice que si, asi que aca pusheo" />
+    <option name="LAST_COMMIT_MESSAGE" value="No cambie nada de CalendarioTest, pero git dice que si, asi que aca pusheo" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/tp_algoIII$EventoDiarioTest.ic" NAME="EventoDiarioTest Coverage Results" MODIFIED="1682132216221" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

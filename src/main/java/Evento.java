@@ -11,7 +11,7 @@ public abstract class Evento
     private int maxOcurrencias;
     private int ocurrenciasRealizadas;
     private Repeticion tipoRepeticion;
-    private final ArrayList<Alarma> alarmasEvento;
+    private  ArrayList<Alarma> alarmasEvento;
 
 
 
@@ -113,6 +113,7 @@ public abstract class Evento
 
                 //Un evento infinito no tiene fecha final.
                 fechaFin = null;
+                proximosEventos.add(proximaFecha);
 
                 //Por temas de testeo, el while se deja funcionando a base de las ocurrencias
                 while (fechaFinNula() && ocurrenciasRealizadas < maxOcurrencias)

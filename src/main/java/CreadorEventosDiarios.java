@@ -1,3 +1,4 @@
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.List;
 public class CreadorEventosDiarios implements CreadorDeEventos{
@@ -6,14 +7,13 @@ public class CreadorEventosDiarios implements CreadorDeEventos{
         return new EventoDiario();
     }
 
-    public Evento crearEvento(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion, int intervalo)
-    {
+    //El parámetro "intervalo" puede ser usado por EventoDiario, EventoMensual y EventoAnual, ya que todos usan el tipo int y la misma lógica pero distinta aplicación.
+    public Evento crearEvento(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion, int intervalo,List<DayOfWeek> diasSemana ) {
         return new EventoDiario(titulo,descripcion,fechaInicio,fechaFin,maxOcurrencias, tipoRepeticion,intervalo);
     }
-
-//    public List<LocalDateTime> proximosEventosDiarios(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion) {
-//        Evento evento = new EventoDiario(titulo,descripcion,fechaInicio,fechaFin,maxOcurrencias, tipoRepeticion);
-//        return evento.obtenerProximosEventos();
-//    }
+    public Evento obtenerEventos(){
+        var eventosDiarios = new EventoDiario();
+        return eventosDiarios;
+    }
 
 }
