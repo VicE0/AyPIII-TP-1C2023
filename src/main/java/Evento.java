@@ -16,6 +16,7 @@ public abstract class Evento
     //Constructor default con los valores iniciales
     //Por Default, el evento será de dia completo
     public Evento(){
+
         this.titulo = "Evento sin titulo";
         this.descripcion = "-";
         this.fechaInicio = LocalDateTime.now();
@@ -29,6 +30,7 @@ public abstract class Evento
     // PRE: Pido los datos necesarios para la creación de un evento
     // POS: Inicializo los valores correctos del evento con los datos disponibles
     public Evento(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion) {
+
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.fechaInicio = fechaInicio;
@@ -45,13 +47,13 @@ public abstract class Evento
     public String obtenerDescripcion() {return descripcion;}
     public LocalDateTime obtenerFechaInicio() {return fechaInicio;}
     public LocalDateTime obtenerFechaFin() {return fechaFin;}
-
     public int obtenerMaxOcurrencias() {return maxOcurrencias;}
     public int obtenerOcurrencias() {return ocurrenciasRealizadas;}
     public Repeticion obtenerTipoRepeticion() {return tipoRepeticion;}
     public ArrayList<Alarma> obtenerAlarmasEvento(){
         return alarmasEvento;
     }
+
     public ArrayList<Evento> obtenerProximosEventos(Evento evento)
     {
         ArrayList<Evento> proximosEventos = new ArrayList<>();
@@ -88,10 +90,12 @@ public abstract class Evento
 
 
 
+    //Ests métodos lo heredan las subclases EventoDiario, EventoSemanal, EventoMensual y EventoAnual
+
     //Método para obtener la siguiente ocurrencia del Evento segun la frecuencia que tiene asignada.
-    //Este método lo heredan las subclases EventoDiario, EventoSemanal, EventoMensual y EventoAnual
     protected abstract LocalDateTime calcularSiguienteOcurrencia(LocalDateTime fecha);
 
+    //Método para crear una nueva instancia del objeto evento segun las repeticiones que le corresponden al evento.
     protected abstract ArrayList<Evento> switchCaseRepeticion(LocalDateTime proximaFecha,ArrayList<Evento>  proximosEventos);
 
 

@@ -1,6 +1,7 @@
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -168,17 +169,17 @@ public class Calendario {
 
 //ESTE METODO NO ES PEDIDO POR EL ENUNCIADO DE LA ETAPA 1, PERO A RECOMENDACIÓN DE ESSAYA FUE IMPLEMENTADO
 // Método para obtener los eventos correspondientes a una fecha
-//    public ArrayList<Evento> obtenerEventosSegunFecha(LocalDate fecha) {
-//
-//        ArrayList<Evento> eventosEnFecha = new ArrayList<>();
-//
-//        for (Evento evento : this.eventos) {
-//            if (evento.obtenerFechaInicio().toLocalDate().equals(fecha) || evento.obtenerFechaFin().toLocalDate().equals(fecha)) {
-//                eventosEnFecha.add(evento);
-//            }
-//        }
-//        return eventosEnFecha;
-//    }
-//
+    public ArrayList<Evento> obtenerEventosSegunFecha(LocalDate fecha) {
+
+        ArrayList<Evento> eventosEnFecha = new ArrayList<>();
+
+        for (Evento evento : this.eventos) {
+            if (evento.obtenerFechaInicio().toLocalDate().equals(fecha) || evento.obtenerFechaFin().toLocalDate().equals(fecha)) {
+                eventosEnFecha.add(evento);
+            }
+        }
+        return eventosEnFecha;
+    }
+
 
 }
