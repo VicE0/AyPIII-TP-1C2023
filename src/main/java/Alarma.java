@@ -1,6 +1,8 @@
 import java.time.LocalDateTime;
 public abstract class Alarma {
     private final Efecto efecto;
+    public abstract void establecerFechaYHora(LocalDateTime fechaYHora);
+
     public abstract LocalDateTime obtenerFechaYHora();
 
     public Alarma(Efecto efecto){

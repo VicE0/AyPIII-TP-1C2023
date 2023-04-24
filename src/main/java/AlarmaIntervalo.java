@@ -2,10 +2,13 @@ import java.time.LocalDateTime;
 import java.time.LocalDate;
 
 public class AlarmaIntervalo extends Alarma{
-    private final LocalDateTime fechaYHora;
+    private  LocalDateTime fechaYHora;
     public AlarmaIntervalo(LocalDateTime fechaYHora, int intervalo, Efecto efecto) {
         super(efecto);
         this.fechaYHora = calcularIntervalo(fechaYHora,intervalo);
+    }
+    public void establecerFechaYHora(LocalDateTime fechaYHora){
+        this.fechaYHora = fechaYHora;
     }
     public LocalDateTime obtenerFechaYHora(){
         return fechaYHora;

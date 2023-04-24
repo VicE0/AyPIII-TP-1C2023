@@ -58,6 +58,9 @@ public abstract class Tarea
     public void agregarAlarma(Alarma alarma){
         alarmas.add(alarma);
     }
+    public void modificarAlarma(Alarma alarma, LocalDateTime fechayHora){
+        alarma.establecerFechaYHora(fechayHora);
+    }
     public void desactivarAlarma(Alarma alarma){
         alarmas.remove(alarma);
     }
