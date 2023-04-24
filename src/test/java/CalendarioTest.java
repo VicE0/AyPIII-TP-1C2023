@@ -19,6 +19,7 @@ public class CalendarioTest {
         assertEquals(1,calendario.obtenerTareas().size());
         assertTrue(calendario.obtenerTareas().contains(tarea));
     }
+
     @Test
     public void testTareaSeCreaConDatosCorrectos(){
 
@@ -259,6 +260,29 @@ public class CalendarioTest {
         assertEquals(alarmaDos,calendario.proximaAlarma());
     }
 
+    @Test
+    public void testCrearEventosYTareas() {
+        var creadorEventosDiarios = new CreadorEventosDiarios();
+        var eventosDiarios = new Calendario(creadorEventosDiarios);
+        var creadorEventosSemanales = new CreadorEventosSemanales();
+        var eventosSemanales = new Calendario(creadorEventosSemanales);
+        var creadorEventosAnuales = new CreadorEventosAnuales();
+        var eventosAnuales = new Calendario(creadorEventosAnuales);
+        var calendario = new Calendario();
+        var tarea = new TareaConVencimiento();
+        var tareaDos = new TareaDiaCompleto();
+        calendario.crearTarea(tarea);
+        calendario.crearTarea(tareaDos);
+        eventosDiarios.crearEvento("Evento Diario", "Evento Repetido", LocalDateTime.of(2023, 4, 10, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 10, Repeticion.HASTA_OCURRENCIAS, 1, null);
+        eventosSemanales.crearEvento("Evento Semanal", "Evento Repetido", LocalDateTime.of(2023, 4, 11, 9, 0), LocalDateTime.of(2023, 4, 21, 9, 30), 1, Repeticion.HASTA_FECHA_FIN, 0, List.of(DayOfWeek.MONDAY));
+        eventosAnuales.crearEvento("Evento Anual", "Evento Unico", LocalDateTime.of(2023, 4, 13, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 99, Repeticion.HASTA_FECHA_FIN, 3, null);
+        calendario.agregarEventosACalendario(eventosAnuales.obtenerEventosCreados());
+        calendario.agregarEventosACalendario(eventosDiarios.obtenerEventosCreados());
+        calendario.agregarEventosACalendario(eventosSemanales.obtenerEventosCreados());
+        assertEquals(3,calendario.obtenerListaEventosTotales().size());
+        assertEquals(2, calendario.obtenerTareas().size());
+        assertTrue(calendario.obtenerTareas().contains(tarea));
+    }
     @Test
     public void testCrearEventoDefault(){
 
