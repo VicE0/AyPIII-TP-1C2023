@@ -12,8 +12,8 @@ public class CreadorEventosDiarios implements CreadorDeEventos{
         return new EventoDiario(titulo,descripcion,fechaInicio,fechaFin,maxOcurrencias, tipoRepeticion,intervalo);
     }
     public Evento obtenerEventos(){
-        var eventosDiarios = new EventoDiario();
-        return eventosDiarios;
+        return new EventoDiario();
+
     }
 
 }

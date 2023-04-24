@@ -12,8 +12,8 @@ public class CreadorEventosMensuales implements CreadorDeEventos{
         return new EventoMensual(titulo,descripcion,fechaInicio,fechaFin,maxOcurrencias, tipoRepeticion,intervalo);
     }
     public Evento obtenerEventos(){
-        var eventosMensuales = new EventoMensual();
+        return new EventoMensual();
 
-        return eventosMensuales;
+
     }
 }

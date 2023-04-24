@@ -12,8 +12,7 @@ public class CreadorEventosSemanales implements CreadorDeEventos{
     }
 
     public Evento obtenerEventos(){
-        var eventosSemanales = new EventoSemanal();
-        return eventosSemanales;
+        return new EventoSemanal();
     }
 
 }
