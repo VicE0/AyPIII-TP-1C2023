@@ -164,7 +164,7 @@ public class CalendarioTest {
         assertEquals(LocalDateTime.of(2023,12,22,0,0),calendario.obtenerTareas().get(0).obtenerFechaInicio());
         assertEquals(LocalDateTime.of(2023,12,22,23,59,59),calendario.obtenerTareas().get(0).obtenerFechaVencimiento());
 
-        calendario.modificarTarea(idUno,"Nuevo Titulo","Nueva Descripcion",LocalDateTime.of(2023,12,24,0,0),LocalDateTime.of(2023,12,24,18,20));
+        calendario.modificarTarea(idUno,"Nuevo Titulo","Nueva Descripcion",LocalDateTime.of(2023,12,24,0,0),LocalDateTime.of(2023,12,24,18,20),null,null);
 
         assertEquals("Nuevo Titulo",calendario.obtenerTareas().get(0).obtenerTitulo());
         assertEquals("Nueva Descripcion",calendario.obtenerTareas().get(0).obtenerDescripcion());
@@ -174,7 +174,6 @@ public class CalendarioTest {
     }
     @Test
     public void testConDosTareasIgualesModificaCorrecta(){
-
         var calendario = new Calendario();
         var tareaUno = new TareaDiaCompleto("Tarea","Hacer la tarea", LocalDate.of(2023,12,22));
         var tareaDos = new TareaDiaCompleto("Tarea","Hacer la tarea", LocalDate.of(2023,12,22));
@@ -182,7 +181,7 @@ public class CalendarioTest {
 
         calendario.crearTarea(tareaUno);
         calendario.crearTarea(tareaDos);
-        calendario.modificarTarea(idUno,"Nuevo Titulo","Nueva Descripcion",LocalDateTime.of(2023,12,24,0,0),LocalDateTime.of(2023,12,24,18,20));
+        calendario.modificarTarea(idUno,"Nuevo Titulo","Nueva Descripcion",LocalDateTime.of(2023,12,24,0,0),LocalDateTime.of(2023,12,24,18,20), null, null);
 
         assertEquals("Nuevo Titulo",calendario.obtenerTareas().get(0).obtenerTitulo());
         assertEquals("Nueva Descripcion",calendario.obtenerTareas().get(0).obtenerDescripcion());
@@ -194,16 +193,41 @@ public class CalendarioTest {
         assertEquals(LocalDateTime.of(2023,12,22,23,59,59),calendario.obtenerTareas().get(1).obtenerFechaVencimiento());
 
     }
+
+    @Test
+    public void testModificarAlarmaDeTarea() {
+
+        var calendario = new Calendario();
+        var tarea = new TareaDiaCompleto("Tarea", "Hacer la tarea", LocalDate.of(2023, 12, 22));
+        var notificacion = new Notificacion();
+        var alarma = new AlarmaFechaAbsoluta(LocalDateTime.of(2023, 12, 22, 0, 0), notificacion);
+        tarea.agregarAlarma(alarma);
+        calendario.crearTarea(tarea);
+        int idUno = tarea.obtenerId();
+
+        assertEquals("Tarea", calendario.obtenerTareas().get(0).obtenerTitulo());
+        assertEquals("Hacer la tarea", calendario.obtenerTareas().get(0).obtenerDescripcion());
+        assertEquals(LocalDateTime.of(2023, 12, 22, 0, 0), calendario.obtenerTareas().get(0).obtenerFechaInicio());
+        assertEquals(LocalDateTime.of(2023, 12, 22, 23, 59, 59), calendario.obtenerTareas().get(0).obtenerFechaVencimiento());
+        assertEquals(LocalDateTime.of(2023,12,22,0,0),calendario.obtenerTareas().get(0).obtenerAlarmas().get(0).obtenerFechaYHora());
+
+        calendario.modificarTarea(idUno, null, null, null,null, calendario.obtenerTareas().get(0).obtenerAlarmas().get(0),LocalDateTime.of(2023, 12, 21, 23, 30));
+        assertEquals("Tarea", calendario.obtenerTareas().get(0).obtenerTitulo());
+        assertEquals("Hacer la tarea", calendario.obtenerTareas().get(0).obtenerDescripcion());
+        assertEquals(LocalDateTime.of(2023, 12, 22, 0, 0), calendario.obtenerTareas().get(0).obtenerFechaInicio());
+        assertEquals(LocalDateTime.of(2023, 12, 22, 23, 59, 59), calendario.obtenerTareas().get(0).obtenerFechaVencimiento());
+        assertEquals(LocalDateTime.of(2023, 12, 21, 23, 30),calendario.obtenerTareas().get(0).obtenerAlarmas().get(0).obtenerFechaYHora());
+
+    }
     @Test
     public void testSiNoEncuentraIdNoModificaNada(){
-
         var calendario = new Calendario();
         var tareaUno = new TareaDiaCompleto("Tarea","Hacer la tarea", LocalDate.of(2023,12,22));
         var tareaDos = new TareaDiaCompleto("Tarea","Hacer la tarea", LocalDate.of(2023,12,22));
 
         calendario.crearTarea(tareaUno);
         calendario.crearTarea(tareaDos);
-        calendario.modificarTarea(9999,"Nuevo Titulo","Nueva Descripcion",LocalDateTime.of(2023,12,24,0,0),LocalDateTime.of(2023,12,24,18,20));
+        calendario.modificarTarea(9999,"Nuevo Titulo","Nueva Descripcion",LocalDateTime.of(2023,12,24,0,0),LocalDateTime.of(2023,12,24,18,20),null,null);
 
         assertEquals("Tarea",calendario.obtenerTareas().get(0).obtenerTitulo());
         assertEquals("Hacer la tarea",calendario.obtenerTareas().get(0).obtenerDescripcion());

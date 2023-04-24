@@ -12,7 +12,6 @@ public class Calendario {
     private CreadorDeEventos creadorDeEventos;
     private final ArrayList<Evento> eventos;
     private ArrayList<Tarea> tareas;
-    private ArrayList<Alarma> alarmas;
 
     public  Calendario(){
         this.tareas = new ArrayList<>();
@@ -112,16 +111,21 @@ public class Calendario {
         tareas.add(tarea);
     }
 
-    public void modificarTarea(int id, String nuevoTitulo, String nuevaDescripcion, LocalDateTime nuevaFechaInicio, LocalDateTime nuevaFechaVencimiento) {
+
+
+    public void modificarTarea(int id, String nuevoTitulo, String nuevaDescripcion, LocalDateTime nuevaFechaInicio, LocalDateTime nuevaFechaVencimiento, Alarma alarma, LocalDateTime nuevaFechaAlarma) {
 
         boolean encontrada = false;
         for (int i=0;i< tareas.size() && !encontrada ; i++){
             Tarea tarea = tareas.get(i);
             if (tarea.obtenerId() == id) {
-                tarea.establecerTitulo(nuevoTitulo);
-                tarea.establecerDescripcion(nuevaDescripcion);
-                tarea.establecerFechaInicio(nuevaFechaInicio);
-                tarea.establecerFechaVencimiento(nuevaFechaVencimiento);
+                tarea.establecerTitulo(nuevoTitulo != null ? nuevoTitulo : tarea.obtenerTitulo());
+                tarea.establecerDescripcion(nuevaDescripcion != null ? nuevaDescripcion : tarea.obtenerDescripcion());
+                tarea.establecerFechaInicio(nuevaFechaInicio != null ? nuevaFechaInicio : tarea.obtenerFechaInicio());
+                tarea.establecerFechaVencimiento(nuevaFechaVencimiento != null ? nuevaFechaVencimiento : tarea.obtenerFechaVencimiento());
+                if (alarma != null){
+                    tarea.modificarAlarma(alarma,nuevaFechaAlarma);
+                }
                 encontrada = true;
             }
         }
@@ -146,7 +150,7 @@ public class Calendario {
     }
 
     Alarma proximaAlarma() {
-        alarmas = new ArrayList<>();
+        ArrayList<Alarma> alarmas = new ArrayList<>();
         for (Evento evento : eventos) {
             alarmas.addAll(evento.obtenerAlarmasEvento());
         }
@@ -155,7 +159,7 @@ public class Calendario {
         }
         Alarma recorrerLista = null;
         for (Alarma alarma : alarmas){
-            if (recorrerLista == null || alarma.obtenerFechaYHora().compareTo(recorrerLista.obtenerFechaYHora())<0) {
+            if (recorrerLista == null || alarma.obtenerFechaYHora().isBefore(recorrerLista.obtenerFechaYHora())) {
                 // la alarma actual es la próxima en sonar
                 if (alarma.obtenerFechaYHora().isAfter(LocalDateTime.now())) {
                     // solo si la alarma es futura
