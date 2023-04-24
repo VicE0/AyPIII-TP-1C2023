@@ -175,6 +175,26 @@ public class CalendarioTest {
         assertEquals(LocalDateTime.of(2023,12,22,23,59,59),calendario.obtenerTareas().get(1).obtenerFechaVencimiento());
     }
 
+    @Test
+    public void testCreoAlarmasYVeoCualEsLaProximaEnSonar(){
+        var calendario = new Calendario();
+        var tareaUno = new TareaDiaCompleto("Tarea","Hacer la tarea", LocalDate.of(2023,12,22));
+        var tareaDos = new TareaDiaCompleto("Tarea","Hacer la tarea", LocalDate.of(2023,12,22));
+        var notificacion = new Notificacion();
+        var alarma = new AlarmaIntervalo( LocalDateTime.of(2023, 5,2 , 0, 0),60,notificacion);
+        var alarmaUno = new AlarmaFechaAbsoluta( LocalDateTime.of(2023, 5, 1, 0, 0),notificacion);
+        var alarmaDos = new AlarmaFechaAbsoluta( LocalDateTime.of(2023, 4, 29, 0, 0),notificacion);
+        var alarmaTres = new AlarmaFechaAbsoluta( LocalDateTime.of(2023, 5, 5, 0, 0),notificacion);
+
+        tareaUno.agregarAlarma(alarma);
+        tareaUno.agregarAlarma(alarmaUno);
+        tareaDos.agregarAlarma(alarmaDos);
+        tareaDos.agregarAlarma(alarmaTres);
+        calendario.crearTarea(tareaUno);
+        calendario.crearTarea(tareaDos);
+        assertEquals(alarmaDos,calendario.proximaAlarma());
+    }
+
 //    @Test
 //    public void testCrearEventoDefault(){
 //

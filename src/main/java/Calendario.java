@@ -11,6 +11,7 @@ public class Calendario {
     private CreadorDeEventos creadorDeEventos;
     private ArrayList<Evento> eventos;
     private ArrayList<Tarea> tareas;
+    private ArrayList<Alarma> alarmas;
 
     public  Calendario(){
         this.tareas = new ArrayList<>();
@@ -19,6 +20,7 @@ public class Calendario {
 
     public Calendario(CreadorDeEventos creadorDeEventos) {
         this.creadorDeEventos = creadorDeEventos;
+        this.eventos = new ArrayList<>();
         this.eventos = new ArrayList<>();
     }
 
@@ -172,5 +174,26 @@ public class Calendario {
 //        return eventosEnFecha;
 //    }
 //
+
+    Alarma proximaAlarma() {
+        alarmas = new ArrayList<>();
+        for (Evento evento : eventos) {
+            alarmas.addAll(evento.obtenerAlarmasEvento());
+        }
+        for (Tarea tarea : tareas) {
+            alarmas.addAll(tarea.obtenerAlarmas());
+        }
+        Alarma recorrerLista = null;
+        for (Alarma alarma : alarmas){
+            if (recorrerLista == null || alarma.obtenerFechaYHora().compareTo(recorrerLista.obtenerFechaYHora())<0) {
+                // la alarma actual es la próxima en sonar
+                if (alarma.obtenerFechaYHora().isAfter(LocalDateTime.now())) {
+                    // solo si la alarma es futura
+                    recorrerLista = alarma;
+                }
+            }
+        }
+        return recorrerLista;
+        }
 
 }
