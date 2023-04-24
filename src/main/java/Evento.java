@@ -14,7 +14,6 @@ public  class Evento
     private  ArrayList<Alarma> alarmasEvento;
 
 
-
     //Constructor default con los valores iniciales
     //Por Default, el evento será de dia completo
     public Evento(){
@@ -40,9 +39,7 @@ public  class Evento
         this.tipoRepeticion = tipoRepeticion;
         this.alarmasEvento = new ArrayList<>();
 
-
     }
-
 
 //GETTERS
     public String obtenerTitulo() {return titulo;}
@@ -79,7 +76,6 @@ public  class Evento
         alarmasEvento.remove(alarma);
     }
 
-
     public void establecerMaxOcurrencias(int maxOcurrencias) {
         this.maxOcurrencias = maxOcurrencias;
     }
@@ -113,11 +109,10 @@ public  class Evento
 
             case INFINITA:
 
-                //Un evento infinito no tiene fecha final.
-                fechaFin = null;
+                var eventoInfinito = new Evento(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion());
+                proximosEventos.add(eventoInfinito);
 
-                //Por temas de testeo, el while se deja funcionando a base de las ocurrencias
-                while (fechaFinNula() && ocurrenciasRealizadas < maxOcurrencias)
+                while (ocurrenciasRealizadas < maxOcurrencias)
                 {
                     proximaFecha = calcularSiguienteOcurrencia(proximaFecha);
                     var eventoNuevo = new Evento(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion());
@@ -128,8 +123,8 @@ public  class Evento
 
             case HASTA_FECHA_FIN:
                 if ( !fechaFinNula() ) {
-                    var eventoSiguiente = new Evento(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion());
-                    proximosEventos.add(eventoSiguiente);
+                    var eventoFechaFin = new Evento(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion());
+                    proximosEventos.add(eventoFechaFin);
                 }
 
                 while(proximaFecha.isBefore(fechaFin)) {
@@ -143,8 +138,8 @@ public  class Evento
 
             case HASTA_OCURRENCIAS:
 
-                var eventoSiguiente = new Evento(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion());
-                proximosEventos.add(eventoSiguiente);
+                var eventoOcurrencias = new Evento(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion());
+                proximosEventos.add(eventoOcurrencias);
                 sumarOcurrencias();
 
                 while (ocurrenciasRealizadas < maxOcurrencias)

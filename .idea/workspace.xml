@@ -4,19 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0950ebdb-872c-4eb3-9494-228a982e1e68" name="Changes" comment="Voy terminando la logica del calendario y sus tests. Falta completar unas cositas y ta">
+    <list default="true" id="0950ebdb-872c-4eb3-9494-228a982e1e68" name="Changes" comment="Cambios para que proximosEventos devuelva un objeto Evento y no un LocalDateTime. Comento todo, despues arreglo">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Calendario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Calendario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/CreadorEventosAnuales.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CreadorEventosAnuales.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/CreadorEventosMensuales.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CreadorEventosMensuales.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/CreadorEventosSemanales.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CreadorEventosSemanales.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Evento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Evento.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/EventoAnual.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/EventoAnual.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/EventoDiario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/EventoDiario.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/EventoMensual.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/EventoMensual.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/EventoSemanal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/EventoSemanal.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/CalendarioTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/CalendarioTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/EventoAnualTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/EventoAnualTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/EventoDiarioTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/EventoDiarioTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/EventoMensualTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/EventoMensualTest.java" afterDir="false" />
@@ -97,19 +92,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AlarmaTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="EventoAnualTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="tp-algoIII" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="AlarmaTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CalendarioTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="tp-algoIII" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="CalendarioTest" />
+      <option name="MAIN_CLASS_NAME" value="EventoAnualTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -133,13 +119,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="EventoSemanalTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="tp-algoIII" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="EventoSemanalTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
-        <item itemvalue="JUnit.CalendarioTest" />
-        <item itemvalue="JUnit.EventoMensualTest" />
         <item itemvalue="JUnit.EventoDiarioTest" />
-        <item itemvalue="JUnit.AlarmaTest" />
+        <item itemvalue="JUnit.EventoAnualTest" />
+        <item itemvalue="JUnit.EventoSemanalTest" />
+        <item itemvalue="JUnit.EventoMensualTest" />
       </list>
     </recent_temporary>
   </component>
@@ -299,7 +294,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682238749425</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Cambios para que proximosEventos devuelva un objeto Evento y no un LocalDateTime. Comento todo, despues arreglo">
+      <created>1682291879152</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1682291879152</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -373,13 +375,14 @@
     <MESSAGE value="Commiteo para que git no joda" />
     <MESSAGE value="No cambie nada de CalendarioTest, pero git dice que si, asi que aca pusheo" />
     <MESSAGE value="Voy terminando la logica del calendario y sus tests. Falta completar unas cositas y ta" />
-    <option name="LAST_COMMIT_MESSAGE" value="Voy terminando la logica del calendario y sus tests. Falta completar unas cositas y ta" />
+    <MESSAGE value="Cambios para que proximosEventos devuelva un objeto Evento y no un LocalDateTime. Comento todo, despues arreglo" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cambios para que proximosEventos devuelva un objeto Evento y no un LocalDateTime. Comento todo, despues arreglo" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/tp_algoIII$EventoDiarioTest.ic" NAME="EventoDiarioTest Coverage Results" MODIFIED="1682132216221" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/tp_algoIII$EventoDiarioTest.ic" NAME="EventoDiarioTest Coverage Results" MODIFIED="1682300068794" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/tp_algoIII$EventoSemanalTest.ic" NAME="EventoSemanalTest Coverage Results" MODIFIED="1682014237659" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/tp_algoIII$EventoMensualTest.ic" NAME="EventoMensualTest Coverage Results" MODIFIED="1682040000098" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-    <SUITE FILE_PATH="coverage/tp_algoIII$EventoAnualTest.ic" NAME="EventoAnualTest Coverage Results" MODIFIED="1682044330084" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/tp_algoIII$AlarmaTest.ic" NAME="AlarmaTest Coverage Results" MODIFIED="1682120155857" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/tp_algoIII$EventoAnualTest.ic" NAME="EventoAnualTest Coverage Results" MODIFIED="1682300041700" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

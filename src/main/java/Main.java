@@ -55,9 +55,9 @@ public class Main {
         int maxOcurrencias = 3;
         Repeticion tipoRepeticion = Repeticion.HASTA_OCURRENCIAS;
 
-        int intervalo = 1;
+        int intervalo = 3;
 
-        Evento eventoDiario = new EventoDiario(titulo,descripcion,fechaInicio,fechaFin,maxOcurrencias,tipoRepeticion,intervalo);
+        Evento eventoDiario = new EventoDiario();
 
 
         List<Evento> proximosEventos = eventoDiario.obtenerProximosEventos(eventoDiario);
