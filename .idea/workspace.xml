@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="54a62356-3dfc-443e-a72c-23670700532b" name="Changes" comment="Agregro el ultimo metodo en calendario y su test. Limpio un poquito mas el codigo">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="54a62356-3dfc-443e-a72c-23670700532b" name="Changes" comment="Agrego modificarAlarma al metodo modificarEvento. Completo los tests">
       <change beforePath="$PROJECT_DIR$/src/main/java/Calendario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Calendario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Evento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Evento.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/CalendarioTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/CalendarioTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -87,11 +85,19 @@
       <option name="project" value="LOCAL" />
       <updated>1682352601237</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Agrego modificarAlarma al metodo modificarEvento. Completo los tests">
+      <created>1682359420573</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1682359420573</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Agregro el ultimo metodo en calendario y su test. Limpio un poquito mas el codigo" />
-    <option name="LAST_COMMIT_MESSAGE" value="Agregro el ultimo metodo en calendario y su test. Limpio un poquito mas el codigo" />
+    <MESSAGE value="Agrego modificarAlarma al metodo modificarEvento. Completo los tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="Agrego modificarAlarma al metodo modificarEvento. Completo los tests" />
   </component>
 </project>

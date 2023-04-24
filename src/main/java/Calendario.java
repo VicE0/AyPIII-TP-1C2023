@@ -18,6 +18,7 @@ public class Calendario {
         this.eventos = new ArrayList<>();
     }
 
+    //Este constructor es utilizado unicamente para el caso que se creen eventos no defaults
     public Calendario(CreadorDeEventos creadorDeEventos) {
         this.creadorDeEventos = creadorDeEventos;
         this.eventos = new ArrayList<>();
@@ -31,6 +32,8 @@ public class Calendario {
         this.eventos.add(creadorDeEventos.crearEventoDefault());
     }
 
+    //PRE: Recibe una lista de objetos Evento
+    //POS: Agrega toda la lista de los eventos a la clase calendario
     public void agregarEventosACalendario(ArrayList<Evento> listaEventos){
 
         for(Evento eventoEnLista : listaEventos) {
@@ -38,9 +41,15 @@ public class Calendario {
         }
     }
 
+    //PRE: -
+    //POS: Devuelve la lista de objetos evento creada en el calendario
     public ArrayList<Evento> obtenerListaEventosTotales(){
         return this.eventos;
     }
+
+    //PRE: Recibe una el objeto Evento a eliminar
+    //POS: Itera por toda la lista de los eventos totales almacenados en la clase calendario. Si las clases del elemento a eliminar y el
+    // evento encontrado en la lista coinciden, entonces lo elimina. Esto asegura que se eliminen todas las ocurrencias de dicho objeto
 
     public void eliminarEvento(Evento eventoAEliminar) {
 
@@ -79,12 +88,13 @@ public class Calendario {
         }
     }
 
-
+    //PRE: -
+    //POS: Devuelve una lista de objetos evento.
     public ArrayList<Evento> obtenerEventosCreados() {
 
         ArrayList<Evento> eventosCreados = new ArrayList<>();
 
-        for (Evento evento : this.eventos) {
+        for (Evento ignored : this.eventos) {
             eventosCreados.add(creadorDeEventos.obtenerEventos());
         }
         return eventosCreados;

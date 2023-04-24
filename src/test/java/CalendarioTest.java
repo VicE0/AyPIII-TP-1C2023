@@ -497,11 +497,10 @@ public class CalendarioTest {
         LocalDateTime fecha2 = lista.get(1).obtenerFechaInicio();
         LocalDateTime fecha3 = lista.get(2).obtenerFechaInicio();
 
-        LocalDateTime fecha1Esperada = fechaInicio;
-        LocalDateTime fecha2Esperada = fecha1Esperada.plusDays(2);
+        LocalDateTime fecha2Esperada = fechaInicio.plusDays(2);
         LocalDateTime fecha3Esperada = fecha2Esperada.plusDays(2);
 
-        assertEquals(fecha1,fecha1Esperada );
+        assertEquals(fecha1, fechaInicio);
         assertEquals(fecha2,fecha2Esperada );
         assertEquals(fecha3,fecha3Esperada );
 
@@ -630,11 +629,10 @@ public class CalendarioTest {
         LocalDateTime fechaMiercoles = lista.get(1).obtenerFechaInicio();
         LocalDateTime fechaLunes2 = lista.get(2).obtenerFechaInicio();
 
-        LocalDateTime fechaLunesEsperada = fechaInicio; //Lunes 3 de abril
-        LocalDateTime fechaMiercolesEsperada = fechaLunesEsperada.plusDays(2); //Miercoles 5 de abril
+        LocalDateTime fechaMiercolesEsperada = fechaInicio.plusDays(2); //Miercoles 5 de abril
         LocalDateTime fechaLunes2Esperada = fechaMiercolesEsperada.plusDays(5); //Lunes 10 de abril
 
-        assertEquals(fechaLunes,fechaLunesEsperada );
+        assertEquals(fechaLunes, fechaInicio);
         assertEquals(fechaMiercoles,fechaMiercolesEsperada );
         assertEquals(fechaLunes2,fechaLunes2Esperada );
         assertTrue(eventoSemanal.obtenerAlarmasEvento().contains(alarmaSonido));
@@ -680,11 +678,10 @@ public class CalendarioTest {
         LocalDateTime fechaJunio  = listaMensual.get(1).obtenerFechaInicio();
         LocalDateTime fechaAgosto = listaMensual.get(2).obtenerFechaInicio();
 
-        LocalDateTime fechaAbrilEsperada  = fechaInicio;
-        LocalDateTime fechaJunioEsperada  = fechaAbrilEsperada.plusMonths(2);
+        LocalDateTime fechaJunioEsperada  = fechaInicio.plusMonths(2);
         LocalDateTime fechaAgostoEsperada = fechaJunioEsperada.plusMonths(2);
 
-        assertEquals(fechaAbril,fechaAbrilEsperada );
+        assertEquals(fechaAbril, fechaInicio);
         assertEquals(fechaJunio,fechaJunioEsperada );
         assertEquals(fechaAgosto,fechaAgostoEsperada );
 
@@ -721,11 +718,10 @@ public class CalendarioTest {
         LocalDateTime fecha2025 = listaAnios.get(1).obtenerFechaInicio();
         LocalDateTime fecha2027 = listaAnios.get(2).obtenerFechaInicio();
 
-        LocalDateTime fecha2023Esperada = fechaInicio;
-        LocalDateTime fecha2025Esperada = fecha2023Esperada.plusYears(2);
+        LocalDateTime fecha2025Esperada = fechaInicio.plusYears(2);
         LocalDateTime fecha2027Esperada = fecha2025Esperada.plusYears(2);
 
-        assertEquals(fecha2023,fecha2023Esperada );
+        assertEquals(fecha2023, fechaInicio);
         assertEquals(fecha2025,fecha2025Esperada );
         assertEquals(fecha2027,fecha2027Esperada );
 
@@ -735,6 +731,7 @@ public class CalendarioTest {
 
     }
 
+    //Modifico un evento default a uno con valores por parametro
     @Test
     public void testModificarEvento(){
 

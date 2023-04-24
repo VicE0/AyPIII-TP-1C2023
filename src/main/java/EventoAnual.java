@@ -73,6 +73,10 @@ public class EventoAnual extends Evento {
 
     //Metodo que crea una nueva instancia del objeto EventoAnual según la cantidad de veces que indique el tipo de repeticion
     //Por cada fecha en la que el evento se deba repetir, se crea un nuevo objeto con dicha fecha como una nueva fecha de inicio
+
+    //PRE: Recibe una fecha y una lista de objetos evento
+    //POS: Segun la repeticion que le corresponda al objeto, crea una nueva instancia de EventoAnual con la proxima fecha de ocurrencia como nueva fecha de inicio del evento
+    //Agrega esta nueva instancia del objeto a la array list y la devuelve
     @Override
     protected ArrayList<Evento> switchCaseRepeticion(LocalDateTime proximaFecha, ArrayList<Evento>  proximosEventos)
     {
