@@ -642,7 +642,7 @@ public class CalendarioTest {
         assertTrue(eventoMensual.obtenerAlarmasEvento().isEmpty());
 
         //Verifico que puedo acceder a alarmas
-        var mail        = new Sonido();
+        var mail        = new Email();
         var alarmaMail  = new AlarmaFechaAbsoluta(LocalDateTime.of(2023, 4, 17, 10, 0),mail);
         eventoMensual.agregarAlarmaEvento(alarmaMail);
 
@@ -685,9 +685,9 @@ public class CalendarioTest {
 
         Repeticion tipoRepeticion = Repeticion.HASTA_OCURRENCIAS;
 
-        var eventAnual = new EventoAnual();
-        eventAnual.establecerCantidadAnios(2);
-        int intervaloAnios = eventAnual.obtenerCantidadAnios();
+        var eventoAnual = new EventoAnual();
+        eventoAnual.establecerCantidadAnios(2);
+        int intervaloAnios = eventoAnual.obtenerCantidadAnios();
 
         eventosAnualesLista.crearEvento(titulo, descripcion, fechaInicio,fechaFin,maxOcurrencias,tipoRepeticion,intervaloAnios ,null);
 
@@ -705,7 +705,7 @@ public class CalendarioTest {
         assertEquals(fecha2025,fecha2025Esperada );
         assertEquals(fecha2027,fecha2027Esperada );
 
-        assertTrue(eventAnual.obtenerAlarmasEvento().isEmpty());
+        assertTrue(eventoAnual.obtenerAlarmasEvento().isEmpty());
 
         assertEquals(3, listaAnios.size());
 
@@ -720,11 +720,19 @@ public class CalendarioTest {
 
         var eventoOriginal = new EventoAnual("Evento Original", "Evento que quiero modificar", LocalDateTime.of(2023, 4, 3, 9, 0),LocalDateTime.of(2023, 4, 10, 9, 0),3,Repeticion.HASTA_OCURRENCIAS,1 );
 
+        var mail        = new Email();
+        var alarmaMail  = new AlarmaFechaAbsoluta(LocalDateTime.of(2023, 4, 17, 10, 0),mail);
+
+        eventoOriginal.agregarAlarmaEvento(alarmaMail);
+
         eventosAnualesLista.crearEvento(eventoOriginal.obtenerTitulo(), eventoOriginal.obtenerDescripcion(), eventoOriginal.obtenerFechaInicio(),eventoOriginal.obtenerFechaFin(),eventoOriginal.obtenerMaxOcurrencias(),eventoOriginal.obtenerTipoRepeticion(),eventoOriginal.obtenerCantidadAnios(), null);
 
         var eventoModificado = new EventoAnual("Evento Modificado", "Evento Unico", LocalDateTime.of(2023, 4, 13, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 99, Repeticion.HASTA_FECHA_FIN, 3);
 
-        eventosAnualesLista.modificarEvento(eventoOriginal, eventoModificado);
+        LocalDateTime nuevaFechaYHoraAlarma = LocalDateTime.of(2023, 4, 15, 10, 0);
+
+        eventosAnualesLista.modificarEvento(eventoOriginal, eventoModificado, alarmaMail,nuevaFechaYHoraAlarma );
+
 
         for(Evento evento :eventosAnualesLista.obtenerListaEventosTotales() ){
 
@@ -734,6 +742,7 @@ public class CalendarioTest {
             assertEquals(evento.obtenerFechaFin(), eventoModificado.obtenerFechaFin());
             assertEquals(evento.obtenerMaxOcurrencias(), eventoModificado.obtenerMaxOcurrencias());
             assertEquals(evento.obtenerTipoRepeticion(), eventoModificado.obtenerTipoRepeticion());
+            assertEquals(evento.obtenerAlarmasEvento(), eventoModificado.obtenerAlarmasEvento());
 
         }
 
@@ -759,10 +768,27 @@ public class CalendarioTest {
         Calendario calendario = new Calendario();
 
         ArrayList<Evento> listaEventosDiarios   = eventosDiarios.proximosEventosDiarios("Evento Diario", "Evento Repetido", LocalDateTime.of(2023, 4, 10, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 2, Repeticion.HASTA_OCURRENCIAS, 1);
+
+        //Le agrego alarmas a eventos diarios
+        for (Evento eventoDiario : listaEventosDiarios){
+
+            var mail        = new Email();
+            var alarmaMail  = new AlarmaFechaAbsoluta(LocalDateTime.of(2023, 4, 17, 10, 0),mail);
+            eventoDiario.agregarAlarmaEvento(alarmaMail);
+        }
+
         ArrayList<Evento> listaEventosSemanales = eventosSemanales.proximosEventosSemanales("Evento Semanal", "Evento Repetido", LocalDateTime.of(2023, 4, 11, 9, 0), LocalDateTime.of(2023, 4, 21, 9, 30), 3, Repeticion.HASTA_OCURRENCIAS, List.of(DayOfWeek.MONDAY));
         ArrayList<Evento> listaEventosMensuales = eventosMensuales.proximosEventosMensuales("Evento Mensual", "Evento Unico", LocalDateTime.of(2023, 4, 12, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 4, Repeticion.INFINITA, 2);
-        ArrayList<Evento> listaEventosAnuales   = eventosAnuales.proximosEventosAnuales("Evento Anual", "Evento Unico", LocalDateTime.of(2023, 4, 13, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 1, Repeticion.HASTA_FECHA_FIN, 3);
 
+        ArrayList<Evento> listaEventosAnuales   = eventosAnuales.proximosEventosAnuales("Evento Anual", "Evento Unico", LocalDateTime.of(2023, 4, 13, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 1, Repeticion.HASTA_FECHA_FIN, 3);
+        //Le agrego alarmas a eventos Anuales
+        for (Evento eventoAnual : listaEventosAnuales){
+
+            var Sonido        = new Sonido();
+            var alarmaSonido  = new AlarmaFechaAbsoluta(LocalDateTime.of(2023, 4, 17, 10, 0),Sonido);
+
+            eventoAnual.agregarAlarmaEvento(alarmaSonido);
+        }
 
         calendario.agregarEventosACalendario(listaEventosDiarios);
         calendario.agregarEventosACalendario(listaEventosSemanales);
@@ -774,11 +800,21 @@ public class CalendarioTest {
 
         var eventoModificado = new EventoDiario("Evento Modificado", "Evento Unico", LocalDateTime.of(2023, 4, 13, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 99, Repeticion.HASTA_FECHA_FIN, 3);
 
+        LocalDateTime nuevaFechaYHoraAlarma = LocalDateTime.of(2023, 4, 12, 10, 0);
+
+        var mail        = new Email();
+        var alarmaMail  = new AlarmaFechaAbsoluta(nuevaFechaYHoraAlarma,mail);
+        eventoModificado.agregarAlarmaEvento(alarmaMail);
+
+
+
         for (Evento evento : listaTodosLosEventos) {
+
             if (evento.getClass().equals(eventoModificado.getClass())){
-                calendario.modificarEvento(evento, eventoModificado);
+                calendario.modificarEvento(evento, eventoModificado, evento.obtenerAlarmasEvento().get(0),nuevaFechaYHoraAlarma );
             }
         }
+
         Evento primerEventoDiario = calendario.obtenerListaEventosTotales().get(0);
         Evento segundoEventoDiario = calendario.obtenerListaEventosTotales().get(1);
 
@@ -791,6 +827,7 @@ public class CalendarioTest {
         assertEquals(primerEventoDiario.obtenerFechaFin(), eventoModificado.obtenerFechaFin());
         assertEquals(primerEventoDiario.obtenerMaxOcurrencias(), eventoModificado.obtenerMaxOcurrencias());
         assertEquals(primerEventoDiario.obtenerTipoRepeticion(), eventoModificado.obtenerTipoRepeticion());
+        assertEquals(primerEventoDiario.obtenerAlarmasEvento().get(0).obtenerFechaYHora(), eventoModificado.obtenerAlarmasEvento().get(0).obtenerFechaYHora());
 
         assertEquals(segundoEventoDiario.obtenerTitulo(), eventoModificado.obtenerTitulo());
         assertEquals(segundoEventoDiario.obtenerDescripcion(), eventoModificado.obtenerDescripcion());
@@ -798,6 +835,7 @@ public class CalendarioTest {
         assertEquals(segundoEventoDiario.obtenerFechaFin(), eventoModificado.obtenerFechaFin());
         assertEquals(segundoEventoDiario.obtenerMaxOcurrencias(), eventoModificado.obtenerMaxOcurrencias());
         assertEquals(segundoEventoDiario.obtenerTipoRepeticion(), eventoModificado.obtenerTipoRepeticion());
+        assertEquals(segundoEventoDiario.obtenerAlarmasEvento().get(0).obtenerFechaYHora(), eventoModificado.obtenerAlarmasEvento().get(0).obtenerFechaYHora());
 
         //Verifico que no ha sido modificado
         assertNotEquals(eventoSemanalRandom.obtenerTitulo(), eventoModificado.obtenerTitulo());
@@ -807,6 +845,8 @@ public class CalendarioTest {
         assertNotEquals(eventoSemanalRandom.obtenerMaxOcurrencias(), eventoModificado.obtenerMaxOcurrencias());
         assertNotEquals(eventoSemanalRandom.obtenerTipoRepeticion(), eventoModificado.obtenerTipoRepeticion());
 
+       //Como para evento semanal no cree una alarma, me aseguro que no se haya creado  uno despues de la modificacion
+        assertTrue(eventoSemanalRandom.obtenerAlarmasEvento().isEmpty());
     }
 
     @Test

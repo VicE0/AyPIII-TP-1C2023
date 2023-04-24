@@ -107,7 +107,9 @@ public abstract class Evento
         alarmasEvento.remove(alarma);
     }
 
-
+    public void modificarAlarmaEvento(Alarma alarma, LocalDateTime fechayHora){
+        alarma.establecerFechaYHora(fechayHora);
+    }
     public boolean fechaFinNula() {
        return fechaFin == null;
    }

@@ -56,7 +56,7 @@ public class Calendario {
     }
 
 
-    public void modificarEvento(Evento eventoOriginal, Evento eventoModificado) {
+    public void modificarEvento(Evento eventoOriginal, Evento eventoModificado, Alarma alarma, LocalDateTime nuevaFechaAlarma) {
         ArrayList<Evento> eventosAModificar = new ArrayList<>();
 
         for (Evento nuevoEvento : this.eventos) {
@@ -72,6 +72,10 @@ public class Calendario {
             nuevoEvento.establecerFechaFin(eventoModificado.obtenerFechaFin());
             nuevoEvento.establecerMaxOcurrencias(eventoModificado.obtenerMaxOcurrencias());
             nuevoEvento.establecerTipoRepeticion(eventoModificado.obtenerTipoRepeticion());
+
+            if (eventoOriginal.obtenerAlarmasEvento() != null){
+                nuevoEvento.modificarAlarmaEvento(alarma, nuevaFechaAlarma);
+            }
         }
     }
 
