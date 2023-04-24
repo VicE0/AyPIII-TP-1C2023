@@ -9,7 +9,7 @@ public class AlarmaConIntervaloTest {
         var notificacion = new Notificacion();
         var alarma = new AlarmaIntervalo(LocalDateTime.of(2023, 4, 17, 18, 0),30,notificacion);
         assertEquals(LocalDateTime.of(2023,4,17,17,30),alarma.obtenerFechaYHora());
-
+        assertEquals(notificacion,alarma.obtenerEfecto());
     }
     @Test
     public void testAlarmaConIntervaloSeActivaDiaAnterior(){

@@ -22,4 +22,7 @@ public abstract class Alarma {
         efecto.reproducirEfecto();
 
     }
+    public Efecto obtenerEfecto(){
+        return efecto;
+    }
 }
