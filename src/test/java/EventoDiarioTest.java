@@ -5,7 +5,7 @@ import org.junit.rules.ExpectedException;
 import static org.junit.Assert.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.ArrayList;
 
 public class EventoDiarioTest {
 
@@ -48,7 +48,7 @@ public class EventoDiarioTest {
 
         var eventoDiario = new EventoDiario();
 
-        List<Evento> proximosEventos = eventoDiario.obtenerProximosEventos(eventoDiario);
+        ArrayList<Evento> proximosEventos = eventoDiario.obtenerProximosEventos(eventoDiario);
 
         Evento primerEventoEnLista = proximosEventos.get(0);
         Evento segundoEventoEnLista = proximosEventos.get(1);
@@ -185,7 +185,7 @@ public class EventoDiarioTest {
 
         var eventoDiario = new EventoDiario(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion, intervalo);
 
-        List<Evento> proximosEventos = eventoDiario.obtenerProximosEventos(eventoDiario);
+        ArrayList<Evento> proximosEventos = eventoDiario.obtenerProximosEventos(eventoDiario);
 
         LocalDateTime fechaActual = eventoDiario.obtenerFechaInicio();
 
@@ -220,7 +220,7 @@ public class EventoDiarioTest {
         var eventoDiario = new EventoDiario(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion, intervalo);
         eventoDiario.establecerIntervalo(1);
 
-        List<Evento> proximosEventos = eventoDiario.obtenerProximosEventos(eventoDiario);
+        ArrayList<Evento> proximosEventos = eventoDiario.obtenerProximosEventos(eventoDiario);
 
         LocalDateTime fechaActual = eventoDiario.obtenerFechaInicio();
 
@@ -253,7 +253,7 @@ public class EventoDiarioTest {
 
         var eventoDiario = new EventoDiario(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion, intervalo);
 
-        List<Evento> proximosEventos = eventoDiario.obtenerProximosEventos(eventoDiario);
+        ArrayList<Evento> proximosEventos = eventoDiario.obtenerProximosEventos(eventoDiario);
 
         LocalDateTime fechaActual = eventoDiario.obtenerFechaInicio();
 

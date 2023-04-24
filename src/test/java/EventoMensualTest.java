@@ -4,7 +4,7 @@ import org.junit.rules.ExpectedException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
@@ -45,7 +45,7 @@ public class EventoMensualTest {
 
         var eventoMensual = new EventoMensual();
 
-        List<Evento> proximosEventos = eventoMensual.obtenerProximosEventos(eventoMensual);
+        ArrayList<Evento> proximosEventos = eventoMensual.obtenerProximosEventos(eventoMensual);
 
         Evento primerEventoEnLista = proximosEventos.get(0);
         Evento segundoEventoEnLista = proximosEventos.get(1);
@@ -181,7 +181,7 @@ public class EventoMensualTest {
 
         var eventoMensual = new EventoMensual(titulo, descripcion, fechaInicio, fechaFin,maxOcurrencias, tipoRepeticion, cantidadMeses);
 
-        List<Evento> proximosEventos = eventoMensual.obtenerProximosEventos(eventoMensual);
+        ArrayList<Evento> proximosEventos = eventoMensual.obtenerProximosEventos(eventoMensual);
 
         LocalDateTime fechaActual = eventoMensual.obtenerFechaInicio();
 
@@ -228,7 +228,7 @@ public class EventoMensualTest {
 
         var eventoMensual = new EventoMensual(titulo, descripcion, fechaInicio, fechaFin,maxOcurrencias, tipoRepeticion, cantidadMeses);
 
-        List<Evento> proximosEventos = eventoMensual.obtenerProximosEventos(eventoMensual);
+        ArrayList<Evento> proximosEventos = eventoMensual.obtenerProximosEventos(eventoMensual);
 
         LocalDateTime fechaActual = eventoMensual.obtenerFechaInicio();
 
@@ -274,7 +274,7 @@ public class EventoMensualTest {
 
         var eventoMensual = new EventoMensual(titulo, descripcion, fechaInicio, fechaFin,maxOcurrencias, tipoRepeticion, cantidadMeses);
 
-        List<Evento> proximosEventos = eventoMensual.obtenerProximosEventos(eventoMensual);
+        ArrayList<Evento> proximosEventos = eventoMensual.obtenerProximosEventos(eventoMensual);
 
         LocalDateTime fechaActual = eventoMensual.obtenerFechaInicio();
 

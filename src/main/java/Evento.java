@@ -2,7 +2,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
 
-public  class Evento
+public abstract class Evento
 {
     private String titulo;
     private String descripcion;
@@ -53,6 +53,19 @@ public  class Evento
     public ArrayList<Alarma> obtenerAlarmasEvento(){
         return alarmasEvento;
     }
+    public ArrayList<Evento> obtenerProximosEventos(Evento evento)
+    {
+        ArrayList<Evento> proximosEventos = new ArrayList<>();
+
+        // Añade la primera fecha ingresada
+        proximosEventos.add(evento);
+        sumarOcurrencias();
+
+        LocalDateTime proximaFecha = calcularSiguienteOcurrencia(fechaInicio);
+
+        return switchCaseRepeticion(proximaFecha, proximosEventos);
+    }
+
 
 //SETTERS
     public void establecerTitulo(String titulo) {
@@ -67,6 +80,21 @@ public  class Evento
     public void establecerFechaFin(LocalDateTime fechaFin) {
         this.fechaFin = fechaFin;
     }
+    public void establecerMaxOcurrencias(int maxOcurrencias) {
+        this.maxOcurrencias = maxOcurrencias;
+    }
+    public void establecerTipoRepeticion(Repeticion tipoRepeticion ) {
+        this.tipoRepeticion = tipoRepeticion;
+    }
+
+
+
+    //Método para obtener la siguiente ocurrencia del Evento segun la frecuencia que tiene asignada.
+    //Este método lo heredan las subclases EventoDiario, EventoSemanal, EventoMensual y EventoAnual
+    protected abstract LocalDateTime calcularSiguienteOcurrencia(LocalDateTime fecha);
+
+    protected abstract ArrayList<Evento> switchCaseRepeticion(LocalDateTime proximaFecha,ArrayList<Evento>  proximosEventos);
+
 
     public void agregarAlarmaEvento(Alarma alarma){
         alarmasEvento.add(alarma);
@@ -76,89 +104,8 @@ public  class Evento
         alarmasEvento.remove(alarma);
     }
 
-    public void establecerMaxOcurrencias(int maxOcurrencias) {
-        this.maxOcurrencias = maxOcurrencias;
-    }
-    public void establecerTipoRepeticion(Repeticion tipoRepeticion ) {
-        this.tipoRepeticion = tipoRepeticion;
-    }
 
-    //Método para obtener la siguiente ocurrencia del Evento segun la frecuencia que tiene asignada.
-    //Este método lo heredan las subclases EventoDiario, EventoSemanal, EventoMensual y EventoAnual
-    protected  LocalDateTime calcularSiguienteOcurrencia(LocalDateTime fecha){
-        return fecha;
-    }
-
-
-    public List<Evento> obtenerProximosEventos(Evento evento)
-    {
-       List<Evento> proximosEventos = new ArrayList<>();
-
-        // Añade la primera fecha ingresada
-        proximosEventos.add(evento);
-        sumarOcurrencias();
-
-        LocalDateTime proximaFecha = calcularSiguienteOcurrencia(fechaInicio);
-
-        return switchCaseRepeticion(proximaFecha, proximosEventos, evento);
-    }
-
-    protected List<Evento> switchCaseRepeticion(LocalDateTime proximaFecha,List<Evento>  proximosEventos, Evento evento)
-    {
-        switch (tipoRepeticion) {
-
-            case INFINITA:
-
-                var eventoInfinito = new Evento(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion());
-                proximosEventos.add(eventoInfinito);
-
-                while (ocurrenciasRealizadas < maxOcurrencias)
-                {
-                    proximaFecha = calcularSiguienteOcurrencia(proximaFecha);
-                    var eventoNuevo = new Evento(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion());
-                    proximosEventos.add(eventoNuevo);
-                    sumarOcurrencias();
-                }
-                return proximosEventos;
-
-            case HASTA_FECHA_FIN:
-                if ( !fechaFinNula() ) {
-                    var eventoFechaFin = new Evento(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion());
-                    proximosEventos.add(eventoFechaFin);
-                }
-
-                while(proximaFecha.isBefore(fechaFin)) {
-
-                    proximaFecha = calcularSiguienteOcurrencia(proximaFecha);
-                    var eventoNuevo = new Evento(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion());
-                    proximosEventos.add(eventoNuevo);
-
-                }
-                return proximosEventos;
-
-            case HASTA_OCURRENCIAS:
-
-                var eventoOcurrencias = new Evento(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion());
-                proximosEventos.add(eventoOcurrencias);
-                sumarOcurrencias();
-
-                while (ocurrenciasRealizadas < maxOcurrencias)
-                {
-                    proximaFecha = calcularSiguienteOcurrencia(proximaFecha);
-
-                    var eventoNuevo = new Evento(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion());
-                    proximosEventos.add(eventoNuevo);
-                    sumarOcurrencias();
-
-                }
-                return proximosEventos;
-
-            default:
-                return proximosEventos;
-        }
-    }
-
-   public boolean fechaFinNula()
+    public boolean fechaFinNula()
    {
        if (fechaFin != null) {
            return false;
@@ -169,7 +116,6 @@ public  class Evento
     public void sumarOcurrencias(){
         ocurrenciasRealizadas++;
     }
-
 
 }
 

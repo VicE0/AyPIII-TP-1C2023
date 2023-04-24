@@ -7,7 +7,7 @@ import org.junit.rules.ExpectedException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
@@ -48,7 +48,7 @@ public class EventoAnualTest {
 
         var eventoAnual = new EventoAnual();
 
-        List<Evento> proximosEventos = eventoAnual.obtenerProximosEventos(eventoAnual);
+        ArrayList<Evento> proximosEventos = eventoAnual.obtenerProximosEventos(eventoAnual);
 
         Evento primerEventoEnLista = proximosEventos.get(0);
         Evento segundoEventoEnLista = proximosEventos.get(1);
@@ -184,7 +184,7 @@ public class EventoAnualTest {
 
         var eventoAnual = new EventoAnual(titulo, descripcion, fechaInicio, fechaFin,maxOcurrencias, tipoRepeticion, cantidadAnios);
 
-        List<Evento> proximosEventos = eventoAnual.obtenerProximosEventos(eventoAnual);
+        ArrayList<Evento> proximosEventos = eventoAnual.obtenerProximosEventos(eventoAnual);
 
         LocalDateTime fechaActual = eventoAnual.obtenerFechaInicio();
 
@@ -217,7 +217,7 @@ public class EventoAnualTest {
 
         var eventoAnual = new EventoAnual(titulo, descripcion, fechaInicio, fechaFin,maxOcurrencias, tipoRepeticion, cantidadAnios);
 
-        List<Evento> proximosEventos = eventoAnual.obtenerProximosEventos(eventoAnual);
+        ArrayList<Evento> proximosEventos = eventoAnual.obtenerProximosEventos(eventoAnual);
 
         LocalDateTime fechaActual = eventoAnual.obtenerFechaInicio();
 
@@ -266,7 +266,7 @@ public class EventoAnualTest {
 
         var eventoAnual = new EventoAnual(titulo, descripcion, fechaInicio, fechaFin,maxOcurrencias, tipoRepeticion, cantidadAnios);
 
-        List<Evento> proximosEventos = eventoAnual.obtenerProximosEventos(eventoAnual);
+        ArrayList<Evento> proximosEventos = eventoAnual.obtenerProximosEventos(eventoAnual);
 
         LocalDateTime fechaActual = eventoAnual.obtenerFechaInicio();
 

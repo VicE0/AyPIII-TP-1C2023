@@ -14,6 +14,40 @@ public class EventoMensual extends Evento{
         super(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias,tipoRepeticion);
         this.cantidadMeses = cantidadMeses;
     }
+    @Override
+    public String obtenerTitulo() {
+        return super.obtenerTitulo();
+    }
+
+    @Override
+    public String obtenerDescripcion() {
+        return super.obtenerDescripcion();
+    }
+
+    @Override
+    public LocalDateTime obtenerFechaInicio() {
+        return super.obtenerFechaInicio();
+    }
+
+    @Override
+    public LocalDateTime obtenerFechaFin() {
+        return super.obtenerFechaFin();
+    }
+
+    @Override
+    public int obtenerMaxOcurrencias() {
+        return super.obtenerMaxOcurrencias();
+    }
+
+    @Override
+    public Repeticion obtenerTipoRepeticion() {
+        return super.obtenerTipoRepeticion();
+    }
+
+    @Override
+    public int obtenerOcurrencias() {
+        return super.obtenerOcurrencias();
+    }
 
     public int obtenerCantidadMeses() {
         return cantidadMeses;
@@ -35,5 +69,69 @@ public class EventoMensual extends Evento{
             throw new RuntimeException("Cantidad de meses negativo");
         }
         return fecha.plusMonths(1);
+    }
+
+
+    protected ArrayList<Evento> switchCaseRepeticion(LocalDateTime proximaFecha,ArrayList<Evento>  proximosEventos)
+    {
+        switch (obtenerTipoRepeticion()) {
+
+            case INFINITA:
+
+                var eventoInfinito = new EventoMensual(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion(), cantidadMeses);
+
+                proximosEventos.add(eventoInfinito);
+
+                while (obtenerOcurrencias() < obtenerMaxOcurrencias())
+                {
+                    proximaFecha = calcularSiguienteOcurrencia(proximaFecha);
+
+                    var eventoInfinitoNuevo = new EventoMensual(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion(), cantidadMeses);
+
+                    proximosEventos.add(eventoInfinitoNuevo);
+
+                    sumarOcurrencias();
+                }
+                return proximosEventos;
+
+            case HASTA_FECHA_FIN:
+                if ( !fechaFinNula() ) {
+
+                    var eventoFechaFin = new EventoMensual(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion(),cantidadMeses);
+
+                    proximosEventos.add(eventoFechaFin);
+                }
+
+                while(proximaFecha.isBefore(obtenerFechaFin())) {
+
+                    proximaFecha = calcularSiguienteOcurrencia(proximaFecha);
+
+                    var eventoFechaFinNuevo = new EventoMensual(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion(), cantidadMeses);
+                    proximosEventos.add(eventoFechaFinNuevo);
+
+                }
+                return proximosEventos;
+
+            case HASTA_OCURRENCIAS:
+
+                var eventoOcurrencias = new EventoMensual(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion(), cantidadMeses);
+                proximosEventos.add(eventoOcurrencias);
+                sumarOcurrencias();
+
+                while (obtenerOcurrencias() < obtenerMaxOcurrencias()) {
+
+                    proximaFecha = calcularSiguienteOcurrencia(proximaFecha);
+
+                    var eventoOcurrenciasNuevo = new EventoMensual(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion(), cantidadMeses);
+
+                    proximosEventos.add(eventoOcurrenciasNuevo);
+                    sumarOcurrencias();
+
+                }
+                return proximosEventos;
+
+            default:
+                return proximosEventos;
+        }
     }
 }

@@ -14,6 +14,40 @@ public class EventoDiario extends Evento {
         super(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion);
         this.intervalo = intervalo;
     }
+    @Override
+    public String obtenerTitulo() {
+        return super.obtenerTitulo();
+    }
+
+    @Override
+    public String obtenerDescripcion() {
+        return super.obtenerDescripcion();
+    }
+
+    @Override
+    public LocalDateTime obtenerFechaInicio() {
+        return super.obtenerFechaInicio();
+    }
+
+    @Override
+    public LocalDateTime obtenerFechaFin() {
+        return super.obtenerFechaFin();
+    }
+
+    @Override
+    public int obtenerMaxOcurrencias() {
+        return super.obtenerMaxOcurrencias();
+    }
+
+    @Override
+    public Repeticion obtenerTipoRepeticion() {
+        return super.obtenerTipoRepeticion();
+    }
+
+    @Override
+    public int obtenerOcurrencias() {
+        return super.obtenerOcurrencias();
+    }
 
     public int obtenerIntervalo() {
         return intervalo;
@@ -36,6 +70,69 @@ public class EventoDiario extends Evento {
             throw new RuntimeException("Intervalo de dias negativo");
         }
         return fecha.plusDays(1);
+    }
+
+    @Override
+    protected ArrayList<Evento> switchCaseRepeticion(LocalDateTime proximaFecha,ArrayList<Evento>  proximosEventos)
+    {
+        switch (obtenerTipoRepeticion()) {
+
+            case INFINITA:
+
+                var eventoInfinito = new EventoDiario(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion(), intervalo);
+
+                proximosEventos.add(eventoInfinito);
+
+                while (obtenerOcurrencias() < obtenerMaxOcurrencias()) {
+
+                    proximaFecha = calcularSiguienteOcurrencia(proximaFecha);
+
+                    var eventoInfinitoNuevo = new EventoDiario(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion(), intervalo);
+
+                    proximosEventos.add(eventoInfinitoNuevo);
+
+                    sumarOcurrencias();
+                }
+                return proximosEventos;
+
+            case HASTA_FECHA_FIN:
+                if ( !fechaFinNula() ) {
+
+                    var eventoFechaFin = new EventoDiario(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion(),intervalo);
+
+                    proximosEventos.add(eventoFechaFin);
+                }
+                while(proximaFecha.isBefore(obtenerFechaFin())) {
+
+                    proximaFecha = calcularSiguienteOcurrencia(proximaFecha);
+
+                    var eventoFechaFinNuevo = new EventoDiario(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion(), intervalo);
+                    proximosEventos.add(eventoFechaFinNuevo);
+
+                }
+                return proximosEventos;
+
+            case HASTA_OCURRENCIAS:
+
+                var eventoOcurrencias = new EventoDiario(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion(), intervalo);
+                proximosEventos.add(eventoOcurrencias);
+                sumarOcurrencias();
+
+                while (obtenerOcurrencias() < obtenerMaxOcurrencias()) {
+
+                    proximaFecha = calcularSiguienteOcurrencia(proximaFecha);
+
+                    var eventoOcurrenciasNuevo = new EventoDiario(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion(), intervalo);
+
+                    proximosEventos.add(eventoOcurrenciasNuevo);
+                    sumarOcurrencias();
+
+                }
+                return proximosEventos;
+
+            default:
+                return proximosEventos;
+        }
     }
 }
 

@@ -32,18 +32,12 @@ public class Calendario {
         this.eventos.add(creadorDeEventos.crearEventoDefault());
     }
 
-    public void agregarEventoACalendario(ArrayList<Evento> listaEventos){
+    public void agregarEventosACalendario(ArrayList<Evento> listaEventos){
 
         for(Evento eventoEnLista : listaEventos) {
             this.eventos.add(eventoEnLista);
         }
     }
-
-//    public void eliminarEventoDeCalendario(ArrayList<Evento> listaEventos){
-//        for(Evento eventoAEliminar : listaEventos) {
-//            this.eventos.remove(eventoAEliminar);
-//        }
-//    }
 
 
     public ArrayList<Evento> obtenerListaEventosTotales(){
@@ -104,24 +98,25 @@ public class Calendario {
         return eventosCreados;
     }
 
-    public List<Evento> proximosEventosDiarios(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion, int intervalo) {
+
+    public ArrayList<Evento> proximosEventosDiarios(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion, int intervalo) {
         Evento eventoDiario = new EventoDiario( titulo,  descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion,intervalo );
         return eventoDiario.obtenerProximosEventos(eventoDiario);
     }
-//
-//    public List<LocalDateTime> proximosEventosSemanales(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion, List<DayOfWeek> diasSemana) {
-//        Evento eventoSemanal = new EventoSemanal( titulo,  descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion,diasSemana );
-//        return eventoSemanal.obtenerProximosEventos();
-//    }
-//
-//    public List<LocalDateTime> proximosEventosMensuales(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion, int intervaloMeses) {
-//        Evento eventoMensual = new EventoMensual( titulo,  descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion,intervaloMeses );
-//        return eventoMensual.obtenerProximosEventos();
-//    }
-//    public List<LocalDateTime> proximosEventosAnuales(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion, int intervaloAnios) {
-//        Evento eventoAnual = new EventoAnual( titulo,  descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion,intervaloAnios );
-//        return eventoAnual.obtenerProximosEventos();
-//    }
+
+    public ArrayList<Evento> proximosEventosSemanales(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion, List<DayOfWeek> diasSemana) {
+        Evento eventoSemanal = new EventoSemanal( titulo,  descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion,diasSemana );
+        return eventoSemanal.obtenerProximosEventos(eventoSemanal);
+    }
+
+    public ArrayList<Evento> proximosEventosMensuales(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion, int intervaloMeses) {
+        Evento eventoMensual = new EventoMensual( titulo,  descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion,intervaloMeses );
+        return eventoMensual.obtenerProximosEventos(eventoMensual);
+    }
+    public ArrayList<Evento> proximosEventosAnuales(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion, int intervaloAnios) {
+        Evento eventoAnual = new EventoAnual( titulo,  descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion,intervaloAnios );
+        return eventoAnual.obtenerProximosEventos(eventoAnual);
+    }
 
 
     public void crearTarea(Tarea tarea) {

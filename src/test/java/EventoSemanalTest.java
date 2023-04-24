@@ -3,6 +3,7 @@ import org.junit.Test;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.DayOfWeek;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -43,7 +44,7 @@ public class EventoSemanalTest {
 
         var eventoSemanal = new EventoSemanal();
 
-        List<Evento> proximosEventos = eventoSemanal.obtenerProximosEventos(eventoSemanal);
+        ArrayList<Evento> proximosEventos = eventoSemanal.obtenerProximosEventos(eventoSemanal);
 
         Evento primerEventoEnLista = proximosEventos.get(0);
         Evento segundoEventoEnLista = proximosEventos.get(1);
@@ -147,7 +148,7 @@ public class EventoSemanalTest {
         //Testeo que el setter funcione
         eventoSemanal.establecerDiasSemana(List.of(DayOfWeek.TUESDAY, DayOfWeek.THURSDAY));
 
-        List<Evento> proximosEventos = eventoSemanal.obtenerProximosEventos(eventoSemanal);
+        ArrayList<Evento> proximosEventos = eventoSemanal.obtenerProximosEventos(eventoSemanal);
 
         LocalDateTime fechaActual = eventoSemanal.obtenerFechaInicio();
 
@@ -184,7 +185,7 @@ public class EventoSemanalTest {
 
         var eventoSemanal = new EventoSemanal(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion ,diasSemana);
 
-        List<Evento> proximosEventos = eventoSemanal.obtenerProximosEventos(eventoSemanal);
+        ArrayList<Evento> proximosEventos = eventoSemanal.obtenerProximosEventos(eventoSemanal);
 
         LocalDateTime fechaActual = eventoSemanal.obtenerFechaInicio();
 
@@ -229,7 +230,7 @@ public class EventoSemanalTest {
 
         var eventoSemanal = new EventoSemanal(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion ,diasSemana);
 
-        List<Evento> proximosEventos = eventoSemanal.obtenerProximosEventos(eventoSemanal);
+        ArrayList<Evento> proximosEventos = eventoSemanal.obtenerProximosEventos(eventoSemanal);
 
         LocalDateTime fechaActual = eventoSemanal.obtenerFechaInicio();
 
