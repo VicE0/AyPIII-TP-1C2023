@@ -12,9 +12,9 @@ public class CreadorEventosAnuales implements CreadorDeEventos{
         return new EventoAnual(titulo,descripcion,fechaInicio,fechaFin,maxOcurrencias, tipoRepeticion,intervalo);
     }
     public Evento obtenerEventos(){
-        var eventosAnuales = new EventoAnual();
+        return new EventoAnual();
 
-        return eventosAnuales;
+
     }
 
 }
