@@ -4,23 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0950ebdb-872c-4eb3-9494-228a982e1e68" name="Changes" comment="Cambios para que proximosEventos devuelva un objeto Evento y no un LocalDateTime. Comento todo, despues arreglo">
+    <list default="true" id="0950ebdb-872c-4eb3-9494-228a982e1e68" name="Changes" comment="La clase evento vuelve a ser abstracta y voy terminando los tests de eliminar eventos del calendario">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Calendario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Calendario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/CreadorEventosAnuales.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CreadorEventosAnuales.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/CreadorEventosMensuales.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CreadorEventosMensuales.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/CreadorEventosSemanales.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CreadorEventosSemanales.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Evento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Evento.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/EventoAnual.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/EventoAnual.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/EventoDiario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/EventoDiario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/EventoMensual.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/EventoMensual.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/EventoSemanal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/EventoSemanal.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/CalendarioTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/CalendarioTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/EventoAnualTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/EventoAnualTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/EventoDiarioTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/EventoDiarioTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/EventoMensualTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/EventoMensualTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/EventoSemanalTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/EventoSemanalTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -327,7 +314,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682301384756</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="La clase evento vuelve a ser abstracta y voy terminando los tests de eliminar eventos del calendario">
+      <created>1682313243734</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1682313243734</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -403,7 +397,8 @@
     <MESSAGE value="Voy terminando la logica del calendario y sus tests. Falta completar unas cositas y ta" />
     <MESSAGE value="Cambios para que proximosEventos devuelva un objeto Evento y no un LocalDateTime. Comento todo, despues arreglo" />
     <MESSAGE value="Termino de arreglar los tests con la lista de objeto Evento" />
-    <option name="LAST_COMMIT_MESSAGE" value="Termino de arreglar los tests con la lista de objeto Evento" />
+    <MESSAGE value="La clase evento vuelve a ser abstracta y voy terminando los tests de eliminar eventos del calendario" />
+    <option name="LAST_COMMIT_MESSAGE" value="La clase evento vuelve a ser abstracta y voy terminando los tests de eliminar eventos del calendario" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/tp_algoIII$EventoDiarioTest.ic" NAME="EventoDiarioTest Coverage Results" MODIFIED="1682300068794" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

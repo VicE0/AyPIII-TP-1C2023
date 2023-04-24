@@ -8,39 +8,45 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+        CreadorEventosDiarios creadorEventosDiarios = new CreadorEventosDiarios();
+        CreadorEventosSemanales creadorEventosSemanales = new CreadorEventosSemanales();
+        CreadorEventosMensuales creadorEventosMensuales = new CreadorEventosMensuales();
+        CreadorEventosAnuales creadorEventosAnuales = new CreadorEventosAnuales();
+
+        Calendario eventosDiarios = new Calendario(creadorEventosDiarios);
+        Calendario eventosSemanales = new Calendario(creadorEventosSemanales);
+        Calendario eventosMensuales = new Calendario(creadorEventosMensuales);
+        Calendario eventosAnuales = new Calendario(creadorEventosAnuales);
+
+        Calendario calendario = new Calendario();
+
+        ArrayList<Evento> listaEventosDiarios   = eventosDiarios.proximosEventosDiarios("Evento Diario", "Evento Repetido", LocalDateTime.of(2023, 4, 10, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 10, Repeticion.HASTA_OCURRENCIAS, 1);
+        ArrayList<Evento> listaEventosSemanales = eventosSemanales.proximosEventosSemanales("Evento Semanal", "Evento Repetido", LocalDateTime.of(2023, 4, 11, 9, 0), LocalDateTime.of(2023, 4, 21, 9, 30), 1, Repeticion.HASTA_FECHA_FIN, List.of(DayOfWeek.MONDAY));
+        ArrayList<Evento> listaEventosMensuales = eventosMensuales.proximosEventosMensuales("Evento Mensual", "Evento Unico", LocalDateTime.of(2023, 4, 12, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 99, Repeticion.INFINITA, 2);
+        ArrayList<Evento> listaEventosAnuales   = eventosAnuales.proximosEventosAnuales("Evento Anual", "Evento Unico", LocalDateTime.of(2023, 4, 13, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 99, Repeticion.HASTA_FECHA_FIN, 3);
 
 
-        CreadorEventosDiarios creadorDeEventosDiarios = new CreadorEventosDiarios();
-        Calendario eventosDiariosLista = new Calendario(creadorDeEventosDiarios);
+        calendario.agregarEventosACalendario(listaEventosDiarios);
+        calendario.agregarEventosACalendario(listaEventosSemanales);
+        calendario.agregarEventosACalendario(listaEventosMensuales);
+        calendario.agregarEventosACalendario(listaEventosAnuales);
 
+        ArrayList<Evento> listaTodosLosEventos = calendario.obtenerListaEventosTotales();
+        System.out.println(listaTodosLosEventos);
+//        calendario.eliminarEvento(listaTodosLosEventos.get(10));
 
-        String titulo = "Evento Diario";
-        String descripcion = "Evento que se repite hasta ocurrencias";
+        for(Evento eventoSemanal : listaEventosSemanales) {
+            for(Evento evento : listaTodosLosEventos){
+                System.out.println(evento.getClass() == eventoSemanal.getClass());
+            }
 
-        LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 10, 9, 0);
-        LocalDateTime fechaFin    = LocalDateTime.of(2023, 4, 17, 9, 30);
-
-        int maxOcurrencias = 3;
-
-        //Pruebo un tipo por clase de Evento
-        Repeticion tipoRepeticion = Repeticion.HASTA_OCURRENCIAS;
-
-        var eventoDiario = new EventoDiario();
-        eventoDiario.establecerIntervalo(1);
-        int intervalo = eventoDiario.obtenerIntervalo();
-
-
-        ArrayList<Evento> lista = eventosDiariosLista.proximosEventosDiarios(titulo, descripcion, fechaInicio,fechaFin,maxOcurrencias,tipoRepeticion,intervalo);
-
-        eventosDiariosLista.agregarEventosACalendario(lista);
-        ArrayList<Evento> todosloseventos = eventosDiariosLista.obtenerListaEventosTotales();
-
-        eventosDiariosLista.eliminarEvento(todosloseventos.get(0));
-
-        System.out.println(todosloseventos.isEmpty());
-        for(Evento enListac : todosloseventos){
-            System.out.println(enListac.obtenerFechaInicio());
         }
+
+
+
+//        for(Evento enListac : listaTodosLosEventos){
+//            System.out.println(enListac.obtenerTitulo());
+//        }
 
 
 
