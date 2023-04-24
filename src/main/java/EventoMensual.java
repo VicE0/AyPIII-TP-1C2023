@@ -1,6 +1,5 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 
 public class EventoMensual extends Evento{
     private int cantidadMeses;
@@ -56,6 +55,7 @@ public class EventoMensual extends Evento{
     public void establecerCantidadMeses(int cantidadMeses) {
         this.cantidadMeses = cantidadMeses;
     }
+
     @Override
     protected LocalDateTime calcularSiguienteOcurrencia(LocalDateTime fecha) {
         if (cantidadMeses > 1) {
@@ -71,50 +71,47 @@ public class EventoMensual extends Evento{
         return fecha.plusMonths(1);
     }
 
-
+    //Metodo que crea una nueva instancia del objeto EventoMensual según la cantidad de veces que indique el tipo de repeticion
+    //Por cada fecha en la que el evento se deba repetir, se crea un nuevo objeto con dicha fecha como una nueva fecha de inicio
     protected ArrayList<Evento> switchCaseRepeticion(LocalDateTime proximaFecha,ArrayList<Evento>  proximosEventos)
     {
         switch (obtenerTipoRepeticion()) {
+            case INFINITA -> {
 
-            case INFINITA:
-
-                var eventoInfinito = new EventoMensual(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion(), cantidadMeses);
-
+                var eventoInfinito = new EventoMensual(obtenerTitulo(), obtenerDescripcion(), proximaFecha, obtenerFechaFin(), obtenerMaxOcurrencias(), obtenerTipoRepeticion(), cantidadMeses);
                 proximosEventos.add(eventoInfinito);
 
-                while (obtenerOcurrencias() < obtenerMaxOcurrencias())
-                {
+                while (obtenerOcurrencias() < obtenerMaxOcurrencias()) {
                     proximaFecha = calcularSiguienteOcurrencia(proximaFecha);
 
-                    var eventoInfinitoNuevo = new EventoMensual(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion(), cantidadMeses);
+                    var eventoInfinitoNuevo = new EventoMensual(obtenerTitulo(), obtenerDescripcion(), proximaFecha, obtenerFechaFin(), obtenerMaxOcurrencias(), obtenerTipoRepeticion(), cantidadMeses);
 
                     proximosEventos.add(eventoInfinitoNuevo);
 
                     sumarOcurrencias();
                 }
                 return proximosEventos;
+            }
+            case HASTA_FECHA_FIN -> {
+                if (!fechaFinNula()) {
 
-            case HASTA_FECHA_FIN:
-                if ( !fechaFinNula() ) {
-
-                    var eventoFechaFin = new EventoMensual(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion(),cantidadMeses);
+                    var eventoFechaFin = new EventoMensual(obtenerTitulo(), obtenerDescripcion(), proximaFecha, obtenerFechaFin(), obtenerMaxOcurrencias(), obtenerTipoRepeticion(), cantidadMeses);
 
                     proximosEventos.add(eventoFechaFin);
                 }
-
-                while(proximaFecha.isBefore(obtenerFechaFin())) {
+                while (proximaFecha.isBefore(obtenerFechaFin())) {
 
                     proximaFecha = calcularSiguienteOcurrencia(proximaFecha);
 
-                    var eventoFechaFinNuevo = new EventoMensual(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion(), cantidadMeses);
+                    var eventoFechaFinNuevo = new EventoMensual(obtenerTitulo(), obtenerDescripcion(), proximaFecha, obtenerFechaFin(), obtenerMaxOcurrencias(), obtenerTipoRepeticion(), cantidadMeses);
                     proximosEventos.add(eventoFechaFinNuevo);
 
                 }
                 return proximosEventos;
+            }
+            case HASTA_OCURRENCIAS -> {
 
-            case HASTA_OCURRENCIAS:
-
-                var eventoOcurrencias = new EventoMensual(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion(), cantidadMeses);
+                var eventoOcurrencias = new EventoMensual(obtenerTitulo(), obtenerDescripcion(), proximaFecha, obtenerFechaFin(), obtenerMaxOcurrencias(), obtenerTipoRepeticion(), cantidadMeses);
                 proximosEventos.add(eventoOcurrencias);
                 sumarOcurrencias();
 
@@ -122,16 +119,17 @@ public class EventoMensual extends Evento{
 
                     proximaFecha = calcularSiguienteOcurrencia(proximaFecha);
 
-                    var eventoOcurrenciasNuevo = new EventoMensual(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion(), cantidadMeses);
+                    var eventoOcurrenciasNuevo = new EventoMensual(obtenerTitulo(), obtenerDescripcion(), proximaFecha, obtenerFechaFin(), obtenerMaxOcurrencias(), obtenerTipoRepeticion(), cantidadMeses);
 
                     proximosEventos.add(eventoOcurrenciasNuevo);
                     sumarOcurrencias();
 
                 }
                 return proximosEventos;
-
-            default:
+            }
+            default -> {
                 return proximosEventos;
+            }
         }
     }
 }

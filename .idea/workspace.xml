@@ -4,8 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0950ebdb-872c-4eb3-9494-228a982e1e68" name="Changes" comment="La clase evento vuelve a ser abstracta y voy terminando los tests de eliminar eventos del calendario">
+    <list default="true" id="0950ebdb-872c-4eb3-9494-228a982e1e68" name="Changes" comment="Termino de corregir los demas tests y termino eliminarEvento">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Calendario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Calendario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Evento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Evento.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/EventoAnual.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/EventoAnual.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/EventoDiario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/EventoDiario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/EventoMensual.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/EventoMensual.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/EventoSemanal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/EventoSemanal.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/CalendarioTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/CalendarioTest.java" afterDir="false" />
     </list>
@@ -93,10 +99,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="EventoDiarioTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="EventoAnualTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="tp-algoIII" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="EventoDiarioTest" />
+      <option name="MAIN_CLASS_NAME" value="EventoAnualTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -124,9 +130,9 @@
       <list>
         <item itemvalue="JUnit.CalendarioTest" />
         <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.EventoAnualTest" />
         <item itemvalue="JUnit.EventoSemanalTest" />
         <item itemvalue="JUnit.EventoMensualTest" />
-        <item itemvalue="JUnit.EventoDiarioTest" />
       </list>
     </recent_temporary>
   </component>
@@ -321,7 +327,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682313243734</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Termino de corregir los demas tests y termino eliminarEvento">
+      <created>1682318494940</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1682318494940</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -398,7 +411,8 @@
     <MESSAGE value="Cambios para que proximosEventos devuelva un objeto Evento y no un LocalDateTime. Comento todo, despues arreglo" />
     <MESSAGE value="Termino de arreglar los tests con la lista de objeto Evento" />
     <MESSAGE value="La clase evento vuelve a ser abstracta y voy terminando los tests de eliminar eventos del calendario" />
-    <option name="LAST_COMMIT_MESSAGE" value="La clase evento vuelve a ser abstracta y voy terminando los tests de eliminar eventos del calendario" />
+    <MESSAGE value="Termino de corregir los demas tests y termino eliminarEvento" />
+    <option name="LAST_COMMIT_MESSAGE" value="Termino de corregir los demas tests y termino eliminarEvento" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/tp_algoIII$EventoDiarioTest.ic" NAME="EventoDiarioTest Coverage Results" MODIFIED="1682300068794" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

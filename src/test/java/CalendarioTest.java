@@ -1,6 +1,4 @@
-import org.junit.Before;
 import org.junit.Test;
-
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -12,17 +10,23 @@ import static org.junit.Assert.*;
 public class CalendarioTest {
     @Test
     public void testCrearTarea(){
+
         var calendario = new Calendario();
         var tarea = new TareaConVencimiento();
+
         calendario.crearTarea(tarea);
+
         assertEquals(1,calendario.obtenerTareas().size());
         assertTrue(calendario.obtenerTareas().contains(tarea));
     }
     @Test
     public void testTareaSeCreaConDatosCorrectos(){
+
         var calendario = new Calendario();
         var tarea = new TareaDiaCompleto("Tarea","Hacer la tarea", LocalDate.of(2023,12,22));
+
         calendario.crearTarea(tarea);
+
         assertEquals("Tarea",calendario.obtenerTareas().get(0).obtenerTitulo());
         assertEquals("Hacer la tarea",calendario.obtenerTareas().get(0).obtenerDescripcion());
         assertEquals(LocalDateTime.of(2023,12,22,0,0),calendario.obtenerTareas().get(0).obtenerFechaInicio());
@@ -31,13 +35,17 @@ public class CalendarioTest {
     }
     @Test
     public void testCrearVariasTareas(){
+
         var calendario = new Calendario();
+
         var tareaUno = new TareaConVencimiento();
         var tareaDos = new TareaDiaCompleto();
         var tareaTres = new TareaDiaCompleto("Tarea","Hacer la tarea", LocalDate.of(2023,12,22));
+
         calendario.crearTarea(tareaUno);
         calendario.crearTarea(tareaDos);
         calendario.crearTarea(tareaTres);
+
         assertEquals(3,calendario.obtenerTareas().size());
         assertTrue(calendario.obtenerTareas().contains(tareaUno));
         assertTrue(calendario.obtenerTareas().contains(tareaDos));
@@ -45,11 +53,14 @@ public class CalendarioTest {
     }
     @Test
     public void testSePuedeCrearTareasIguales(){
+
         var calendario = new Calendario();
         var tareaUno = new TareaDiaCompleto("Tarea","Hacer la tarea", LocalDate.of(2023,12,22));
         var tareaDos = new TareaDiaCompleto("Tarea","Hacer la tarea", LocalDate.of(2023,12,22));
+
         calendario.crearTarea(tareaUno);
         calendario.crearTarea(tareaDos);
+
         assertEquals(2,calendario.obtenerTareas().size());
         assertTrue(calendario.obtenerTareas().contains(tareaUno));
         assertTrue(calendario.obtenerTareas().contains(tareaDos));
@@ -58,13 +69,19 @@ public class CalendarioTest {
     }
     @Test
     public void testEliminarTarea(){
+
         var calendario = new Calendario();
+
         var tareaUno = new TareaDiaCompleto("Tarea","Hacer la tarea", LocalDate.of(2023,12,22));
         var tareaDos = new TareaDiaCompleto("Tarea","Hacer la tarea", LocalDate.of(2023,11,22));
+
         int idParaBorrar = tareaUno.obtenerId();
+
         calendario.crearTarea(tareaUno);
         calendario.crearTarea(tareaDos);
+
         assertEquals(2,calendario.obtenerTareas().size());
+
         calendario.eliminarTarea(idParaBorrar);
         assertEquals(1,calendario.obtenerTareas().size());
         assertFalse(calendario.obtenerTareas().contains(tareaUno));
@@ -72,13 +89,18 @@ public class CalendarioTest {
     }
     @Test
     public void testEliminarVariasTareas(){
+
         var calendario = new Calendario();
+
         var tareaUno = new TareaConVencimiento();
         int idUno = tareaUno.obtenerId();
+
         var tareaDos = new TareaDiaCompleto();
         int idDos = tareaDos.obtenerId();
+
         var tareaTres = new TareaDiaCompleto("Tarea","Hacer la tarea", LocalDate.of(2023,12,22));
         int idTres = tareaTres.obtenerId();
+
         calendario.crearTarea(tareaUno);
         calendario.crearTarea(tareaDos);
         calendario.crearTarea(tareaTres);
@@ -87,6 +109,7 @@ public class CalendarioTest {
         calendario.eliminarTarea(idUno);
         calendario.eliminarTarea(idDos);
         calendario.eliminarTarea(idTres);
+
         assertEquals(0,calendario.obtenerTareas().size());
         assertFalse(calendario.obtenerTareas().contains(tareaUno));
         assertFalse(calendario.obtenerTareas().contains(tareaDos));
@@ -95,13 +118,19 @@ public class CalendarioTest {
     }
     @Test
     public void testSiHayTareasIgualesBorraLaCorrecta(){
+
         var calendario = new Calendario();
+
         var tareaUno = new TareaDiaCompleto("Tarea","Hacer la tarea", LocalDate.of(2023,12,22));
+
         var tareaDos = new TareaDiaCompleto("Tarea","Hacer la tarea", LocalDate.of(2023,12,22));
+
         int idUno = tareaUno.obtenerId();
+
         calendario.crearTarea(tareaUno);
         calendario.crearTarea(tareaDos);
         assertEquals(2,calendario.obtenerTareas().size());
+
         calendario.eliminarTarea(idUno);
         assertEquals(1,calendario.obtenerTareas().size());
         assertFalse(calendario.obtenerTareas().contains(tareaUno));
@@ -110,28 +139,33 @@ public class CalendarioTest {
     }
     @Test
     public void testSiNoEncuentraIdNoEliminaNada(){
+
         var calendario = new Calendario();
         var tareaUno = new TareaDiaCompleto("Tarea","Hacer la tarea", LocalDate.of(2023,12,22));
         var tareaDos = new TareaDiaCompleto("Tarea","Hacer la tarea", LocalDate.of(2023,12,22));
+
         calendario.crearTarea(tareaUno);
         calendario.crearTarea(tareaDos);
         assertEquals(2,calendario.obtenerTareas().size());
+
         calendario.eliminarTarea(9393);
         assertEquals(2,calendario.obtenerTareas().size());
     }
     @Test
     public void testModificarTarea(){
+
         var calendario = new Calendario();
         var tarea = new TareaDiaCompleto("Tarea","Hacer la tarea", LocalDate.of(2023,12,22));
         calendario.crearTarea(tarea);
         int idUno = tarea.obtenerId();
+
         assertEquals("Tarea",calendario.obtenerTareas().get(0).obtenerTitulo());
         assertEquals("Hacer la tarea",calendario.obtenerTareas().get(0).obtenerDescripcion());
         assertEquals(LocalDateTime.of(2023,12,22,0,0),calendario.obtenerTareas().get(0).obtenerFechaInicio());
         assertEquals(LocalDateTime.of(2023,12,22,23,59,59),calendario.obtenerTareas().get(0).obtenerFechaVencimiento());
 
-
         calendario.modificarTarea(idUno,"Nuevo Titulo","Nueva Descripcion",LocalDateTime.of(2023,12,24,0,0),LocalDateTime.of(2023,12,24,18,20));
+
         assertEquals("Nuevo Titulo",calendario.obtenerTareas().get(0).obtenerTitulo());
         assertEquals("Nueva Descripcion",calendario.obtenerTareas().get(0).obtenerDescripcion());
         assertEquals(LocalDateTime.of(2023,12,24,0,0),calendario.obtenerTareas().get(0).obtenerFechaInicio());
@@ -144,9 +178,11 @@ public class CalendarioTest {
         var tareaUno = new TareaDiaCompleto("Tarea","Hacer la tarea", LocalDate.of(2023,12,22));
         var tareaDos = new TareaDiaCompleto("Tarea","Hacer la tarea", LocalDate.of(2023,12,22));
         int idUno = tareaUno.obtenerId();
+
         calendario.crearTarea(tareaUno);
         calendario.crearTarea(tareaDos);
         calendario.modificarTarea(idUno,"Nuevo Titulo","Nueva Descripcion",LocalDateTime.of(2023,12,24,0,0),LocalDateTime.of(2023,12,24,18,20));
+
         assertEquals("Nuevo Titulo",calendario.obtenerTareas().get(0).obtenerTitulo());
         assertEquals("Nueva Descripcion",calendario.obtenerTareas().get(0).obtenerDescripcion());
         assertEquals(LocalDateTime.of(2023,12,24,0,0),calendario.obtenerTareas().get(0).obtenerFechaInicio());
@@ -162,9 +198,11 @@ public class CalendarioTest {
         var calendario = new Calendario();
         var tareaUno = new TareaDiaCompleto("Tarea","Hacer la tarea", LocalDate.of(2023,12,22));
         var tareaDos = new TareaDiaCompleto("Tarea","Hacer la tarea", LocalDate.of(2023,12,22));
+
         calendario.crearTarea(tareaUno);
         calendario.crearTarea(tareaDos);
         calendario.modificarTarea(9999,"Nuevo Titulo","Nueva Descripcion",LocalDateTime.of(2023,12,24,0,0),LocalDateTime.of(2023,12,24,18,20));
+
         assertEquals("Tarea",calendario.obtenerTareas().get(0).obtenerTitulo());
         assertEquals("Hacer la tarea",calendario.obtenerTareas().get(0).obtenerDescripcion());
         assertEquals(LocalDateTime.of(2023,12,22,0,0),calendario.obtenerTareas().get(0).obtenerFechaInicio());
@@ -273,7 +311,13 @@ public class CalendarioTest {
         //Elimino la instancia de EventoDiario y todas sus repeticiones
         calendario.eliminarEvento(todosLosEventos.get(0));
 
-        assertFalse(todosLosEventos.contains(eventosDiarios));
+        for(Evento eventoDiario : eventosDiarios.obtenerEventosCreados()) {
+            for(Evento evento : todosLosEventos){
+
+                assertNotEquals(evento.getClass() ,eventoDiario.getClass());
+            }
+        }
+
         assertEquals(5, todosLosEventos.size() );
 
     }
@@ -298,9 +342,9 @@ public class CalendarioTest {
         eventosDiarios.crearEvento("Evento Diario", "Evento Repetido", LocalDateTime.of(2023, 4, 10, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 10, Repeticion.HASTA_OCURRENCIAS, 1, null);
 
         eventosSemanales.crearEvento("Evento Semanal", "Evento Repetido", LocalDateTime.of(2023, 4, 11, 9, 0), LocalDateTime.of(2023, 4, 21, 9, 30), 1, Repeticion.HASTA_FECHA_FIN, 0, List.of(DayOfWeek.MONDAY));
-        eventosSemanales.crearEvento("Evento Semanal", "Evento Repetido", LocalDateTime.of(2023, 4, 11, 9, 0), LocalDateTime.of(2023, 4, 21, 9, 30), 1, Repeticion.HASTA_FECHA_FIN, 0, List.of(DayOfWeek.MONDAY));;
+        eventosSemanales.crearEvento("Evento Semanal", "Evento Repetido", LocalDateTime.of(2023, 4, 11, 9, 0), LocalDateTime.of(2023, 4, 21, 9, 30), 1, Repeticion.HASTA_FECHA_FIN, 0, List.of(DayOfWeek.MONDAY));
 
-        eventosMensuales.crearEvento("Evento Mensual", "Evento Unico", LocalDateTime.of(2023, 4, 12, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 99, Repeticion.INFINITA, 2, null);;
+        eventosMensuales.crearEvento("Evento Mensual", "Evento Unico", LocalDateTime.of(2023, 4, 12, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 99, Repeticion.INFINITA, 2, null);
         eventosAnuales.crearEvento("Evento Anual", "Evento Unico", LocalDateTime.of(2023, 4, 13, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 99, Repeticion.HASTA_FECHA_FIN, 3, null);
 
         calendario.agregarEventosACalendario(eventosDiarios.obtenerEventosCreados());
@@ -340,10 +384,10 @@ public class CalendarioTest {
 
         eventosSemanales.crearEvento("Evento Semanal", "Evento Repetido", LocalDateTime.of(2023, 4, 11, 9, 0), LocalDateTime.of(2023, 4, 21, 9, 30), 1, Repeticion.HASTA_FECHA_FIN, 0, List.of(DayOfWeek.MONDAY));
         eventosSemanales.crearEvento("Evento Semanal", "Evento Repetido", LocalDateTime.of(2023, 4, 11, 9, 0), LocalDateTime.of(2023, 4, 21, 9, 30), 1, Repeticion.HASTA_FECHA_FIN, 0, List.of(DayOfWeek.MONDAY));
-        ;
+
 
         eventosMensuales.crearEvento("Evento Mensual", "Evento Unico", LocalDateTime.of(2023, 4, 12, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 99, Repeticion.INFINITA, 2, null);
-        ;
+
         eventosAnuales.crearEvento("Evento Anual", "Evento Unico", LocalDateTime.of(2023, 4, 13, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 99, Repeticion.HASTA_FECHA_FIN, 3, null);
 
         calendario.agregarEventosACalendario(eventosDiarios.obtenerEventosCreados());
@@ -356,16 +400,22 @@ public class CalendarioTest {
         //Elimino la instancia de EventoSemanal y todas sus repeticiones
         calendario.eliminarEvento(todosLosEventos.get(2));
 
-        assertFalse(todosLosEventos.contains(eventosSemanales));
+        for(Evento eventoSemanal : eventosSemanales.obtenerEventosCreados()) {
+            for(Evento evento : todosLosEventos){
+                assertNotEquals(evento.getClass() ,eventoSemanal.getClass());
+            }
+        }
+
         assertEquals(4, todosLosEventos.size());
     }
 
     @Test
     public void testObtenerProximosEventosDiarios(){
+
         CreadorEventosDiarios creadorDeEventosDiarios = new CreadorEventosDiarios();
         Calendario eventosDiariosLista = new Calendario(creadorDeEventosDiarios);
 
-        String titulo = "Evento Diario";
+        String titulo      = "Evento Diario";
         String descripcion = "Evento que se repite hasta ocurrencias";
 
         LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 10, 9, 0);
@@ -384,7 +434,7 @@ public class CalendarioTest {
 
         //Verifico que puedo acceder a alarmas
         var Notificacion = new Notificacion();
-        var alarma = new AlarmaFechaAbsoluta(LocalDateTime.of(2023, 4, 17, 10, 0),Notificacion);
+        var alarma       = new AlarmaFechaAbsoluta(LocalDateTime.of(2023, 4, 17, 10, 0),Notificacion);
         eventoDiario.agregarAlarmaEvento(alarma);
 
         //Creo el evento con la alarma
@@ -412,10 +462,11 @@ public class CalendarioTest {
 
     @Test
     public void testEliminarTodosLosProximosEventosDiarios(){
+
         CreadorEventosDiarios creadorDeEventosDiarios = new CreadorEventosDiarios();
         Calendario eventosDiariosLista = new Calendario(creadorDeEventosDiarios);
 
-        String titulo = "Evento Diario";
+        String titulo      = "Evento Diario";
         String descripcion = "Evento que se repite hasta ocurrencias";
 
         LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 10, 9, 0);
@@ -434,7 +485,7 @@ public class CalendarioTest {
 
         //Verifico que puedo acceder a alarmas
         var Notificacion = new Notificacion();
-        var alarma = new AlarmaFechaAbsoluta(LocalDateTime.of(2023, 4, 17, 10, 0),Notificacion);
+        var alarma       = new AlarmaFechaAbsoluta(LocalDateTime.of(2023, 4, 17, 10, 0),Notificacion);
         eventoDiario.agregarAlarmaEvento(alarma);
 
         ArrayList<Evento> lista = eventosDiariosLista.proximosEventosDiarios(titulo, descripcion, fechaInicio,fechaFin,maxOcurrencias,tipoRepeticion,intervalo);
@@ -497,7 +548,7 @@ public class CalendarioTest {
         CreadorEventosSemanales creadorEventosSemanales = new CreadorEventosSemanales();
         Calendario eventosSemanalesLista = new Calendario(creadorEventosSemanales);
 
-        String titulo = "Evento Semanal";
+        String titulo      = "Evento Semanal";
         String descripcion = "Evento que se repite hasta FechaFin";
 
         LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 3, 9, 0);
@@ -508,19 +559,19 @@ public class CalendarioTest {
         //Pruebo un tipo por clase de Evento
         Repeticion tipoRepeticion = Repeticion.HASTA_FECHA_FIN;
 
-
         var eventoSemanal = new EventoSemanal();
+
         eventoSemanal.establecerDiasSemana(List.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY));
         List<DayOfWeek> diasSemana = eventoSemanal.obtenerDiasSemana();
 
         assertTrue(eventoSemanal.obtenerAlarmasEvento().isEmpty());
 
         //Verifico que puedo acceder a alarmas
-        var sonido = new Sonido();
+        var sonido       = new Sonido();
         var alarmaSonido = new AlarmaFechaAbsoluta(LocalDateTime.of(2023, 4, 17, 10, 0),sonido);
         eventoSemanal.agregarAlarmaEvento(alarmaSonido);
 
-        //Creo el con la alarma
+        //Creo el evento con la alarma
         eventosSemanalesLista.crearEvento(titulo, descripcion, fechaInicio,fechaFin,maxOcurrencias,tipoRepeticion,0 ,diasSemana);
 
         ArrayList<Evento> lista = eventosSemanalesLista.proximosEventosSemanales(titulo, descripcion, fechaInicio,fechaFin,maxOcurrencias,tipoRepeticion,diasSemana);
@@ -546,16 +597,15 @@ public class CalendarioTest {
         CreadorEventosMensuales creadorEventosMensuales = new CreadorEventosMensuales();
         Calendario eventosMensualesLista = new Calendario(creadorEventosMensuales);
 
-        String titulo = "Evento Mensual";
-        String descripcion = "Evento que se repite Infinitamente";
+        String titulo       = "Evento Mensual";
+        String descripcion  = "Evento que se repite Infinitamente";
 
         LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 3, 9, 0);
-        LocalDateTime fechaFin = LocalDateTime.of(2023, 4, 10, 9, 0);
+        LocalDateTime fechaFin    = LocalDateTime.of(2023, 4, 10, 9, 0);
 
         int maxOcurrencias = 99; //numero alto pero testeable
 
         Repeticion tipoRepeticion = Repeticion.INFINITA;
-
 
         var eventoMensual = new EventoMensual();
 
@@ -564,28 +614,29 @@ public class CalendarioTest {
 
         assertTrue(eventoMensual.obtenerAlarmasEvento().isEmpty());
 
-
         //Verifico que puedo acceder a alarmas
-        var mail = new Sonido();
-        var alarmaMail = new AlarmaFechaAbsoluta(LocalDateTime.of(2023, 4, 17, 10, 0),mail);
+        var mail        = new Sonido();
+        var alarmaMail  = new AlarmaFechaAbsoluta(LocalDateTime.of(2023, 4, 17, 10, 0),mail);
         eventoMensual.agregarAlarmaEvento(alarmaMail);
 
-        //Creo el con la alarma
+
+        //Creo el evento con la alarma
         eventosMensualesLista.crearEvento(titulo, descripcion, fechaInicio,fechaFin,maxOcurrencias,tipoRepeticion,intervaloMeses ,null);
 
         ArrayList<Evento> listaMensual = eventosMensualesLista.proximosEventosMensuales(titulo, descripcion, fechaInicio,fechaFin,maxOcurrencias,tipoRepeticion,intervaloMeses);
 
-        LocalDateTime fechaAbril = listaMensual.get(0).obtenerFechaInicio();
-        LocalDateTime fechaJunio = listaMensual.get(1).obtenerFechaInicio();
+        LocalDateTime fechaAbril  = listaMensual.get(0).obtenerFechaInicio();
+        LocalDateTime fechaJunio  = listaMensual.get(1).obtenerFechaInicio();
         LocalDateTime fechaAgosto = listaMensual.get(2).obtenerFechaInicio();
 
-        LocalDateTime fechaAbrilEsperada = fechaInicio;
-        LocalDateTime fechaJunioEsperada = fechaAbrilEsperada.plusMonths(2);
+        LocalDateTime fechaAbrilEsperada  = fechaInicio;
+        LocalDateTime fechaJunioEsperada  = fechaAbrilEsperada.plusMonths(2);
         LocalDateTime fechaAgostoEsperada = fechaJunioEsperada.plusMonths(2);
 
         assertEquals(fechaAbril,fechaAbrilEsperada );
         assertEquals(fechaJunio,fechaJunioEsperada );
         assertEquals(fechaAgosto,fechaAgostoEsperada );
+
         assertTrue(eventoMensual.obtenerAlarmasEvento().contains(alarmaMail));
         assertEquals(100, listaMensual.size());
 
@@ -593,14 +644,15 @@ public class CalendarioTest {
 
     @Test
     public void testObtenerProximosEventosAnuales(){
+
         CreadorEventosAnuales creadorEventosAnuales = new CreadorEventosAnuales();
         Calendario eventosAnualesLista = new Calendario(creadorEventosAnuales);
 
-        String titulo = "Evento Anual";
-        String descripcion = "Evento que se repite hasta ocurrencias";
+        String titulo      =  "Evento Anual";
+        String descripcion =  "Evento que se repite hasta ocurrencias";
 
         LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 3, 9, 0);
-        LocalDateTime fechaFin = LocalDateTime.of(2023, 4, 10, 9, 0);
+        LocalDateTime fechaFin    = LocalDateTime.of(2023, 4, 10, 9, 0);
 
         int maxOcurrencias = 3;
 
@@ -625,8 +677,105 @@ public class CalendarioTest {
         assertEquals(fecha2023,fecha2023Esperada );
         assertEquals(fecha2025,fecha2025Esperada );
         assertEquals(fecha2027,fecha2027Esperada );
+
         assertTrue(eventAnual.obtenerAlarmasEvento().isEmpty());
+
         assertEquals(3, listaAnios.size());
+
+    }
+
+    @Test
+    public void testModificarEvento(){
+
+        //Testeo con eventos anuales en este caso
+        CreadorEventosAnuales creadorEventosAnuales = new CreadorEventosAnuales();
+        Calendario eventosAnualesLista = new Calendario(creadorEventosAnuales);
+
+        var eventoOriginal = new EventoAnual("Evento Original", "Evento que quiero modificar", LocalDateTime.of(2023, 4, 3, 9, 0),LocalDateTime.of(2023, 4, 10, 9, 0),3,Repeticion.HASTA_OCURRENCIAS,1 );
+
+        eventosAnualesLista.crearEvento(eventoOriginal.obtenerTitulo(), eventoOriginal.obtenerDescripcion(), eventoOriginal.obtenerFechaInicio(),eventoOriginal.obtenerFechaFin(),eventoOriginal.obtenerMaxOcurrencias(),eventoOriginal.obtenerTipoRepeticion(),eventoOriginal.obtenerCantidadAnios(), null);
+
+        var eventoModificado = new EventoAnual("Evento Modificado", "Evento Unico", LocalDateTime.of(2023, 4, 13, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 99, Repeticion.HASTA_FECHA_FIN, 3);
+
+        eventosAnualesLista.modificarEvento(eventoOriginal, eventoModificado);
+
+        for(Evento evento :eventosAnualesLista.obtenerListaEventosTotales() ){
+
+            assertEquals(evento.obtenerTitulo(), eventoModificado.obtenerTitulo());
+            assertEquals(evento.obtenerDescripcion(), eventoModificado.obtenerDescripcion());
+            assertEquals(evento.obtenerFechaInicio(), eventoModificado.obtenerFechaInicio());
+            assertEquals(evento.obtenerFechaFin(), eventoModificado.obtenerFechaFin());
+            assertEquals(evento.obtenerMaxOcurrencias(), eventoModificado.obtenerMaxOcurrencias());
+            assertEquals(evento.obtenerTipoRepeticion(), eventoModificado.obtenerTipoRepeticion());
+
+        }
+
+    }
+
+    @Test
+    public void testModificarTodasLasOcurrenciasDeEvento(){
+
+        //En este caso, pruebo con eventos diarios
+        CreadorEventosDiarios creadorEventosDiarios = new CreadorEventosDiarios();
+        CreadorEventosSemanales creadorEventosSemanales = new CreadorEventosSemanales();
+        CreadorEventosMensuales creadorEventosMensuales = new CreadorEventosMensuales();
+        CreadorEventosAnuales creadorEventosAnuales = new CreadorEventosAnuales();
+
+        Calendario eventosDiarios = new Calendario(creadorEventosDiarios);
+        Calendario eventosSemanales = new Calendario(creadorEventosSemanales);
+        Calendario eventosMensuales = new Calendario(creadorEventosMensuales);
+        Calendario eventosAnuales = new Calendario(creadorEventosAnuales);
+
+        Calendario calendario = new Calendario();
+
+        ArrayList<Evento> listaEventosDiarios   = eventosDiarios.proximosEventosDiarios("Evento Diario", "Evento Repetido", LocalDateTime.of(2023, 4, 10, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 2, Repeticion.HASTA_OCURRENCIAS, 1);
+        ArrayList<Evento> listaEventosSemanales = eventosSemanales.proximosEventosSemanales("Evento Semanal", "Evento Repetido", LocalDateTime.of(2023, 4, 11, 9, 0), LocalDateTime.of(2023, 4, 21, 9, 30), 3, Repeticion.HASTA_OCURRENCIAS, List.of(DayOfWeek.MONDAY));
+        ArrayList<Evento> listaEventosMensuales = eventosMensuales.proximosEventosMensuales("Evento Mensual", "Evento Unico", LocalDateTime.of(2023, 4, 12, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 4, Repeticion.INFINITA, 2);
+        ArrayList<Evento> listaEventosAnuales   = eventosAnuales.proximosEventosAnuales("Evento Anual", "Evento Unico", LocalDateTime.of(2023, 4, 13, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 1, Repeticion.HASTA_FECHA_FIN, 3);
+
+
+        calendario.agregarEventosACalendario(listaEventosDiarios);
+        calendario.agregarEventosACalendario(listaEventosSemanales);
+        calendario.agregarEventosACalendario(listaEventosMensuales);
+        calendario.agregarEventosACalendario(listaEventosAnuales);
+
+
+        ArrayList<Evento> listaTodosLosEventos = calendario.obtenerListaEventosTotales();
+
+        var eventoModificado = new EventoDiario("Evento Modificado", "Evento Unico", LocalDateTime.of(2023, 4, 13, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 99, Repeticion.HASTA_FECHA_FIN, 3);
+
+        for (Evento evento : listaTodosLosEventos) {
+            if (evento.getClass().equals(eventoModificado.getClass())){
+                calendario.modificarEvento(evento, eventoModificado);
+            }
+        }
+        Evento primerEventoDiario = calendario.obtenerListaEventosTotales().get(0);
+        Evento segundoEventoDiario = calendario.obtenerListaEventosTotales().get(1);
+
+        //Dentro de la lista de eventos totales del calendario, hay 3 eventos semanales. Agarro uno al azar con respecto a su indice y pruebo que no ha sido modificado
+        Evento eventoSemanalRandom = calendario.obtenerListaEventosTotales().get(2);
+
+        assertEquals(primerEventoDiario.obtenerTitulo(), eventoModificado.obtenerTitulo());
+        assertEquals(primerEventoDiario.obtenerDescripcion(), eventoModificado.obtenerDescripcion());
+        assertEquals(primerEventoDiario.obtenerFechaInicio(), eventoModificado.obtenerFechaInicio());
+        assertEquals(primerEventoDiario.obtenerFechaFin(), eventoModificado.obtenerFechaFin());
+        assertEquals(primerEventoDiario.obtenerMaxOcurrencias(), eventoModificado.obtenerMaxOcurrencias());
+        assertEquals(primerEventoDiario.obtenerTipoRepeticion(), eventoModificado.obtenerTipoRepeticion());
+
+        assertEquals(segundoEventoDiario.obtenerTitulo(), eventoModificado.obtenerTitulo());
+        assertEquals(segundoEventoDiario.obtenerDescripcion(), eventoModificado.obtenerDescripcion());
+        assertEquals(segundoEventoDiario.obtenerFechaInicio(), eventoModificado.obtenerFechaInicio());
+        assertEquals(segundoEventoDiario.obtenerFechaFin(), eventoModificado.obtenerFechaFin());
+        assertEquals(segundoEventoDiario.obtenerMaxOcurrencias(), eventoModificado.obtenerMaxOcurrencias());
+        assertEquals(segundoEventoDiario.obtenerTipoRepeticion(), eventoModificado.obtenerTipoRepeticion());
+
+        //Verifico que no ha sido modificado
+        assertNotEquals(eventoSemanalRandom.obtenerTitulo(), eventoModificado.obtenerTitulo());
+        assertNotEquals(eventoSemanalRandom.obtenerDescripcion(), eventoModificado.obtenerDescripcion());
+        assertNotEquals(eventoSemanalRandom.obtenerFechaInicio(), eventoModificado.obtenerFechaInicio());
+        assertNotEquals(eventoSemanalRandom.obtenerFechaFin(), eventoModificado.obtenerFechaFin());
+        assertNotEquals(eventoSemanalRandom.obtenerMaxOcurrencias(), eventoModificado.obtenerMaxOcurrencias());
+        assertNotEquals(eventoSemanalRandom.obtenerTipoRepeticion(), eventoModificado.obtenerTipoRepeticion());
 
     }
 }

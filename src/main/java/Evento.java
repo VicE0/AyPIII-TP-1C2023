@@ -1,5 +1,4 @@
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.ArrayList;
 
 public abstract class Evento
@@ -105,12 +104,8 @@ public abstract class Evento
     }
 
 
-    public boolean fechaFinNula()
-   {
-       if (fechaFin != null) {
-           return false;
-       }
-       return true;
+    public boolean fechaFinNula() {
+       return fechaFin == null;
    }
 
     public void sumarOcurrencias(){

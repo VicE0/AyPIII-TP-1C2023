@@ -71,50 +71,49 @@ public class EventoAnual extends Evento {
         return fecha.plusYears(1);
     }
 
+    //Metodo que crea una nueva instancia del objeto EventoAnual según la cantidad de veces que indique el tipo de repeticion
+    //Por cada fecha en la que el evento se deba repetir, se crea un nuevo objeto con dicha fecha como una nueva fecha de inicio
     @Override
     protected ArrayList<Evento> switchCaseRepeticion(LocalDateTime proximaFecha, ArrayList<Evento>  proximosEventos)
     {
         switch (obtenerTipoRepeticion()) {
+            case INFINITA -> {
 
-            case INFINITA:
-
-                var eventoInfinito = new EventoAnual(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion(), cantidadAnios);
-
+                var eventoInfinito = new EventoAnual(obtenerTitulo(), obtenerDescripcion(), proximaFecha, obtenerFechaFin(), obtenerMaxOcurrencias(), obtenerTipoRepeticion(), cantidadAnios);
                 proximosEventos.add(eventoInfinito);
 
-                while (obtenerOcurrencias() < obtenerMaxOcurrencias())
-                {
+                while (obtenerOcurrencias() < obtenerMaxOcurrencias()) {
                     proximaFecha = calcularSiguienteOcurrencia(proximaFecha);
 
-                    var eventoInfinitoNuevo = new EventoAnual(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion(), cantidadAnios);
+                    var eventoInfinitoNuevo = new EventoAnual(obtenerTitulo(), obtenerDescripcion(), proximaFecha, obtenerFechaFin(), obtenerMaxOcurrencias(), obtenerTipoRepeticion(), cantidadAnios);
 
                     proximosEventos.add(eventoInfinitoNuevo);
 
                     sumarOcurrencias();
                 }
                 return proximosEventos;
+            }
+            case HASTA_FECHA_FIN -> {
+                if (!fechaFinNula()) {
 
-            case HASTA_FECHA_FIN:
-                if ( !fechaFinNula() ) {
-
-                    var eventoFechaFin = new EventoAnual(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion(),cantidadAnios);
+                    var eventoFechaFin = new EventoAnual(obtenerTitulo(), obtenerDescripcion(), proximaFecha, obtenerFechaFin(), obtenerMaxOcurrencias(), obtenerTipoRepeticion(), cantidadAnios);
 
                     proximosEventos.add(eventoFechaFin);
                 }
-
-                while(proximaFecha.isBefore(obtenerFechaFin())) {
+                while (proximaFecha.isBefore(obtenerFechaFin())) {
 
                     proximaFecha = calcularSiguienteOcurrencia(proximaFecha);
 
-                    var eventoFechaFinNuevo = new EventoAnual(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion(), cantidadAnios);
+                    var eventoFechaFinNuevo = new EventoAnual(obtenerTitulo(), obtenerDescripcion(), proximaFecha, obtenerFechaFin(), obtenerMaxOcurrencias(), obtenerTipoRepeticion(), cantidadAnios);
                     proximosEventos.add(eventoFechaFinNuevo);
 
                 }
                 return proximosEventos;
+            }
+            case HASTA_OCURRENCIAS -> {
 
-            case HASTA_OCURRENCIAS:
+                var eventoOcurrencias = new EventoAnual(obtenerTitulo(), obtenerDescripcion(), proximaFecha, obtenerFechaFin(), obtenerMaxOcurrencias(), obtenerTipoRepeticion(), cantidadAnios);
 
-                var eventoOcurrencias = new EventoAnual(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion(), cantidadAnios);
                 proximosEventos.add(eventoOcurrencias);
                 sumarOcurrencias();
 
@@ -122,16 +121,17 @@ public class EventoAnual extends Evento {
 
                     proximaFecha = calcularSiguienteOcurrencia(proximaFecha);
 
-                    var eventoOcurrenciasNuevo = new EventoAnual(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion(), cantidadAnios);
+                    var eventoOcurrenciasNuevo = new EventoAnual(obtenerTitulo(), obtenerDescripcion(), proximaFecha, obtenerFechaFin(), obtenerMaxOcurrencias(), obtenerTipoRepeticion(), cantidadAnios);
 
                     proximosEventos.add(eventoOcurrenciasNuevo);
                     sumarOcurrencias();
 
                 }
                 return proximosEventos;
-
-            default:
+            }
+            default -> {
                 return proximosEventos;
+            }
         }
     }
 }

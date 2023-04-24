@@ -9,7 +9,7 @@ import java.util.Iterator;
 public class Calendario {
 
     private CreadorDeEventos creadorDeEventos;
-    private ArrayList<Evento> eventos;
+    private final ArrayList<Evento> eventos;
     private ArrayList<Tarea> tareas;
     private ArrayList<Alarma> alarmas;
 
@@ -20,7 +20,6 @@ public class Calendario {
 
     public Calendario(CreadorDeEventos creadorDeEventos) {
         this.creadorDeEventos = creadorDeEventos;
-        this.eventos = new ArrayList<>();
         this.eventos = new ArrayList<>();
     }
 
@@ -39,33 +38,19 @@ public class Calendario {
         }
     }
 
-
     public ArrayList<Evento> obtenerListaEventosTotales(){
         return this.eventos;
     }
 
-
-//    public void eliminarEvento(Evento eventoAEliminar) {
-//        ArrayList<Evento> eventosAEliminar = new ArrayList<>();
-//
-//        for (Evento nuevoEvento : this.eventos) {
-//            if (nuevoEvento.getClass().equals(eventoAEliminar.getClass()) && nuevoEvento.obtenerTitulo().equals(eventoAEliminar.obtenerTitulo())) {
-//                eventosAEliminar.add(nuevoEvento);
-//            }
-//        }
-//
-//        for (Evento evento : eventosAEliminar) {
-//            eventosAEliminar.remove(evento);
-//        }
-//    }
-
-
     public void eliminarEvento(Evento eventoAEliminar) {
-        Iterator<Evento> it = obtenerListaEventosTotales().iterator();
-        while (it.hasNext()) {
-            Evento evento = it.next();
+
+        Iterator<Evento> iterador = obtenerListaEventosTotales().iterator();
+
+        while (iterador.hasNext()) {
+            Evento evento = iterador.next();
+
             if (evento.getClass().equals(eventoAEliminar.getClass()) && evento.obtenerTitulo().equals(eventoAEliminar.obtenerTitulo())) {
-                it.remove();
+                iterador.remove();
             }
         }
     }
@@ -75,6 +60,7 @@ public class Calendario {
         ArrayList<Evento> eventosAModificar = new ArrayList<>();
 
         for (Evento nuevoEvento : this.eventos) {
+
             if (nuevoEvento.getClass().equals(eventoOriginal.getClass()) && nuevoEvento.obtenerTitulo().equals(eventoOriginal.obtenerTitulo())) {
                 eventosAModificar.add(nuevoEvento);
             }
@@ -84,6 +70,8 @@ public class Calendario {
             nuevoEvento.establecerDescripcion(eventoModificado.obtenerDescripcion());
             nuevoEvento.establecerFechaInicio(eventoModificado.obtenerFechaInicio());
             nuevoEvento.establecerFechaFin(eventoModificado.obtenerFechaFin());
+            nuevoEvento.establecerMaxOcurrencias(eventoModificado.obtenerMaxOcurrencias());
+            nuevoEvento.establecerTipoRepeticion(eventoModificado.obtenerTipoRepeticion());
         }
     }
 
@@ -156,20 +144,6 @@ public class Calendario {
         return tareas;
     }
 
-    //    // Método para obtener los eventos correspondientes a una fecha
-//    public ArrayList<Evento> obtenerEventosSegunFecha(LocalDate fecha) {
-//
-//        ArrayList<Evento> eventosEnFecha = new ArrayList<>();
-//
-//        for (Evento evento : this.eventos) {
-//            if (evento.obtenerFechaInicio().toLocalDate().equals(fecha) || evento.obtenerFechaFin().toLocalDate().equals(fecha)) {
-//                eventosEnFecha.add(evento);
-//            }
-//        }
-//        return eventosEnFecha;
-//    }
-//
-
     Alarma proximaAlarma() {
         alarmas = new ArrayList<>();
         for (Evento evento : eventos) {
@@ -190,5 +164,21 @@ public class Calendario {
         }
         return recorrerLista;
     }
+
+
+//ESTE METODO NO ES PEDIDO POR EL ENUNCIADO DE LA ETAPA 1, PERO A RECOMENDACIÓN DE ESSAYA FUE IMPLEMENTADO
+// Método para obtener los eventos correspondientes a una fecha
+//    public ArrayList<Evento> obtenerEventosSegunFecha(LocalDate fecha) {
+//
+//        ArrayList<Evento> eventosEnFecha = new ArrayList<>();
+//
+//        for (Evento evento : this.eventos) {
+//            if (evento.obtenerFechaInicio().toLocalDate().equals(fecha) || evento.obtenerFechaFin().toLocalDate().equals(fecha)) {
+//                eventosEnFecha.add(evento);
+//            }
+//        }
+//        return eventosEnFecha;
+//    }
+//
 
 }

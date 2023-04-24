@@ -1,6 +1,5 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 
 public class EventoDiario extends Evento {
     private int intervalo;
@@ -72,49 +71,51 @@ public class EventoDiario extends Evento {
         return fecha.plusDays(1);
     }
 
+    //Metodo que crea una nueva instancia del objeto EventoDiario según la cantidad de veces que indique el tipo de repeticion
+    //Por cada fecha en la que el evento se deba repetir, se crea un nuevo objeto con dicha fecha como una nueva fecha de inicio
     @Override
     protected ArrayList<Evento> switchCaseRepeticion(LocalDateTime proximaFecha,ArrayList<Evento>  proximosEventos)
     {
         switch (obtenerTipoRepeticion()) {
+            case INFINITA -> {
 
-            case INFINITA:
-
-                var eventoInfinito = new EventoDiario(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion(), intervalo);
-
+                var eventoInfinito = new EventoDiario(obtenerTitulo(), obtenerDescripcion(), proximaFecha, obtenerFechaFin(), obtenerMaxOcurrencias(), obtenerTipoRepeticion(), intervalo);
                 proximosEventos.add(eventoInfinito);
 
                 while (obtenerOcurrencias() < obtenerMaxOcurrencias()) {
 
                     proximaFecha = calcularSiguienteOcurrencia(proximaFecha);
 
-                    var eventoInfinitoNuevo = new EventoDiario(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion(), intervalo);
+                    var eventoInfinitoNuevo = new EventoDiario(obtenerTitulo(), obtenerDescripcion(), proximaFecha, obtenerFechaFin(), obtenerMaxOcurrencias(), obtenerTipoRepeticion(), intervalo);
 
                     proximosEventos.add(eventoInfinitoNuevo);
 
                     sumarOcurrencias();
                 }
                 return proximosEventos;
+            }
+            case HASTA_FECHA_FIN -> {
 
-            case HASTA_FECHA_FIN:
-                if ( !fechaFinNula() ) {
+                if (!fechaFinNula()) {
 
-                    var eventoFechaFin = new EventoDiario(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion(),intervalo);
+                    var eventoFechaFin = new EventoDiario(obtenerTitulo(), obtenerDescripcion(), proximaFecha, obtenerFechaFin(), obtenerMaxOcurrencias(), obtenerTipoRepeticion(), intervalo);
 
                     proximosEventos.add(eventoFechaFin);
                 }
-                while(proximaFecha.isBefore(obtenerFechaFin())) {
+
+                while (proximaFecha.isBefore(obtenerFechaFin())) {
 
                     proximaFecha = calcularSiguienteOcurrencia(proximaFecha);
 
-                    var eventoFechaFinNuevo = new EventoDiario(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion(), intervalo);
+                    var eventoFechaFinNuevo = new EventoDiario(obtenerTitulo(), obtenerDescripcion(), proximaFecha, obtenerFechaFin(), obtenerMaxOcurrencias(), obtenerTipoRepeticion(), intervalo);
                     proximosEventos.add(eventoFechaFinNuevo);
 
                 }
                 return proximosEventos;
+            }
+            case HASTA_OCURRENCIAS -> {
 
-            case HASTA_OCURRENCIAS:
-
-                var eventoOcurrencias = new EventoDiario(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion(), intervalo);
+                var eventoOcurrencias = new EventoDiario(obtenerTitulo(), obtenerDescripcion(), proximaFecha, obtenerFechaFin(), obtenerMaxOcurrencias(), obtenerTipoRepeticion(), intervalo);
                 proximosEventos.add(eventoOcurrencias);
                 sumarOcurrencias();
 
@@ -122,16 +123,17 @@ public class EventoDiario extends Evento {
 
                     proximaFecha = calcularSiguienteOcurrencia(proximaFecha);
 
-                    var eventoOcurrenciasNuevo = new EventoDiario(obtenerTitulo(),obtenerDescripcion(),proximaFecha,obtenerFechaFin(),obtenerMaxOcurrencias(),obtenerTipoRepeticion(), intervalo);
+                    var eventoOcurrenciasNuevo = new EventoDiario(obtenerTitulo(), obtenerDescripcion(), proximaFecha, obtenerFechaFin(), obtenerMaxOcurrencias(), obtenerTipoRepeticion(), intervalo);
 
                     proximosEventos.add(eventoOcurrenciasNuevo);
                     sumarOcurrencias();
 
                 }
                 return proximosEventos;
-
-            default:
+            }
+            default -> {
                 return proximosEventos;
+            }
         }
     }
 }
