@@ -5,12 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f4a2b6a4-54ae-4808-8225-7104df414da0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Calendario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Calendario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/CreadorDeEventos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CreadorDeEventos.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/CreadorEventosSemanales.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CreadorEventosSemanales.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/EventoSemanal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/EventoSemanal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/CreadorEventosAnuales.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CreadorEventosAnuales.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/CreadorEventosDiarios.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CreadorEventosDiarios.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/CreadorEventosMensuales.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CreadorEventosMensuales.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +51,16 @@
     "RunOnceActivity.ShowReadmeOnStart": "true"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.CalendarioTest">
+    <configuration name="CalendarioTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="tp-algoIII" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="CalendarioTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="EventoSemanalTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="tp-algoIII" />
       <option name="PACKAGE_NAME" value="" />
@@ -65,6 +72,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.CalendarioTest" />
         <item itemvalue="JUnit.EventoSemanalTest" />
       </list>
     </recent_temporary>
