@@ -1,17 +1,17 @@
 import java.time.LocalDateTime;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 public class EventoSemanal extends Evento {
-    private List<DayOfWeek> diasSemana;
+    private Set<DayOfWeek> diasSemana;
 
     public EventoSemanal() {
         super();
         this.diasSemana = null;
     }
 
-    public EventoSemanal(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin,int maxOcurrencias,Repeticion tipoRepeticion ,List<DayOfWeek> diasSemana) {
+    public EventoSemanal(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin,int maxOcurrencias,Repeticion tipoRepeticion ,Set<DayOfWeek> diasSemana) {
         super(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias,tipoRepeticion);
         this.diasSemana = diasSemana;
     }
@@ -51,11 +51,11 @@ public class EventoSemanal extends Evento {
         return super.obtenerOcurrencias();
     }
 
-    public List<DayOfWeek> obtenerDiasSemana() {
+    public Set<DayOfWeek> obtenerDiasSemana() {
         return diasSemana;
     }
 
-    public void establecerDiasSemana(List<DayOfWeek> diasSemana) {
+    public void establecerDiasSemana(Set<DayOfWeek> diasSemana) {
         this.diasSemana = diasSemana;
     }
 
