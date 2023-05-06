@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import java.util.List;
+import java.util.Set;
 import java.util.Iterator;
 
 public class Calendario {
@@ -24,7 +24,7 @@ public class Calendario {
         this.eventos = new ArrayList<>();
     }
 
-    public void crearEvento(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion, int intervalo, List<DayOfWeek> diasSemana) {
+    public void crearEvento(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion, int intervalo, Set<DayOfWeek> diasSemana) {
         this.eventos.add(creadorDeEventos.crearEvento(titulo, descripcion, fechaInicio,fechaFin, maxOcurrencias, tipoRepeticion, intervalo,diasSemana));
     }
 
@@ -106,7 +106,7 @@ public class Calendario {
         return eventoDiario.obtenerProximosEventos(eventoDiario);
     }
 
-    public ArrayList<Evento> proximosEventosSemanales(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion, List<DayOfWeek> diasSemana) {
+    public ArrayList<Evento> proximosEventosSemanales(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion, Set<DayOfWeek> diasSemana) {
         Evento eventoSemanal = new EventoSemanal( titulo,  descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion,diasSemana );
         return eventoSemanal.obtenerProximosEventos(eventoSemanal);
     }

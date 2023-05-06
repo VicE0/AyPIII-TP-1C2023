@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.*;
 
@@ -82,7 +82,7 @@ public class EventoSemanalTest {
         int maxOcurrencias = 1;
         Repeticion tipoRepeticion = Repeticion.HASTA_OCURRENCIAS;
 
-        List<DayOfWeek> diasSemana = List.of(DayOfWeek.MONDAY, DayOfWeek.FRIDAY);
+        Set<DayOfWeek> diasSemana = Set.of(DayOfWeek.MONDAY, DayOfWeek.FRIDAY);
 
 
         var eventoSemanal = new EventoSemanal(titulo, descripcion, fechaInicio, fechaFin,maxOcurrencias, tipoRepeticion ,diasSemana);
@@ -109,7 +109,7 @@ public class EventoSemanalTest {
         int maxOcurrencias = 1;
         Repeticion tipoRepeticion = Repeticion.HASTA_OCURRENCIAS;
 
-        List<DayOfWeek> diasSemana = List.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY ,DayOfWeek.FRIDAY);
+        Set<DayOfWeek> diasSemana = Set.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY ,DayOfWeek.FRIDAY);
 
 
         var eventoSemanal = new EventoSemanal(titulo, descripcion, fechaInicio, fechaFin,maxOcurrencias, tipoRepeticion ,diasSemana);
@@ -140,13 +140,13 @@ public class EventoSemanalTest {
         int maxOcurrencias = 99; //ingreso un numero grande pero testeable
         Repeticion tipoRepeticion = Repeticion.INFINITA;
 
-        List<DayOfWeek> diasSemana = List.of(DayOfWeek.MONDAY, DayOfWeek.FRIDAY);
-        List<DayOfWeek> diasSemanaActualizado = List.of(DayOfWeek.TUESDAY, DayOfWeek.THURSDAY);
+        Set<DayOfWeek> diasSemana = Set.of(DayOfWeek.MONDAY, DayOfWeek.FRIDAY);
+        Set<DayOfWeek> diasSemanaActualizado = Set.of(DayOfWeek.TUESDAY, DayOfWeek.THURSDAY);
 
         var eventoSemanal = new EventoSemanal(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion ,diasSemana);
 
         //Testeo que el setter funcione
-        eventoSemanal.establecerDiasSemana(List.of(DayOfWeek.TUESDAY, DayOfWeek.THURSDAY));
+        eventoSemanal.establecerDiasSemana(Set.of(DayOfWeek.TUESDAY, DayOfWeek.THURSDAY));
 
         ArrayList<Evento> proximosEventos = eventoSemanal.obtenerProximosEventos(eventoSemanal);
 
@@ -181,7 +181,7 @@ public class EventoSemanalTest {
         Repeticion tipoRepeticion = Repeticion.HASTA_FECHA_FIN;
 
 
-        List<DayOfWeek> diasSemana = List.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY);
+        Set<DayOfWeek> diasSemana = Set.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY);
 
         var eventoSemanal = new EventoSemanal(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion ,diasSemana);
 
@@ -226,7 +226,7 @@ public class EventoSemanalTest {
         Repeticion tipoRepeticion = Repeticion.HASTA_OCURRENCIAS;
 
 
-        List<DayOfWeek> diasSemana = List.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY);
+        Set<DayOfWeek> diasSemana = Set.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY);
 
         var eventoSemanal = new EventoSemanal(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion ,diasSemana);
 
