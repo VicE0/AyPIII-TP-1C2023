@@ -121,7 +121,7 @@ public class Calendario {
     }
 
 
-    public void crearTarea(Tarea tarea) {
+    public void agregarTarea(Tarea tarea) {
         tareas.add(tarea);
     }
 
@@ -163,7 +163,7 @@ public class Calendario {
         return tareas;
     }
 
-    Alarma proximaAlarma() {
+    Alarma proximaAlarma(LocalDateTime fechaReferencia) {
         ArrayList<Alarma> alarmas = new ArrayList<>();
         for (Evento evento : eventos) {
             alarmas.addAll(evento.obtenerAlarmasEvento());
@@ -175,7 +175,7 @@ public class Calendario {
         for (Alarma alarma : alarmas){
             if (recorrerLista == null || alarma.obtenerFechaYHora().isBefore(recorrerLista.obtenerFechaYHora())) {
                 // la alarma actual es la próxima en sonar
-                if (alarma.obtenerFechaYHora().isAfter(LocalDateTime.now())) {
+                if (fechaReferencia.isAfter(alarma.obtenerFechaYHora())) {
                     // solo si la alarma es futura
                     recorrerLista = alarma;
                 }

@@ -14,7 +14,7 @@ public class CalendarioTest {
         var calendario = new Calendario();
         var tarea = new TareaConVencimiento();
 
-        calendario.crearTarea(tarea);
+        calendario.agregarTarea(tarea);
 
         assertEquals(1,calendario.obtenerTareas().size());
         assertTrue(calendario.obtenerTareas().contains(tarea));
@@ -26,7 +26,7 @@ public class CalendarioTest {
         var calendario = new Calendario();
         var tarea = new TareaDiaCompleto("Tarea","Hacer la tarea", LocalDate.of(2023,12,22));
 
-        calendario.crearTarea(tarea);
+        calendario.agregarTarea(tarea);
 
         assertEquals("Tarea",calendario.obtenerTareas().get(0).obtenerTitulo());
         assertEquals("Hacer la tarea",calendario.obtenerTareas().get(0).obtenerDescripcion());
@@ -43,9 +43,9 @@ public class CalendarioTest {
         var tareaDos = new TareaDiaCompleto();
         var tareaTres = new TareaDiaCompleto("Tarea","Hacer la tarea", LocalDate.of(2023,12,22));
 
-        calendario.crearTarea(tareaUno);
-        calendario.crearTarea(tareaDos);
-        calendario.crearTarea(tareaTres);
+        calendario.agregarTarea(tareaUno);
+        calendario.agregarTarea(tareaDos);
+        calendario.agregarTarea(tareaTres);
 
         assertEquals(3,calendario.obtenerTareas().size());
         assertTrue(calendario.obtenerTareas().contains(tareaUno));
@@ -59,8 +59,8 @@ public class CalendarioTest {
         var tareaUno = new TareaDiaCompleto("Tarea","Hacer la tarea", LocalDate.of(2023,12,22));
         var tareaDos = new TareaDiaCompleto("Tarea","Hacer la tarea", LocalDate.of(2023,12,22));
 
-        calendario.crearTarea(tareaUno);
-        calendario.crearTarea(tareaDos);
+        calendario.agregarTarea(tareaUno);
+        calendario.agregarTarea(tareaDos);
 
         assertEquals(2,calendario.obtenerTareas().size());
         assertTrue(calendario.obtenerTareas().contains(tareaUno));
@@ -78,8 +78,8 @@ public class CalendarioTest {
 
         int idParaBorrar = tareaUno.obtenerId();
 
-        calendario.crearTarea(tareaUno);
-        calendario.crearTarea(tareaDos);
+        calendario.agregarTarea(tareaUno);
+        calendario.agregarTarea(tareaDos);
 
         assertEquals(2,calendario.obtenerTareas().size());
 
@@ -102,9 +102,9 @@ public class CalendarioTest {
         var tareaTres = new TareaDiaCompleto("Tarea","Hacer la tarea", LocalDate.of(2023,12,22));
         int idTres = tareaTres.obtenerId();
 
-        calendario.crearTarea(tareaUno);
-        calendario.crearTarea(tareaDos);
-        calendario.crearTarea(tareaTres);
+        calendario.agregarTarea(tareaUno);
+        calendario.agregarTarea(tareaDos);
+        calendario.agregarTarea(tareaTres);
 
         assertEquals(3,calendario.obtenerTareas().size());
         calendario.eliminarTarea(idUno);
@@ -128,8 +128,8 @@ public class CalendarioTest {
 
         int idUno = tareaUno.obtenerId();
 
-        calendario.crearTarea(tareaUno);
-        calendario.crearTarea(tareaDos);
+        calendario.agregarTarea(tareaUno);
+        calendario.agregarTarea(tareaDos);
         assertEquals(2,calendario.obtenerTareas().size());
 
         calendario.eliminarTarea(idUno);
@@ -145,8 +145,8 @@ public class CalendarioTest {
         var tareaUno = new TareaDiaCompleto("Tarea","Hacer la tarea", LocalDate.of(2023,12,22));
         var tareaDos = new TareaDiaCompleto("Tarea","Hacer la tarea", LocalDate.of(2023,12,22));
 
-        calendario.crearTarea(tareaUno);
-        calendario.crearTarea(tareaDos);
+        calendario.agregarTarea(tareaUno);
+        calendario.agregarTarea(tareaDos);
         assertEquals(2,calendario.obtenerTareas().size());
 
         calendario.eliminarTarea(9393);
@@ -157,7 +157,7 @@ public class CalendarioTest {
 
         var calendario = new Calendario();
         var tarea = new TareaDiaCompleto("Tarea","Hacer la tarea", LocalDate.of(2023,12,22));
-        calendario.crearTarea(tarea);
+        calendario.agregarTarea(tarea);
         int idUno = tarea.obtenerId();
 
         assertEquals("Tarea",calendario.obtenerTareas().get(0).obtenerTitulo());
@@ -180,8 +180,8 @@ public class CalendarioTest {
         var tareaDos = new TareaDiaCompleto("Tarea","Hacer la tarea", LocalDate.of(2023,12,22));
         int idUno = tareaUno.obtenerId();
 
-        calendario.crearTarea(tareaUno);
-        calendario.crearTarea(tareaDos);
+        calendario.agregarTarea(tareaUno);
+        calendario.agregarTarea(tareaDos);
         calendario.modificarTarea(idUno,"Nuevo Titulo","Nueva Descripcion",LocalDateTime.of(2023,12,24,0,0),LocalDateTime.of(2023,12,24,18,20), null, null);
 
         assertEquals("Nuevo Titulo",calendario.obtenerTareas().get(0).obtenerTitulo());
@@ -203,7 +203,7 @@ public class CalendarioTest {
         var notificacion = new Notificacion();
         var alarma = new AlarmaFechaAbsoluta(LocalDateTime.of(2023, 12, 22, 0, 0), notificacion);
         tarea.agregarAlarma(alarma);
-        calendario.crearTarea(tarea);
+        calendario.agregarTarea(tarea);
         int idUno = tarea.obtenerId();
 
         assertEquals("Tarea", calendario.obtenerTareas().get(0).obtenerTitulo());
@@ -226,8 +226,8 @@ public class CalendarioTest {
         var tareaUno = new TareaDiaCompleto("Tarea","Hacer la tarea", LocalDate.of(2023,12,22));
         var tareaDos = new TareaDiaCompleto("Tarea","Hacer la tarea", LocalDate.of(2023,12,22));
 
-        calendario.crearTarea(tareaUno);
-        calendario.crearTarea(tareaDos);
+        calendario.agregarTarea(tareaUno);
+        calendario.agregarTarea(tareaDos);
         calendario.modificarTarea(9999,"Nuevo Titulo","Nueva Descripcion",LocalDateTime.of(2023,12,24,0,0),LocalDateTime.of(2023,12,24,18,20),null,null);
 
         assertEquals("Tarea",calendario.obtenerTareas().get(0).obtenerTitulo());
@@ -255,9 +255,9 @@ public class CalendarioTest {
         tareaUno.agregarAlarma(alarmaUno);
         tareaDos.agregarAlarma(alarmaDos);
         tareaDos.agregarAlarma(alarmaTres);
-        calendario.crearTarea(tareaUno);
-        calendario.crearTarea(tareaDos);
-        assertEquals(alarmaDos,calendario.proximaAlarma());
+        calendario.agregarTarea(tareaUno);
+        calendario.agregarTarea(tareaDos);
+        assertEquals(alarmaDos,calendario.proximaAlarma(LocalDateTime.now()));
     }
 
     @Test
@@ -271,8 +271,8 @@ public class CalendarioTest {
         var calendario = new Calendario();
         var tarea = new TareaConVencimiento();
         var tareaDos = new TareaDiaCompleto();
-        calendario.crearTarea(tarea);
-        calendario.crearTarea(tareaDos);
+        calendario.agregarTarea(tarea);
+        calendario.agregarTarea(tareaDos);
         eventosDiarios.crearEvento("Evento Diario", "Evento Repetido", LocalDateTime.of(2023, 4, 10, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 10, Repeticion.HASTA_OCURRENCIAS, 1, null);
         eventosSemanales.crearEvento("Evento Semanal", "Evento Repetido", LocalDateTime.of(2023, 4, 11, 9, 0), LocalDateTime.of(2023, 4, 21, 9, 30), 1, Repeticion.HASTA_FECHA_FIN, 0, Set.of(DayOfWeek.MONDAY));
         eventosAnuales.crearEvento("Evento Anual", "Evento Unico", LocalDateTime.of(2023, 4, 13, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 99, Repeticion.HASTA_FECHA_FIN, 3, null);
