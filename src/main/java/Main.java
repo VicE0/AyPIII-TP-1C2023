@@ -17,7 +17,7 @@ public class Main {
 
         Repeticion tipoRepeticion = Repeticion.HASTA_OCURRENCIAS;
 
-        int intervalo = 1;
+        int intervalo = 2;
 //
 //        var eventoDiario = new EventoDiario(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion, intervalo);
 
@@ -41,7 +41,7 @@ public class Main {
 
 
         for (Evento evento : eventito){
-            System.out.println(evento.obtenerTitulo());
+            System.out.println(evento.obtenerFechaInicio());
         }
 
 

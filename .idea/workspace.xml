@@ -7,12 +7,9 @@
     <list default="true" id="f4a2b6a4-54ae-4808-8225-7104df414da0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Calendario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Calendario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ConstructorEventos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ConstructorEventos.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ConstructorEventosDiarios.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ConstructorEventosDiarios.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/CreadorDeEventos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CreadorDeEventos.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/CreadorEventosAnuales.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CreadorEventosAnuales.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/CreadorEventosDiarios.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CreadorEventosDiarios.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/CreadorEventosMensuales.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CreadorEventosMensuales.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/CreadorEventosSemanales.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CreadorEventosSemanales.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/EventoDiario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/EventoDiario.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

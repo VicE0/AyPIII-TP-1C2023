@@ -41,86 +41,89 @@ public class Calendario {
 
     public ArrayList<Evento> proximosEventos(ConstructorEventos constructor){
 
-
-        ArrayList<Evento> proximosEventos = new ArrayList<>();
+        ArrayList<Evento> OcurrenciasEventos = new ArrayList<>();
 
         // Añade la primera fecha ingresada
-        proximosEventos.add(constructor.obtenerEventoCreado());
+
+        OcurrenciasEventos.add(constructor.obtenerEventoCreado());
         constructor.obtenerEventoCreado().sumarOcurrencias();
 
         LocalDateTime proximaFecha = constructor.obtenerEventoCreado().calcularSiguienteOcurrencia(constructor.obtenerEventoCreado().obtenerFechaInicio());
 
-        return repeticionEvento(proximaFecha, proximosEventos, constructor);
+        return constructor.repeticionEvento(proximaFecha, OcurrenciasEventos);
     }
 
-
-    public ArrayList<Evento> repeticionEvento(LocalDateTime proximaFecha, ArrayList<Evento> proximosEventos, ConstructorEventos constructor) {
-
-        switch (constructor.obtenerEventoCreado().obtenerTipoRepeticion()) {
-
-            case INFINITA -> {
-                var eventoInfinito = constructor.obtenerEventoCreado();
-
-                proximosEventos.add(eventoInfinito);
-
-                while (constructor.obtenerEventoCreado().obtenerOcurrencias() < constructor.obtenerEventoCreado().obtenerMaxOcurrencias()) {
-
-                    proximaFecha = constructor.obtenerEventoCreado().calcularSiguienteOcurrencia(proximaFecha);
-
-                    var eventoInfinitoNuevo = constructor.obtenerEventoCreado();
-
-                    proximosEventos.add(eventoInfinitoNuevo);
-
-                    constructor.obtenerEventoCreado().sumarOcurrencias();
-                }
-                return proximosEventos;
-            }
-
-            case HASTA_FECHA_FIN -> {
-
-                if (!constructor.obtenerEventoCreado().fechaFinNula()) {
-
-                    var eventoFechaFin = constructor.obtenerEventoCreado();
-
-                    proximosEventos.add(eventoFechaFin);
-                }
-
-                while (proximaFecha.isBefore(constructor.obtenerEventoCreado().obtenerFechaFin())) {
-
-                    proximaFecha = constructor.obtenerEventoCreado().calcularSiguienteOcurrencia(proximaFecha);
-
-                    var eventoFechaFinNuevo = constructor.obtenerEventoCreado();
-                    proximosEventos.add(eventoFechaFinNuevo);
-
-                }
-                return proximosEventos;
-            }
-
-            case HASTA_OCURRENCIAS -> {
-
-                var eventoOcurrencias = constructor.obtenerEventoCreado();
-                proximosEventos.add(eventoOcurrencias);
-
-                constructor.obtenerEventoCreado().sumarOcurrencias();
-
-                while (constructor.obtenerEventoCreado().obtenerOcurrencias() < constructor.obtenerEventoCreado().obtenerMaxOcurrencias()) {
-
-                    proximaFecha = constructor.obtenerEventoCreado().calcularSiguienteOcurrencia(proximaFecha);
-
-                    var eventoOcurrenciasNuevo = constructor.obtenerEventoCreado();
-
-                    proximosEventos.add(eventoOcurrenciasNuevo);
-                    constructor.obtenerEventoCreado().sumarOcurrencias();
-
-                }
-                return proximosEventos;
-            }
-
-            default -> {
-                return proximosEventos;
-            }
-        }
-    }
+//
+//    public ArrayList<Evento> repeticionEvento(LocalDateTime proximaFecha, ArrayList<Evento> proximosEventos, ConstructorEventos constructor) {
+//
+//        switch (constructor.obtenerEventoCreado().obtenerTipoRepeticion()) {
+//
+//            case INFINITA -> {
+//                var eventoInfinito = constructor.obtenerEventoCreado();
+//
+//                proximosEventos.add(eventoInfinito);
+//
+//                while (constructor.obtenerEventoCreado().obtenerOcurrencias() < constructor.obtenerEventoCreado().obtenerMaxOcurrencias()) {
+//
+//                    proximaFecha = constructor.obtenerEventoCreado().calcularSiguienteOcurrencia(proximaFecha);
+//
+//                    var eventoInfinitoNuevo = constructor.obtenerEventoCreado();
+//
+//                    proximosEventos.add(eventoInfinitoNuevo);
+//
+//                    constructor.obtenerEventoCreado().sumarOcurrencias();
+//                }
+//                return proximosEventos;
+//            }
+//
+//            case HASTA_FECHA_FIN -> {
+//
+//                if (!constructor.obtenerEventoCreado().fechaFinNula()) {
+//
+//                    var eventoFechaFin = constructor.obtenerEventoCreado();
+//
+//                    proximosEventos.add(eventoFechaFin);
+//                }
+//
+//                while (proximaFecha.isBefore(constructor.obtenerEventoCreado().obtenerFechaFin())) {
+//
+//                    proximaFecha = constructor.obtenerEventoCreado().calcularSiguienteOcurrencia(proximaFecha);
+//
+//                    var eventoFechaFinNuevo = constructor.obtenerEventoCreado();
+//
+//                    eventoFechaFinNuevo.establecerFechaInicio(proximaFecha);
+//                    proximosEventos.add(eventoFechaFinNuevo);
+//
+//                }
+//                return proximosEventos;
+//            }
+//
+//            case HASTA_OCURRENCIAS -> {
+//
+//                var eventoOcurrencias = constructor.obtenerEventoCreado();
+//                proximosEventos.add(eventoOcurrencias);
+//
+//                constructor.obtenerEventoCreado().sumarOcurrencias();
+//
+//                while (constructor.obtenerEventoCreado().obtenerOcurrencias() < constructor.obtenerEventoCreado().obtenerMaxOcurrencias()) {
+//
+//                    proximaFecha = constructor.obtenerEventoCreado().calcularSiguienteOcurrencia(proximaFecha);
+//
+//                    var eventoOcurrenciasNuevo = constructor.obtenerEventoCreado();
+//                    eventoOcurrenciasNuevo.establecerFechaInicio(proximaFecha);
+//
+//                    proximosEventos.add(eventoOcurrenciasNuevo);
+//                    constructor.obtenerEventoCreado().sumarOcurrencias();
+//
+//                }
+//                return proximosEventos;
+//            }
+//
+//            default -> {
+//                return proximosEventos;
+//            }
+//        }
+//    }
 
 
 
