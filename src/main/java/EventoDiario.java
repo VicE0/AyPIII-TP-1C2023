@@ -1,8 +1,9 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class EventoDiario extends Evento {
+public class EventoDiario extends Evento{
     private int intervalo;
+
 
     public EventoDiario() {
         super();
@@ -13,40 +14,40 @@ public class EventoDiario extends Evento {
         super(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion);
         this.intervalo = intervalo;
     }
-    @Override
-    public String obtenerTitulo() {
-        return super.obtenerTitulo();
-    }
-
-    @Override
-    public String obtenerDescripcion() {
-        return super.obtenerDescripcion();
-    }
-
-    @Override
-    public LocalDateTime obtenerFechaInicio() {
-        return super.obtenerFechaInicio();
-    }
-
-    @Override
-    public LocalDateTime obtenerFechaFin() {
-        return super.obtenerFechaFin();
-    }
-
-    @Override
-    public int obtenerMaxOcurrencias() {
-        return super.obtenerMaxOcurrencias();
-    }
-
-    @Override
-    public Repeticion obtenerTipoRepeticion() {
-        return super.obtenerTipoRepeticion();
-    }
-
-    @Override
-    public int obtenerOcurrencias() {
-        return super.obtenerOcurrencias();
-    }
+//    @Override
+//    public String obtenerTitulo() {
+//        return super.obtenerTitulo();
+//    }
+//
+//    @Override
+//    public String obtenerDescripcion() {
+//        return super.obtenerDescripcion();
+//    }
+//
+//    @Override
+//    public LocalDateTime obtenerFechaInicio() {
+//        return super.obtenerFechaInicio();
+//    }
+//
+//    @Override
+//    public LocalDateTime obtenerFechaFin() {
+//        return super.obtenerFechaFin();
+//    }
+//
+//    @Override
+//    public int obtenerMaxOcurrencias() {
+//        return super.obtenerMaxOcurrencias();
+//    }
+//
+//    @Override
+//    public Repeticion obtenerTipoRepeticion() {
+//        return super.obtenerTipoRepeticion();
+//    }
+//
+//    @Override
+//    public int obtenerOcurrencias() {
+//        return super.obtenerOcurrencias();
+//    }
 
     public int obtenerIntervalo() {
         return intervalo;

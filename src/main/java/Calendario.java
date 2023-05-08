@@ -10,7 +10,7 @@ import java.util.Iterator;
 public class Calendario {
 
     private CreadorDeEventos creadorDeEventos;
-    private final ArrayList<Evento> eventos;
+    private  ArrayList<Evento> eventos;
     private ArrayList<Tarea> tareas;
 
     public  Calendario(){
@@ -24,12 +24,9 @@ public class Calendario {
         this.eventos = new ArrayList<>();
     }
 
-    public void crearEvento(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion, int intervalo, Set<DayOfWeek> diasSemana) {
-        this.eventos.add(creadorDeEventos.crearEvento(titulo, descripcion, fechaInicio,fechaFin, maxOcurrencias, tipoRepeticion, intervalo,diasSemana));
-    }
+    public void agregarEvento(Evento evento){
 
-    public void crearEventoDefault(){
-        this.eventos.add(creadorDeEventos.crearEventoDefault());
+        this.eventos.add(evento);
     }
 
     //PRE: Recibe una lista de objetos Evento
@@ -40,6 +37,96 @@ public class Calendario {
             this.eventos.add(eventoEnLista);
         }
     }
+
+
+    public ArrayList<Evento> proximosEventos(ConstructorEventos constructor){
+
+
+        ArrayList<Evento> proximosEventos = new ArrayList<>();
+
+        // Añade la primera fecha ingresada
+        proximosEventos.add(constructor.obtenerEventoCreado());
+        constructor.obtenerEventoCreado().sumarOcurrencias();
+
+        LocalDateTime proximaFecha = constructor.obtenerEventoCreado().calcularSiguienteOcurrencia(constructor.obtenerEventoCreado().obtenerFechaInicio());
+
+        return repeticionEvento(proximaFecha, proximosEventos, constructor);
+    }
+
+
+    public ArrayList<Evento> repeticionEvento(LocalDateTime proximaFecha, ArrayList<Evento> proximosEventos, ConstructorEventos constructor) {
+
+        switch (constructor.obtenerEventoCreado().obtenerTipoRepeticion()) {
+
+            case INFINITA -> {
+                var eventoInfinito = constructor.obtenerEventoCreado();
+
+                proximosEventos.add(eventoInfinito);
+
+                while (constructor.obtenerEventoCreado().obtenerOcurrencias() < constructor.obtenerEventoCreado().obtenerMaxOcurrencias()) {
+
+                    proximaFecha = constructor.obtenerEventoCreado().calcularSiguienteOcurrencia(proximaFecha);
+
+                    var eventoInfinitoNuevo = constructor.obtenerEventoCreado();
+
+                    proximosEventos.add(eventoInfinitoNuevo);
+
+                    constructor.obtenerEventoCreado().sumarOcurrencias();
+                }
+                return proximosEventos;
+            }
+
+            case HASTA_FECHA_FIN -> {
+
+                if (!constructor.obtenerEventoCreado().fechaFinNula()) {
+
+                    var eventoFechaFin = constructor.obtenerEventoCreado();
+
+                    proximosEventos.add(eventoFechaFin);
+                }
+
+                while (proximaFecha.isBefore(constructor.obtenerEventoCreado().obtenerFechaFin())) {
+
+                    proximaFecha = constructor.obtenerEventoCreado().calcularSiguienteOcurrencia(proximaFecha);
+
+                    var eventoFechaFinNuevo = constructor.obtenerEventoCreado();
+                    proximosEventos.add(eventoFechaFinNuevo);
+
+                }
+                return proximosEventos;
+            }
+
+            case HASTA_OCURRENCIAS -> {
+
+                var eventoOcurrencias = constructor.obtenerEventoCreado();
+                proximosEventos.add(eventoOcurrencias);
+
+                constructor.obtenerEventoCreado().sumarOcurrencias();
+
+                while (constructor.obtenerEventoCreado().obtenerOcurrencias() < constructor.obtenerEventoCreado().obtenerMaxOcurrencias()) {
+
+                    proximaFecha = constructor.obtenerEventoCreado().calcularSiguienteOcurrencia(proximaFecha);
+
+                    var eventoOcurrenciasNuevo = constructor.obtenerEventoCreado();
+
+                    proximosEventos.add(eventoOcurrenciasNuevo);
+                    constructor.obtenerEventoCreado().sumarOcurrencias();
+
+                }
+                return proximosEventos;
+            }
+
+            default -> {
+                return proximosEventos;
+            }
+        }
+    }
+
+
+
+
+
+
 
     //PRE: -
     //POS: Devuelve la lista de objetos evento creada en el calendario
@@ -90,15 +177,15 @@ public class Calendario {
 
     //PRE: -
     //POS: Devuelve una lista de objetos evento.
-    public ArrayList<Evento> obtenerEventosCreados() {
-
-        ArrayList<Evento> eventosCreados = new ArrayList<>();
-
-        for (Evento ignored : this.eventos) {
-            eventosCreados.add(creadorDeEventos.obtenerEventos());
-        }
-        return eventosCreados;
-    }
+//    public ArrayList<Evento> obtenerEventosCreados() {
+//
+//        ArrayList<Evento> eventosCreados = new ArrayList<>();
+//
+//        for (Evento ignored : this.eventos) {
+//            eventosCreados.add(creadorDeEventos.obtenerEventos());
+//        }
+//        return eventosCreados;
+//    }
 
 
     public ArrayList<Evento> proximosEventosDiarios(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion, int intervalo) {

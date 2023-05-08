@@ -1,9 +1,14 @@
-import java.time.DayOfWeek;
 import java.time.LocalDateTime;
-import java.util.Set;
+
+import java.util.ArrayList;
 
 public interface CreadorDeEventos {
-    Evento crearEventoDefault();
-    Evento crearEvento(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion, int intervalo, Set<DayOfWeek> diasSemana);
-    Evento obtenerEventos();
+    Evento construirEvento(ConstructorEventos constructor);
 }
+
+
+
+
+//    ArrayList<Evento> proximosEventos(Evento evento);
+
+
