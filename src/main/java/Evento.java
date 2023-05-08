@@ -10,7 +10,7 @@ public abstract class Evento
     private int maxOcurrencias;
     private int ocurrenciasRealizadas;
     private Repeticion tipoRepeticion;
-    private  ArrayList<Alarma> alarmasEvento;
+    private final ArrayList<Alarma> alarmasEvento;
 
 
     //Constructor default con los valores iniciales
@@ -54,18 +54,18 @@ public abstract class Evento
         return alarmasEvento;
     }
 
-    public ArrayList<Evento> obtenerProximosEventos(Evento evento)
-    {
-        ArrayList<Evento> proximosEventos = new ArrayList<>();
-
-        // Añade la primera fecha ingresada
-        proximosEventos.add(evento);
-        sumarOcurrencias();
-
-        LocalDateTime proximaFecha = calcularSiguienteOcurrencia(fechaInicio);
-
-        return switchCaseRepeticion(proximaFecha, proximosEventos);
-    }
+//    public ArrayList<Evento> obtenerProximosEventos(Evento evento)
+//    {
+//        ArrayList<Evento> proximosEventos = new ArrayList<>();
+//
+//        // Añade la primera fecha ingresada
+//        proximosEventos.add(evento);
+//        sumarOcurrencias();
+//
+//        LocalDateTime proximaFecha = calcularSiguienteOcurrencia(fechaInicio);
+//
+//        return switchCaseRepeticion(proximaFecha, proximosEventos);
+//    }
 
 
 //SETTERS
@@ -96,7 +96,7 @@ public abstract class Evento
     protected abstract LocalDateTime calcularSiguienteOcurrencia(LocalDateTime fecha);
 
     //Método para crear una nueva instancia del objeto evento segun las repeticiones que le corresponden al evento.
-    protected abstract ArrayList<Evento> switchCaseRepeticion(LocalDateTime proximaFecha,ArrayList<Evento>  proximosEventos);
+//    protected abstract ArrayList<Evento> switchCaseRepeticion(LocalDateTime proximaFecha,ArrayList<Evento>  proximosEventos);
 
 
     public void agregarAlarmaEvento(Alarma alarma){
