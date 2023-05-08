@@ -1,5 +1,9 @@
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Set;
+
+import java.time.Clock;
 
 public class Main {
     public static void main(String[] args) {
@@ -10,28 +14,21 @@ public class Main {
         String titulo = "AAAAAAAAAAAAAAAAAAAAAAA";
         String descripcion = "Evento que se repite hasta llegar a una fecha";
 
-        LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 1, 9, 0);
-        LocalDateTime fechaFin = LocalDateTime.of(2023, 4, 10, 9, 0);
+        LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 1, 9, 0,10);
+        LocalDateTime fechaFin = LocalDateTime.of(2023, 4, 10, 9, 0,10);
 
-        int maxOcurrencias = 11;
+        int maxOcurrencias = 10;
 
         Repeticion tipoRepeticion = Repeticion.HASTA_OCURRENCIAS;
 
-        int intervalo = 2;
-//
-//        var eventoDiario = new EventoDiario(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion, intervalo);
+//        int intervalo = 2;
+        Set<DayOfWeek> diasSemana = Set.of(DayOfWeek.MONDAY, DayOfWeek.FRIDAY);
 
-//        ArrayList<Evento> listita = creadorEventosDiarios.proximosEventos(eventoDiario);
-//
-//        for (Evento evento : listita){
-//            System.out.println(evento.obtenerFechaInicio());
-//
-//        }
+//        CONSTRUCTOR ACA
+        ConstructorEventos builder = new ConstructorEventosDiaCompleto(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion);
+        CreadorDeEventos diaCompleto = new CreadorEventosDiaCompleto();
 
-        ConstructorEventos builder = new ConstructorEventosDiarios(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion, intervalo);
-        CreadorDeEventos diario = new CreadorEventosDiarios();
-
-        var calendario = new Calendario(diario);
+        var calendario = new Calendario(diaCompleto);
 
         ArrayList<Evento> listaEventoss = calendario.proximosEventos(builder);
         calendario.agregarEventosACalendario(listaEventoss);
@@ -41,8 +38,14 @@ public class Main {
 
 
         for (Evento evento : eventito){
-            System.out.println(evento.obtenerFechaInicio());
+            System.out.println(evento.obtenerFechaInicio() + " " + evento.obtenerFechaFin());
         }
+//
+//        Clock clock = Clock.systemUTC().withZone(java.time.ZoneId.of("UTC+1")) ;
+//
+//        LocalDateTime now = LocalDateTime.now(clock);
+//
+//        System.out.println(clock.getZone());
 
 
     }
