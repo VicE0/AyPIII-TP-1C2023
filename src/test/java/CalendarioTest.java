@@ -1,3 +1,5 @@
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -8,6 +10,15 @@ import java.util.Set;
 import static org.junit.Assert.*;
 
 public class CalendarioTest {
+
+    //Creadores de los eventos, son la clase "Director" que utilizan el Builder
+    CreadorDeEventos eventoDiarioCreado      = new CreadorEventosDiarios();
+    CreadorDeEventos eventoSemanalCreado     = new CreadorEventosSemanales();
+    CreadorDeEventos eventoMensualCreado     = new CreadorEventosMensuales();
+    CreadorDeEventos eventoAnualCreado       = new CreadorEventosAnuales();
+    CreadorDeEventos eventoDiaCompletoCreado = new CreadorEventosDiaCompleto();
+
+
     @Test
     public void testCrearTarea(){
 
@@ -283,124 +294,131 @@ public class CalendarioTest {
 //        assertEquals(2, calendario.obtenerTareas().size());
 //        assertTrue(calendario.obtenerTareas().contains(tarea));
 //    }
-//    @Test
-//    public void testCrearEventoDefault(){
-//
-//        CreadorEventosDiarios   creadorEventosDiarios     =   new CreadorEventosDiarios();
-//        CreadorEventosSemanales creadorEventosSemanales   =   new CreadorEventosSemanales();
-//        CreadorEventosMensuales creadorEventosMensuales   =   new CreadorEventosMensuales();
-//        CreadorEventosAnuales   creadorEventosAnuales     =   new CreadorEventosAnuales();
-//
-//        Calendario eventosDiarios   = new Calendario(creadorEventosDiarios);
-//        Calendario eventosSemanales = new Calendario(creadorEventosSemanales);
-//        Calendario eventosMensuales = new Calendario(creadorEventosMensuales);
-//        Calendario eventosAnuales   = new Calendario(creadorEventosAnuales);
-//
-//        Calendario calendario = new Calendario();
-//
-//        //Creo multiples eventos iguales
-//        eventosDiarios.crearEventoDefault();
-//        eventosDiarios.crearEventoDefault();
-//
-//        eventosSemanales.crearEventoDefault();
-//        eventosSemanales.crearEventoDefault();
-//        eventosSemanales.crearEventoDefault();
-//
-//        eventosMensuales.crearEventoDefault();
-//        eventosAnuales.crearEventoDefault();
-//
-//        calendario.agregarEventosACalendario(eventosDiarios.obtenerEventosCreados());
-//        calendario.agregarEventosACalendario(eventosSemanales.obtenerEventosCreados());
-//        calendario.agregarEventosACalendario(eventosMensuales.obtenerEventosCreados());
-//        calendario.agregarEventosACalendario(eventosAnuales.obtenerEventosCreados());
-//
-//        int i = 0;
-//        for(Evento evento : calendario.obtenerListaEventosTotales()){
-//            assertEquals(evento, calendario.obtenerListaEventosTotales().get(i));
-//            i++;
-//        }
-//
-//        //Cada evento fue agregado correctamente, incluso duplicados
-//        assertEquals(7, calendario.obtenerListaEventosTotales().size());
-//
-//    }
-//
-//    @Test
-//    public void testEliminarEventoDefault(){
-//
-//        CreadorEventosDiarios   creadorEventosDiarios     =   new CreadorEventosDiarios();
-//        CreadorEventosSemanales creadorEventosSemanales   =   new CreadorEventosSemanales();
-//        CreadorEventosMensuales creadorEventosMensuales   =   new CreadorEventosMensuales();
-//        CreadorEventosAnuales   creadorEventosAnuales     =   new CreadorEventosAnuales();
-//
-//        Calendario eventosDiarios   = new Calendario(creadorEventosDiarios);
-//        Calendario eventosSemanales = new Calendario(creadorEventosSemanales);
-//        Calendario eventosMensuales = new Calendario(creadorEventosMensuales);
-//        Calendario eventosAnuales   = new Calendario(creadorEventosAnuales);
-//
-//        Calendario calendario = new Calendario();
-//
-//        //Creo multiples eventos iguales
-//        eventosDiarios.crearEventoDefault();
-//        eventosDiarios.crearEventoDefault();
-//
-//        eventosSemanales.crearEventoDefault();
-//        eventosSemanales.crearEventoDefault();
-//        eventosSemanales.crearEventoDefault();
-//
-//        eventosMensuales.crearEventoDefault();
-//        eventosAnuales.crearEventoDefault();
-//
-//        calendario.agregarEventosACalendario(eventosDiarios.obtenerEventosCreados());
-//        calendario.agregarEventosACalendario(eventosSemanales.obtenerEventosCreados());
-//        calendario.agregarEventosACalendario(eventosMensuales.obtenerEventosCreados());
-//        calendario.agregarEventosACalendario(eventosAnuales.obtenerEventosCreados());
-//
-//        ArrayList<Evento> todosLosEventos = calendario.obtenerListaEventosTotales();
-//
-//        //Elimino la instancia de EventoDiario y todas sus repeticiones
-//        calendario.eliminarEvento(todosLosEventos.get(0));
-//
-//        for(Evento eventoDiario : eventosDiarios.obtenerEventosCreados()) {
-//            for(Evento evento : todosLosEventos){
-//
-//                assertNotEquals(evento.getClass() ,eventoDiario.getClass());
-//            }
-//        }
-//
-//        assertEquals(5, todosLosEventos.size() );
-//
-//    }
-//
+
+    @Test
+    public void testCrearEventoDefault(){
+
+        //Construyo los objetos con constructor default
+        ConstructorEventos   eventoDiarioConstruido       =   new ConstructorEventosDiarios();
+        ConstructorEventos   eventoSemanalConstruido      =   new ConstructorEventosSemanales();
+        ConstructorEventos   eventoMensualConstruido      =   new ConstructorEventosMensuales();
+        ConstructorEventos   eventoAnualConstruido        =   new ConstructorEventosAnuales();
+        ConstructorEventos   eventoDiaCompletoConstruido  =   new ConstructorEventosDiaCompleto();
+
+        Evento eventoDiario      = eventoDiarioCreado.crearEvento(eventoDiarioConstruido);
+        Evento eventoSemanal     = eventoSemanalCreado.crearEvento(eventoSemanalConstruido);
+        Evento eventoMensual     = eventoMensualCreado.crearEvento(eventoMensualConstruido);
+        Evento eventoAnual       = eventoAnualCreado.crearEvento(eventoAnualConstruido);
+        Evento eventoDiaCompleto = eventoDiaCompletoCreado.crearEvento(eventoDiaCompletoConstruido);
+
+        var calendario = new Calendario();
+
+        //Agrego eventos iguales
+        calendario.agregarEvento(eventoDiario);
+        calendario.agregarEvento(eventoDiario);
+
+        calendario.agregarEvento(eventoSemanal);
+        calendario.agregarEvento(eventoMensual);
+
+        calendario.agregarEvento(eventoAnual);
+        calendario.agregarEvento(eventoAnual);
+
+        calendario.agregarEvento(eventoDiaCompleto);
+
+        ArrayList<Evento> listaEventos = calendario.obtenerListaEventosTotales();
+        int i = 0;
+        for(Evento evento : listaEventos){
+            assertEquals(evento, calendario.obtenerListaEventosTotales().get(i));
+            i++;
+        }
+
+        //Verifico que esten los duplicados como instancias unicas
+        assertEquals(listaEventos.get(0).getClass(), eventoDiario.getClass());
+        assertEquals(listaEventos.get(1).getClass(), eventoDiario.getClass());
+
+        assertEquals(listaEventos.get(2).getClass(), eventoSemanal.getClass());
+        assertEquals(listaEventos.get(3).getClass(), eventoMensual.getClass());
+
+        assertEquals(listaEventos.get(4).getClass(), eventoAnual.getClass());
+        assertEquals(listaEventos.get(5).getClass(), eventoAnual.getClass());
+
+        assertEquals(listaEventos.get(6).getClass(), eventoDiaCompleto.getClass());
+
+
+
+        //Cada evento fue agregado correctamente, incluso duplicados
+        assertEquals(7, calendario.obtenerListaEventosTotales().size());
+
+    }
+
+    @Test
+    public void testEliminarEventoDefault(){
+
+        //Construyo los objetos con constructor default
+        ConstructorEventos   eventoDiarioConstruido       =   new ConstructorEventosDiarios();
+        ConstructorEventos   eventoSemanalConstruido      =   new ConstructorEventosSemanales();
+        ConstructorEventos   eventoMensualConstruido      =   new ConstructorEventosMensuales();
+        ConstructorEventos   eventoAnualConstruido        =   new ConstructorEventosAnuales();
+        ConstructorEventos   eventoDiaCompletoConstruido  =   new ConstructorEventosDiaCompleto();
+
+        Evento eventoDiario      = eventoDiarioCreado.crearEvento(eventoDiarioConstruido);
+        Evento eventoSemanal     = eventoSemanalCreado.crearEvento(eventoSemanalConstruido);
+        Evento eventoMensual     = eventoMensualCreado.crearEvento(eventoMensualConstruido);
+        Evento eventoAnual       = eventoAnualCreado.crearEvento(eventoAnualConstruido);
+        Evento eventoDiaCompleto = eventoDiaCompletoCreado.crearEvento(eventoDiaCompletoConstruido);
+
+        var calendario = new Calendario();
+
+        //Agrego eventos iguales
+        calendario.agregarEvento(eventoDiario);
+        calendario.agregarEvento(eventoDiario);
+
+        calendario.agregarEvento(eventoSemanal);
+        calendario.agregarEvento(eventoMensual);
+
+        calendario.agregarEvento(eventoAnual);
+        calendario.agregarEvento(eventoAnual);
+
+        calendario.agregarEvento(eventoDiaCompleto);
+
+        ArrayList<Evento> listaEventos = calendario.obtenerListaEventosTotales();
+
+        //Elimino la instancia de EventoDiario y todas sus repeticiones
+        calendario.eliminarEvento(listaEventos.get(0));
+
+       for(Evento evento : listaEventos){
+           assertNotEquals(evento.getClass() ,eventoDiario.getClass());
+
+       }
+
+       assertEquals(5, listaEventos.size() );
+
+    }
+
 //    @Test
 //    public void testCrearEvento(){
 //
-//        CreadorEventosDiarios   creadorEventosDiarios     =   new CreadorEventosDiarios();
-//        CreadorEventosSemanales creadorEventosSemanales   =   new CreadorEventosSemanales();
-//        CreadorEventosMensuales creadorEventosMensuales   =   new CreadorEventosMensuales();
-//        CreadorEventosAnuales   creadorEventosAnuales     =   new CreadorEventosAnuales();
 //
-//        Calendario eventosDiarios   = new Calendario(creadorEventosDiarios);
-//        Calendario eventosSemanales = new Calendario(creadorEventosSemanales);
-//        Calendario eventosMensuales = new Calendario(creadorEventosMensuales);
-//        Calendario eventosAnuales   = new Calendario(creadorEventosAnuales);
+//        ConstructorEventos eventoDiarioConstruido      = new ConstructorEventosDiarios("Evento Diario", "Evento Repetido", LocalDateTime.of(2023, 4, 10, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 10, Repeticion.HASTA_OCURRENCIAS, 1);
+//        ConstructorEventos eventoSemanalConstruido     = new ConstructorEventosSemanales("Evento Semanal", "Evento Repetido", LocalDateTime.of(2023, 4, 11, 9, 0), LocalDateTime.of(2023, 4, 21, 9, 30), 1, Repeticion.HASTA_FECHA_FIN, Set.of(DayOfWeek.MONDAY));
+//        ConstructorEventos eventoMensualConstruido     = new ConstructorEventosMensuales("Evento Mensual", "Evento Unico", LocalDateTime.of(2023, 4, 12, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 99, Repeticion.INFINITA, 2);
+//        ConstructorEventos eventoAnualConstruido       = new ConstructorEventosAnuales("Evento Anual", "Evento Unico", LocalDateTime.of(2023, 4, 13, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 10, Repeticion.HASTA_FECHA_FIN, 3);
+//        ConstructorEventos eventoDiaCompletoConstruido = new ConstructorEventosDiaCompleto("Evento Dia Completo", "Evento Unico", LocalDateTime.of(2023, 4, 13, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 10, Repeticion.HASTA_OCURRENCIAS );
 //
-//        Calendario calendario = new Calendario();
 //
-//        //Creo multiples eventos iguales
-//        eventosDiarios.crearEvento("Evento Diario", "Evento Repetido", LocalDateTime.of(2023, 4, 10, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 10, Repeticion.HASTA_OCURRENCIAS, 1, null);
-//        eventosDiarios.crearEvento("Evento Diario", "Evento Repetido", LocalDateTime.of(2023, 4, 10, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 10, Repeticion.HASTA_OCURRENCIAS, 1, null);
+//        Evento eventoDiario      = eventoDiarioCreado.crearEvento(eventoDiarioConstruido);
+//        Evento eventoSemanal     = eventoSemanalCreado.crearEvento(eventoSemanalConstruido);
+//        Evento eventoMensual     = eventoMensualCreado.crearEvento(eventoMensualConstruido);
+//        Evento eventoAnual       = eventoAnualCreado.crearEvento(eventoAnualConstruido);
+//        Evento eventoDiaCompleto = eventoDiaCompletoCreado.crearEvento(eventoDiaCompletoConstruido);
 //
-//        eventosSemanales.crearEvento("Evento Semanal", "Evento Repetido", LocalDateTime.of(2023, 4, 11, 9, 0), LocalDateTime.of(2023, 4, 21, 9, 30), 1, Repeticion.HASTA_FECHA_FIN, 0, Set.of(DayOfWeek.MONDAY));
-//        eventosSemanales.crearEvento("Evento Semanal", "Evento Repetido", LocalDateTime.of(2023, 4, 11, 9, 0), LocalDateTime.of(2023, 4, 21, 9, 30), 1, Repeticion.HASTA_FECHA_FIN, 0, Set.of(DayOfWeek.MONDAY));
+//        var calendario = new Calendario();
 //
-//        eventosMensuales.crearEvento("Evento Mensual", "Evento Unico", LocalDateTime.of(2023, 4, 12, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 99, Repeticion.INFINITA, 2, null);
-//        eventosAnuales.crearEvento("Evento Anual", "Evento Unico", LocalDateTime.of(2023, 4, 13, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 99, Repeticion.HASTA_FECHA_FIN, 3, null);
-//
-//        calendario.agregarEventosACalendario(eventosDiarios.obtenerEventosCreados());
-//        calendario.agregarEventosACalendario(eventosSemanales.obtenerEventosCreados());
-//        calendario.agregarEventosACalendario(eventosMensuales.obtenerEventosCreados());
-//        calendario.agregarEventosACalendario(eventosAnuales.obtenerEventosCreados());
+//        calendario.agregarEvento(eventoDiario);
+//        calendario.agregarEvento(eventoSemanal);
+//        calendario.agregarEvento(eventoMensual);
+//        calendario.agregarEvento(eventoAnual);
+//        calendario.agregarEvento(eventoDiaCompleto);
 //
 //        int i = 0;
 //        for(Evento evento : calendario.obtenerListaEventosTotales()){
@@ -412,7 +430,7 @@ public class CalendarioTest {
 //        //Cada evento fue agregado correctamente, incluso duplicados
 //        assertEquals(6, calendario.obtenerListaEventosTotales().size());
 //    }
-//
+
 //    @Test
 //    public void testEliminarEvento() {
 //

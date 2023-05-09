@@ -8,7 +8,7 @@ import java.util.Iterator;
 
 public class Calendario {
 
-    private CreadorDeEventos creadorDeEventos;
+//    private CreadorDeEventos creadorDeEventos;
     private  ArrayList<Evento> eventos;
     private ArrayList<Tarea> tareas;
 
@@ -17,11 +17,11 @@ public class Calendario {
         this.eventos = new ArrayList<>();
     }
 
-    //Este constructor es utilizado unicamente para el caso que se creen eventos no defaults
-    public Calendario(CreadorDeEventos creadorDeEventos) {
-        this.creadorDeEventos = creadorDeEventos;
-        this.eventos = new ArrayList<>();
-    }
+//    //Este constructor es utilizado unicamente para el caso que se creen eventos no defaults
+//    public Calendario(CreadorDeEventos creadorDeEventos) {
+//        this.creadorDeEventos = creadorDeEventos;
+//        this.eventos = new ArrayList<>();
+//    }
 
     public void agregarEvento(Evento evento){
 
@@ -52,12 +52,14 @@ public class Calendario {
         return constructor.repeticionEvento(proximaFecha, OcurrenciasEventos);
     }
 
-
     //PRE: -
     //POS: Devuelve la lista de objetos evento creada en el calendario
     public ArrayList<Evento> obtenerListaEventosTotales(){
         return this.eventos;
     }
+
+
+
 
     //PRE: Recibe una el objeto Evento a eliminar
     //POS: Itera por toda la lista de los eventos totales almacenados en la clase calendario. Si las clases del elemento a eliminar y el
@@ -189,6 +191,8 @@ public class Calendario {
         }
         return eventosEnFecha;
     }
+
+
 //    public ArrayList<Evento> proximosEventosDiarios(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion, int intervalo) {
 //        Evento eventoDiario = new EventoDiario( titulo,  descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion,intervalo );
 //        return eventoDiario.obtenerProximosEventos(eventoDiario);
