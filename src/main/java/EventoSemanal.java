@@ -40,7 +40,7 @@ public class EventoSemanal extends Evento {
                 return siguienteFecha;
             }
         }
-        return null;
+        return fecha;
     }
-
+    //Si el set esta vacio, simplemente el evento se vuelve a repetir la semana siguiene
 }

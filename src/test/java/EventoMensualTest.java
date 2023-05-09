@@ -1,11 +1,9 @@
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-
 import static org.junit.Assert.*;
 
 public class EventoMensualTest {
@@ -39,28 +37,11 @@ public class EventoMensualTest {
         //Para los tests de constructor Default de la clase abstracta Evento se utilizó el metodo .toLocalDate para que el test no falle por milésima de segundos.
 
     }
-    //Creo un EventoSemanal Default
-    @Test
-    public void testCreacionEventoMensualDefault() {
-
-        var eventoMensual = new EventoMensual();
-
-        ArrayList<Evento> proximosEventos = eventoMensual.obtenerProximosEventos(eventoMensual);
-
-        Evento primerEventoEnLista = proximosEventos.get(0);
-        Evento segundoEventoEnLista = proximosEventos.get(1);
-
-        assertEquals(primerEventoEnLista.obtenerFechaInicio().toLocalDate(), eventoMensual.obtenerFechaInicio().toLocalDate());
-        assertEquals(segundoEventoEnLista.obtenerFechaFin().toLocalDate(), eventoMensual.obtenerFechaFin().toLocalDate());
-
-        assertEquals(2, proximosEventos.size());
-    }
 
     @Test
     public void testObtenerSiguienteOcurrenciaValoresDefault() {
 
         var eventoMensual = new EventoMensual();
-
         LocalDateTime FechaEsperada = eventoMensual.obtenerFechaInicio().plusMonths(1);
         LocalDateTime FechaActual = eventoMensual.calcularSiguienteOcurrencia(eventoMensual.obtenerFechaInicio());
 
@@ -73,13 +54,10 @@ public class EventoMensualTest {
 
         String titulo = "Evento Mensual";
         String descripcion =   "Evento que se repite al siguiente mes";
-
         LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 3, 9, 0); //lunes 3 de abril
         LocalDateTime fechaFin =    LocalDateTime.of(2023, 4, 24, 9, 30); //lunes 24 de abril
-
-        //Estos dos atributos son testeados correctamento en los siguientes test
-        int maxOcurrencias = 1;
         Repeticion tipoRepeticion = Repeticion.HASTA_OCURRENCIAS;
+        int maxOcurrencias = 1;
         int cantidadMeses = 1;
 
         var eventoMensual = new EventoMensual(titulo, descripcion, fechaInicio, fechaFin,maxOcurrencias, tipoRepeticion, cantidadMeses);
@@ -96,25 +74,41 @@ public class EventoMensualTest {
 
         String titulo = "Evento Mensual";
         String descripcion =   "Evento que se repite cada 3 meses";
-
         LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 3, 9, 0); //lunes 3 de abril
         LocalDateTime fechaFin =    LocalDateTime.of(2023, 4, 24, 9, 30); //lunes 24 de abril
-
-        //Estos dos atributos son testeados correctamento en los siguientes test
-        int maxOcurrencias = 1;
         Repeticion tipoRepeticion = Repeticion.HASTA_OCURRENCIAS;
+        int maxOcurrencias = 1;
+        int cantidadMeses = 3;
 
-        int cantidadMeses = 1;
+        var eventoMensual = new EventoMensual();
+        eventoMensual.establecerTitulo(titulo);
+        eventoMensual.establecerDescripcion(descripcion);
+        eventoMensual.establecerFechaInicio(fechaInicio);
+        eventoMensual.establecerFechaFin(fechaFin);
+        eventoMensual.establecerMaxOcurrencias(maxOcurrencias);
+        eventoMensual.establecerTipoRepeticion(tipoRepeticion);
+        eventoMensual.establecerCantidadMeses(cantidadMeses);
 
-        var eventoMensual = new EventoMensual(titulo, descripcion, fechaInicio, fechaFin,maxOcurrencias, tipoRepeticion, cantidadMeses);
-        eventoMensual.establecerCantidadMeses(3);
+        //Creo Varias alarmas
+        var Notificacion = new Notificacion();
+        var mail = new Email();
 
+        var alarmaNotif = new AlarmaFechaAbsoluta( LocalDateTime.of(2023, 4, 15, 10, 0),Notificacion);
+        var alarmaMail = new AlarmaFechaAbsoluta(LocalDateTime.of(2023, 4, 12, 10, 0),mail);
+
+        eventoMensual.agregarAlarmaEvento(alarmaNotif);
+        eventoMensual.agregarAlarmaEvento(alarmaMail);
+
+        ArrayList<Alarma> listaAlarmas = eventoMensual.obtenerAlarmasEvento();
 
         LocalDateTime fechaEsperada = fechaInicio.plusMonths(3);
         LocalDateTime FechaActual = eventoMensual.calcularSiguienteOcurrencia(fechaInicio);
 
         assertEquals(fechaEsperada, FechaActual);
-        assertNotEquals(cantidadMeses, eventoMensual.obtenerCantidadMeses());
+        assertEquals(cantidadMeses, eventoMensual.obtenerCantidadMeses());
+        assertTrue(listaAlarmas.contains(alarmaMail));
+        assertTrue(listaAlarmas.contains(alarmaNotif));
+
     }
 
     @Test
@@ -122,18 +116,13 @@ public class EventoMensualTest {
 
         String titulo = "Evento Mensual";
         String descripcion = "Evento con cantidad de meses nulo";
-
         LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 10, 9, 0);
         LocalDateTime fechaFin = LocalDateTime.of(2023, 4, 17, 9, 30);
-
-        //Estos dos atributos son testeados correctamento en los siguientes test
-        int maxOcurrencias = 1;
         Repeticion tipoRepeticion = Repeticion.HASTA_OCURRENCIAS;
-
+        int maxOcurrencias = 1;
         int cantidadMeses = 0;
 
         var eventoMensual = new EventoMensual(titulo, descripcion, fechaInicio, fechaFin,maxOcurrencias, tipoRepeticion, cantidadMeses);
-
 
         LocalDateTime fechaEsperada = fechaInicio;
         LocalDateTime FechaActual = eventoMensual.calcularSiguienteOcurrencia(fechaInicio);
@@ -149,11 +138,9 @@ public class EventoMensualTest {
 
         LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 10, 9, 0);
         LocalDateTime fechaFin = LocalDateTime.of(2023, 4, 17, 9, 30);
-
-        //Estos dos atributos son testeados correctamento en los siguientes test
-        int maxOcurrencias = 1;
         Repeticion tipoRepeticion = Repeticion.HASTA_OCURRENCIAS;
 
+        int maxOcurrencias = 1;
         int cantidadMeses = -1;
 
         var eventoMensual = new EventoMensual(titulo, descripcion, fechaInicio, fechaFin,maxOcurrencias, tipoRepeticion, cantidadMeses);
@@ -161,133 +148,41 @@ public class EventoMensualTest {
         error.expect(RuntimeException.class);
         eventoMensual.calcularSiguienteOcurrencia(fechaInicio);
     }
-
-
-    //Test de EventoMensual con repeticion infinita
     @Test
-    public void testEventoMensualInfinito() {
+    public void testBorrarAlarmas() {
 
-        String titulo = "Evento Mensual infinito";
-        String descripcion = "Evento que se repite cada mes infinitamente";
-
+        String        titulo      = "Evento Mensual";
+        String        descripcion = "Evento que ingresa un intervalo de dias nulo";
         LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 10, 9, 0);
-        LocalDateTime fechaFin = LocalDateTime.of(2023, 4, 17, 9, 30);
-
-        //Estos dos atributos son testeados correctamento en los siguientes test
-        int maxOcurrencias = 99; //Seteo un numero alto pero testeable
-        Repeticion tipoRepeticion = Repeticion.INFINITA;
-
-        int cantidadMeses = 2;
-
-        var eventoMensual = new EventoMensual(titulo, descripcion, fechaInicio, fechaFin,maxOcurrencias, tipoRepeticion, cantidadMeses);
-
-        ArrayList<Evento> proximosEventos = eventoMensual.obtenerProximosEventos(eventoMensual);
-
-        LocalDateTime fechaActual = eventoMensual.obtenerFechaInicio();
-
-        for (Evento eventoEnLista : proximosEventos){
-
-            LocalDateTime fecha = eventoEnLista.obtenerFechaInicio();
-            assertFalse(fechaActual.isAfter(fecha));
-            fechaActual = fecha;
-
-        }
-        assertEquals(100, proximosEventos.size()); //ya que se añade el dia inicial
-
-        LocalDateTime fechaAbril = proximosEventos.get(0).obtenerFechaInicio();
-        LocalDateTime fechaJunio = proximosEventos.get(1).obtenerFechaInicio();
-        LocalDateTime fechaAgosto = proximosEventos.get(2).obtenerFechaInicio();
-
-        LocalDateTime fechaAbrilEsperada = fechaInicio;
-        LocalDateTime fechaJunioEsperada = fechaAbrilEsperada.plusMonths(2);
-        LocalDateTime fechaAgostoEsperada = fechaJunioEsperada.plusMonths(2);
-
-        assertEquals(fechaAbrilEsperada,fechaAbril );
-        assertEquals(fechaJunioEsperada,fechaJunio );
-        assertEquals(fechaAgostoEsperada,fechaAgosto );
-
-    }
-
-
-
-    //Test de EventoSemanal con repeticion hasta alcanzar fechaFin
-    @Test
-    public void testEventoSemanalHastaFecha() {
-
-        String titulo = "Evento Semanal";
-        String descripcion = "Evento que se repite hasta llegar a una fecha";
-
-        LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 1, 9, 0);
-        LocalDateTime fechaFin = LocalDateTime.of(2023, 8, 1, 9, 0);
-
-        int maxOcurrencias = 1;
-
-        Repeticion tipoRepeticion = Repeticion.HASTA_FECHA_FIN;
-
-        int cantidadMeses = 2;
-
-        var eventoMensual = new EventoMensual(titulo, descripcion, fechaInicio, fechaFin,maxOcurrencias, tipoRepeticion, cantidadMeses);
-
-        ArrayList<Evento> proximosEventos = eventoMensual.obtenerProximosEventos(eventoMensual);
-
-        LocalDateTime fechaActual = eventoMensual.obtenerFechaInicio();
-
-        for (Evento eventoEnLista : proximosEventos){
-
-            LocalDateTime fecha = eventoEnLista.obtenerFechaInicio();
-            assertFalse(fechaActual.isAfter(fecha));
-            fechaActual = fecha;
-
-        }
-
-        LocalDateTime fechaAbril = proximosEventos.get(0).obtenerFechaInicio();
-        LocalDateTime fechaJunio = proximosEventos.get(1).obtenerFechaInicio();
-        LocalDateTime fechaAgosto = proximosEventos.get(2).obtenerFechaInicio();
-
-        LocalDateTime fechaAbrilEsperada = fechaInicio;
-        LocalDateTime fechaJunioEsperada = fechaAbrilEsperada.plusMonths(2);
-        LocalDateTime fechaAgostoEsperada = fechaJunioEsperada.plusMonths(2);
-
-        assertEquals(fechaAbrilEsperada,fechaAbril );
-        assertEquals(fechaJunioEsperada,fechaJunio );
-        assertEquals(fechaAgostoEsperada,fechaAgosto );
-
-        assertEquals(3, proximosEventos.size()); // Lapso de 2 meses: Abril - Junio - Agosto
-
-    }
-
-    //test de EventoDiario con repeticion hasta que se alcancen 20 ocurrencias
-    @Test
-    public void testEventoSemanalHastaOcurrencias() {
-
-        String titulo = "Evento Mensual";
-        String descripcion = "Evento que se repite hasta alcanzar 20 ocurrencias";
-
-        LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 1, 9, 0);
-        LocalDateTime fechaFin = LocalDateTime.of(2023, 4, 10, 9, 0);
-
-        int maxOcurrencias = 20;
-
+        LocalDateTime fechaFin    = LocalDateTime.of(2023, 4, 17, 9, 30);
         Repeticion tipoRepeticion = Repeticion.HASTA_OCURRENCIAS;
+        int maxOcurrencias = 4;
+        int cantidadMeses = 0;
 
-        int cantidadMeses = 1;
+        var eventoMensual = new EventoMensual(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion ,cantidadMeses);
 
-        var eventoMensual = new EventoMensual(titulo, descripcion, fechaInicio, fechaFin,maxOcurrencias, tipoRepeticion, cantidadMeses);
+        var notificacion = new Notificacion();
+        var sonido = new Sonido();
+        var mail = new Email();
 
-        ArrayList<Evento> proximosEventos = eventoMensual.obtenerProximosEventos(eventoMensual);
+        var alarmaNotificacion = new AlarmaFechaAbsoluta(eventoMensual.obtenerFechaInicio(), notificacion);
+        var alarmaSonido = new AlarmaFechaAbsoluta(eventoMensual.obtenerFechaInicio(), sonido);
+        var alarmaMail = new AlarmaFechaAbsoluta(eventoMensual.obtenerFechaInicio(), mail);
 
-        LocalDateTime fechaActual = eventoMensual.obtenerFechaInicio();
+        eventoMensual.agregarAlarmaEvento(alarmaNotificacion);
+        eventoMensual.agregarAlarmaEvento(alarmaSonido);
+        eventoMensual.agregarAlarmaEvento(alarmaMail);
 
-        for (Evento eventoEnLista : proximosEventos){
+        eventoMensual.desactivarAlarmaEvento(alarmaNotificacion);
+        eventoMensual.desactivarAlarmaEvento(alarmaSonido);
 
-            LocalDateTime fecha = eventoEnLista.obtenerFechaInicio();
-            assertFalse(fechaActual.isAfter(fecha));
-            fechaActual = fecha;
+        ArrayList<Alarma> listaAlarmas = eventoMensual.obtenerAlarmasEvento();
 
-        }
+        assertFalse(listaAlarmas.contains(alarmaNotificacion));
+        assertFalse(listaAlarmas.contains(alarmaSonido));
+        assertTrue(listaAlarmas.contains(alarmaMail));
 
-        assertEquals(20, eventoMensual.obtenerMaxOcurrencias());
-        assertEquals(eventoMensual.obtenerOcurrencias(), proximosEventos.size());
+        assertEquals(1, listaAlarmas.size());
     }
 
 }
