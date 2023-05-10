@@ -168,7 +168,7 @@ public class Calendario {
         for (Alarma alarma : alarmas){
             if (recorrerLista == null || alarma.obtenerFechaYHora().isBefore(recorrerLista.obtenerFechaYHora())) {
                 // la alarma actual es la próxima en sonar
-                if (fechaReferencia.isAfter(alarma.obtenerFechaYHora())) {
+                if (fechaReferencia.isBefore(alarma.obtenerFechaYHora())) {
                     // solo si la alarma es futura
                     recorrerLista = alarma;
                 }

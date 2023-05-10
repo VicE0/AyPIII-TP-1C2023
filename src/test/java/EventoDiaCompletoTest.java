@@ -9,20 +9,20 @@ public class EventoDiaCompletoTest{
     @Test
     public void testEventoDiaCompletoDefault() {
 
-        var eventoDiaCompleto = new EventoDiaCompleto();
+        var eventoDiaCompleto = new EventoDiaCompleto(LocalDate.of(2023,5,10));
 
         String titulo =  "Evento sin titulo";
         String descripcion = "-";
-        LocalDate fechaInicio = LocalDate.now();
-        LocalDate fechaFin = fechaInicio.plusDays(1);
+        LocalDateTime fechaInicio = LocalDateTime.of(2023,5,10,0,0,0);
+        LocalDateTime fechaFin = fechaInicio.plusDays(1);
         int ocurrenciasRealizadas = 0;
         int maxOcurrencias = 1;
         Repeticion tipoRepeticion = Repeticion.HASTA_FECHA_FIN;
 
         assertEquals(titulo, eventoDiaCompleto.obtenerTitulo());
         assertEquals(descripcion, eventoDiaCompleto.obtenerDescripcion());
-        assertEquals(fechaInicio, eventoDiaCompleto.obtenerFechaInicio().toLocalDate());
-        assertEquals(fechaFin, eventoDiaCompleto.obtenerFechaFin().toLocalDate());
+        assertEquals(fechaInicio, eventoDiaCompleto.obtenerFechaInicio());
+        assertEquals(fechaFin, eventoDiaCompleto.obtenerFechaFin());
         assertEquals(ocurrenciasRealizadas, eventoDiaCompleto.obtenerOcurrencias());
         assertEquals(maxOcurrencias, eventoDiaCompleto.obtenerMaxOcurrencias());
         assertEquals(tipoRepeticion, eventoDiaCompleto.obtenerTipoRepeticion());
@@ -34,7 +34,7 @@ public class EventoDiaCompletoTest{
     @Test
     public void testObtenerSiguienteOcurrenciaValoresDefault() {
 
-        var eventoDiaCompleto = new EventoDiaCompleto();
+        var eventoDiaCompleto = new EventoDiaCompleto(LocalDate.of(2023,5,10));
 
         LocalDateTime FechaEsperada = eventoDiaCompleto.obtenerFechaInicio().plusDays(1);
         LocalDateTime FechaActual = eventoDiaCompleto.calcularSiguienteOcurrencia(eventoDiaCompleto.obtenerFechaInicio());
@@ -52,7 +52,7 @@ public class EventoDiaCompletoTest{
         Repeticion tipoRepeticion = Repeticion.HASTA_OCURRENCIAS;
         int maxOcurrencias = 1;
 
-        var eventoDiaCompleto = new EventoDiaCompleto();
+        var eventoDiaCompleto = new EventoDiaCompleto(LocalDate.of(2023,4,10));
 
         eventoDiaCompleto.establecerTitulo(titulo);
         eventoDiaCompleto.establecerDescripcion(descripcion);

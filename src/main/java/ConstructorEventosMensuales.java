@@ -4,8 +4,8 @@ import java.util.ArrayList;
 public class ConstructorEventosMensuales implements ConstructorEventos{
     private final EventoMensual eventoMensual;
     
-    public ConstructorEventosMensuales(){
-        this.eventoMensual = new EventoMensual();
+    public ConstructorEventosMensuales(LocalDateTime fechaInicio){
+        this.eventoMensual = new EventoMensual(fechaInicio);
     }
 
     public ConstructorEventosMensuales(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias,Repeticion tipoRepeticion,int intervalo){

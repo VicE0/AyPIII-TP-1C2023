@@ -1,4 +1,5 @@
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Set;
@@ -16,7 +17,7 @@ public class Main {
 
         LocalDateTime fechaInicio = LocalDateTime.of(2023, 4, 1, 9, 0, 10);
         LocalDateTime fechaFin = LocalDateTime.of(2023, 4, 10, 9, 0, 10);
-
+        LocalDate fecha = LocalDate.of(2023,5,10);
         int maxOcurrencias = 10;
 
         Repeticion tipoRepeticion = Repeticion.HASTA_OCURRENCIAS;
@@ -30,10 +31,10 @@ public class Main {
 //
 //        var calendario = new Calendario(diaCompleto);
         ConstructorEventos eventoDiarioConstruido = new ConstructorEventosDiarios(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion, intervalo);
-        ConstructorEventos eventoSemanalConstruido = new ConstructorEventosSemanales();
-        ConstructorEventos eventoMensualConstruido = new ConstructorEventosMensuales();
-        ConstructorEventos eventoAnualConstruido = new ConstructorEventosAnuales();
-        ConstructorEventos eventoDiaCompletoConstruido = new ConstructorEventosDiaCompleto();
+        ConstructorEventos eventoSemanalConstruido = new ConstructorEventosSemanales(fechaInicio);
+        ConstructorEventos eventoMensualConstruido = new ConstructorEventosMensuales(fechaInicio);
+        ConstructorEventos eventoAnualConstruido = new ConstructorEventosAnuales(fechaInicio);
+        ConstructorEventos eventoDiaCompletoConstruido = new ConstructorEventosDiaCompleto(fecha);
 
 
         CreadorDeEventos eventoDiarioCreado = new CreadorEventosDiarios();

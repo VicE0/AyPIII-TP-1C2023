@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -5,8 +6,8 @@ public class ConstructorEventosDiaCompleto implements ConstructorEventos {
 
     private  EventoDiaCompleto eventoDiaCompleto;
 
-    public ConstructorEventosDiaCompleto(){
-        this.eventoDiaCompleto = new EventoDiaCompleto();
+    public ConstructorEventosDiaCompleto(LocalDate fechaInicio){
+        this.eventoDiaCompleto = new EventoDiaCompleto(fechaInicio);
     }
 
     public ConstructorEventosDiaCompleto(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion){

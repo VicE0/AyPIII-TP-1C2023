@@ -6,10 +6,9 @@ public class EventoDiaCompleto extends Evento {
     private LocalDateTime fechaFinalDia;
 
 
-    public EventoDiaCompleto() {
-        super();
-        this.fechaInicioDia = LocalDateTime.now();
-        this.fechaFinalDia = this.fechaInicioDia.withHour(23).withMinute(59).withSecond(59);
+    public EventoDiaCompleto(LocalDate fechaInicio) {
+        super(fechaInicio.atTime(0,0,0));
+        this.fechaFinalDia = fechaInicio.atTime(23,59,59);
     }
 
     public EventoDiaCompleto(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion) {

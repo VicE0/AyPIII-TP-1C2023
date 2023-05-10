@@ -7,8 +7,8 @@ public class ConstructorEventosSemanales implements ConstructorEventos{
 
     private final EventoSemanal eventoSemanal;
 
-    public ConstructorEventosSemanales(){
-        this.eventoSemanal = new EventoSemanal();
+    public ConstructorEventosSemanales(LocalDateTime fechaInicio){
+        this.eventoSemanal = new EventoSemanal(fechaInicio);
     }
 
     public ConstructorEventosSemanales(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion, Set<DayOfWeek> diasSemana){

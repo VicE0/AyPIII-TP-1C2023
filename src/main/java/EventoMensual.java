@@ -4,8 +4,8 @@ import java.util.ArrayList;
 public class EventoMensual extends Evento{
     private int cantidadMeses;
 
-    public EventoMensual(){
-        super();
+    public EventoMensual(LocalDateTime fechaInicio){
+        super(fechaInicio);
         this.cantidadMeses = 1;
     }
 

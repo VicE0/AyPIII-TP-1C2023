@@ -268,7 +268,7 @@ public class CalendarioTest {
         tareaDos.agregarAlarma(alarmaTres);
         calendario.agregarTarea(tareaUno);
         calendario.agregarTarea(tareaDos);
-//        assertEquals(alarmaDos,calendario.proximaAlarma(LocalDateTime.now()));
+        assertEquals(alarmaDos,calendario.proximaAlarma(LocalDateTime.of(2023,1,1,0,0)));
     }
 //
 //    @Test
@@ -299,11 +299,11 @@ public class CalendarioTest {
     public void testCrearEventoDefault(){
 
         //Construyo los objetos con constructor default
-        ConstructorEventos   eventoDiarioConstruido       =   new ConstructorEventosDiarios();
-        ConstructorEventos   eventoSemanalConstruido      =   new ConstructorEventosSemanales();
-        ConstructorEventos   eventoMensualConstruido      =   new ConstructorEventosMensuales();
-        ConstructorEventos   eventoAnualConstruido        =   new ConstructorEventosAnuales();
-        ConstructorEventos   eventoDiaCompletoConstruido  =   new ConstructorEventosDiaCompleto();
+        ConstructorEventos   eventoDiarioConstruido       =   new ConstructorEventosDiarios(LocalDateTime.of(2023,5,10,20,30));
+        ConstructorEventos   eventoSemanalConstruido      =   new ConstructorEventosSemanales(LocalDateTime.of(2023,5,10,20,30));
+        ConstructorEventos   eventoMensualConstruido      =   new ConstructorEventosMensuales(LocalDateTime.of(2023,5,10,20,30));
+        ConstructorEventos   eventoAnualConstruido        =   new ConstructorEventosAnuales(LocalDateTime.of(2023,5,10,20,30));
+        ConstructorEventos   eventoDiaCompletoConstruido  =   new ConstructorEventosDiaCompleto(LocalDate.of(2023,5,10));
 
         Evento eventoDiario      = eventoDiarioCreado.crearEvento(eventoDiarioConstruido);
         Evento eventoSemanal     = eventoSemanalCreado.crearEvento(eventoSemanalConstruido);
@@ -355,11 +355,11 @@ public class CalendarioTest {
     public void testEliminarEventoDefault(){
 
         //Construyo los objetos con constructor default
-        ConstructorEventos   eventoDiarioConstruido       =   new ConstructorEventosDiarios();
-        ConstructorEventos   eventoSemanalConstruido      =   new ConstructorEventosSemanales();
-        ConstructorEventos   eventoMensualConstruido      =   new ConstructorEventosMensuales();
-        ConstructorEventos   eventoAnualConstruido        =   new ConstructorEventosAnuales();
-        ConstructorEventos   eventoDiaCompletoConstruido  =   new ConstructorEventosDiaCompleto();
+        ConstructorEventos   eventoDiarioConstruido       =   new ConstructorEventosDiarios(LocalDateTime.of(2023,5,10,20,30));
+        ConstructorEventos   eventoSemanalConstruido      =   new ConstructorEventosSemanales(LocalDateTime.of(2023,5,10,20,30));
+        ConstructorEventos   eventoMensualConstruido      =   new ConstructorEventosMensuales(LocalDateTime.of(2023,5,10,20,30));
+        ConstructorEventos   eventoAnualConstruido        =   new ConstructorEventosAnuales(LocalDateTime.of(2023,5,10,20,30));
+        ConstructorEventos   eventoDiaCompletoConstruido  =   new ConstructorEventosDiaCompleto(LocalDate.of(2023,5,10));
 
         Evento eventoDiario      = eventoDiarioCreado.crearEvento(eventoDiarioConstruido);
         Evento eventoSemanal     = eventoSemanalCreado.crearEvento(eventoSemanalConstruido);

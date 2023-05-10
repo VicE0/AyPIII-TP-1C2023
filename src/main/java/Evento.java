@@ -15,11 +15,11 @@ public abstract class Evento
 
     //Constructor default con los valores iniciales
     //Por Default, el evento será de dia completo
-    public Evento(){
+    public Evento(LocalDateTime fechaInicio){
 
         this.titulo = "Evento sin titulo";
         this.descripcion = "-";
-        this.fechaInicio = LocalDateTime.now();
+        this.fechaInicio = fechaInicio;
         this.fechaFin = this.fechaInicio.plusDays(1);
         this.maxOcurrencias = 1;
         this.ocurrenciasRealizadas = 0;

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 public class EventoDiario extends Evento{
     private int intervalo;
 
-    public EventoDiario() {
-        super();
+    public EventoDiario(LocalDateTime fechaInicio) {
+        super(fechaInicio);
         this.intervalo = 1;
     }
 

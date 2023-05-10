@@ -4,8 +4,8 @@ import java.util.ArrayList;
 public class EventoAnual extends Evento {
     private int cantidadAnios;
 
-    public EventoAnual() {
-        super();
+    public EventoAnual(LocalDateTime fechaInicio) {
+        super(fechaInicio);
         this.cantidadAnios = 1;
     }
 

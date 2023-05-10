@@ -5,8 +5,8 @@ import java.util.Set;
 public class EventoSemanal extends Evento {
     private Set<DayOfWeek> diasSemana;
 
-    public EventoSemanal() {
-        super();
+    public EventoSemanal(LocalDateTime fechaInicio) {
+        super(fechaInicio);
         this.diasSemana = null;
     }
 

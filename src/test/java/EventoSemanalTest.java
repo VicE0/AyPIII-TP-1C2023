@@ -13,13 +13,13 @@ public class EventoSemanalTest {
     @Test
     public void testEventoSemanalDefault() {
 
-        var eventoSemanal = new EventoSemanal();
+        var eventoSemanal = new EventoSemanal(LocalDateTime.of(2023,5,10,20,30));
 
         String titulo =  "Evento sin titulo";
         String descripcion = "-";
 
-        LocalDate fechaInicio = LocalDate.now();
-        LocalDate fechaFin = fechaInicio.plusDays(1);
+        LocalDateTime fechaInicio = LocalDateTime.of(2023,5,10,20,30);
+        LocalDateTime fechaFin = fechaInicio.plusDays(1);
 
         int ocurrenciasRealizadas = 0;
         int maxOcurrencias = 1;
@@ -27,8 +27,8 @@ public class EventoSemanalTest {
 
         assertEquals(titulo, eventoSemanal.obtenerTitulo());
         assertEquals(descripcion, eventoSemanal.obtenerDescripcion());
-        assertEquals(fechaInicio, eventoSemanal.obtenerFechaInicio().toLocalDate());
-        assertEquals(fechaFin, eventoSemanal.obtenerFechaFin().toLocalDate());
+        assertEquals(fechaInicio, eventoSemanal.obtenerFechaInicio());
+        assertEquals(fechaFin, eventoSemanal.obtenerFechaFin());
         assertEquals(ocurrenciasRealizadas, eventoSemanal.obtenerOcurrencias());
         assertEquals(maxOcurrencias, eventoSemanal.obtenerMaxOcurrencias());
         assertEquals(tipoRepeticion, eventoSemanal.obtenerTipoRepeticion());
@@ -41,7 +41,7 @@ public class EventoSemanalTest {
     @Test
     public void testObtenerSiguienteOcurrenciaValoresDefault() {
 
-        var eventoSemanal = new EventoSemanal();
+        var eventoSemanal = new EventoSemanal(LocalDateTime.of(2023,5,10,20,30));
 
         //Por default, el evento no se repite de forma semanal
 
@@ -65,7 +65,7 @@ public class EventoSemanalTest {
 
         Set<DayOfWeek> diasSemana = Set.of(DayOfWeek.MONDAY, DayOfWeek.FRIDAY);
 
-        var eventoSemanal = new EventoSemanal();
+        var eventoSemanal = new EventoSemanal(LocalDateTime.of(2023,5,10,20,30));
 
         eventoSemanal.establecerTitulo(titulo);
         eventoSemanal.establecerDescripcion(descripcion);

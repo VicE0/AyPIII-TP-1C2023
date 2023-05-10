@@ -5,8 +5,8 @@ public class ConstructorEventosAnuales implements ConstructorEventos{
 
     private final EventoAnual eventoAnual;
 
-    public ConstructorEventosAnuales(){
-        this.eventoAnual = new EventoAnual();
+    public ConstructorEventosAnuales(LocalDateTime fechaInicio){
+        this.eventoAnual = new EventoAnual(fechaInicio);
     }
 
     public ConstructorEventosAnuales(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion, int intervalo){

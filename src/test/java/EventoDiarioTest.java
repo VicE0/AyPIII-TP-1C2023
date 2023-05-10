@@ -16,12 +16,12 @@ public class EventoDiarioTest {
     @Test
     public void testEventoDiarioDefault() {
 
-        var eventoDiario = new EventoDiario();
+        var eventoDiario = new EventoDiario(LocalDateTime.of(2023,5,10,20,30));
 
         String titulo =  "Evento sin titulo";
         String descripcion = "-";
-        LocalDate fechaInicio = LocalDate.now();
-        LocalDate fechaFin = fechaInicio.plusDays(1);
+        LocalDateTime fechaInicio = LocalDateTime.of(2023,5,10,20,30);
+        LocalDateTime fechaFin = fechaInicio.plusDays(1);
         int ocurrenciasRealizadas = 0;
         int maxOcurrencias = 1;
         Repeticion tipoRepeticion = Repeticion.HASTA_FECHA_FIN;
@@ -30,8 +30,8 @@ public class EventoDiarioTest {
 
         assertEquals(titulo, eventoDiario.obtenerTitulo());
         assertEquals(descripcion, eventoDiario.obtenerDescripcion());
-        assertEquals(fechaInicio, eventoDiario.obtenerFechaInicio().toLocalDate());
-        assertEquals(fechaFin, eventoDiario.obtenerFechaFin().toLocalDate());
+        assertEquals(fechaInicio, eventoDiario.obtenerFechaInicio());
+        assertEquals(fechaFin, eventoDiario.obtenerFechaFin());
         assertEquals(ocurrenciasRealizadas, eventoDiario.obtenerOcurrencias());
         assertEquals(maxOcurrencias, eventoDiario.obtenerMaxOcurrencias());
         assertEquals(tipoRepeticion, eventoDiario.obtenerTipoRepeticion());
@@ -44,7 +44,7 @@ public class EventoDiarioTest {
     @Test
     public void testObtenerSiguienteOcurrenciaValoresDefault() {
 
-        var eventoDiario = new EventoDiario();
+        var eventoDiario = new EventoDiario(LocalDateTime.of(2023,5,10,20,30));
 
         //Por default, el intervalo = 1
         LocalDateTime FechaEsperada = eventoDiario.obtenerFechaInicio().plusDays(eventoDiario.obtenerIntervalo());
@@ -83,7 +83,7 @@ public class EventoDiarioTest {
         int maxOcurrencias = 1;
         int intervalo = 3;
 
-        var eventoDiario = new EventoDiario();
+        var eventoDiario = new EventoDiario(LocalDateTime.of(2023,5,10,20,30));
 
         eventoDiario.establecerTitulo(titulo);
         eventoDiario.establecerDescripcion(descripcion);

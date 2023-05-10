@@ -15,20 +15,20 @@ public class EventoAnualTest {
     @Test
     public void testEventoMensualDefault() {
 
-        var eventoAnual = new EventoAnual();
+        var eventoAnual = new EventoAnual(LocalDateTime.of(2023,5,10,23,30));
 
         String titulo =  "Evento sin titulo";
         String descripcion = "-";
-        LocalDate fechaInicio = LocalDate.now();
-        LocalDate fechaFin = fechaInicio.plusDays(1);
+        LocalDateTime fechaInicio = LocalDateTime.of(2023,5,10,23,30);
+        LocalDateTime fechaFin = fechaInicio.plusDays(1);
         Repeticion tipoRepeticion = Repeticion.HASTA_FECHA_FIN;
         int ocurrenciasRealizadas = 0;
         int maxOcurrencias = 1;
 
         assertEquals(titulo, eventoAnual.obtenerTitulo());
         assertEquals(descripcion, eventoAnual.obtenerDescripcion());
-        assertEquals(fechaInicio, eventoAnual.obtenerFechaInicio().toLocalDate());
-        assertEquals(fechaFin, eventoAnual.obtenerFechaFin().toLocalDate());
+        assertEquals(fechaInicio, eventoAnual.obtenerFechaInicio());
+        assertEquals(fechaFin, eventoAnual.obtenerFechaFin());
         assertEquals(ocurrenciasRealizadas, eventoAnual.obtenerOcurrencias());
         assertEquals(maxOcurrencias, eventoAnual.obtenerMaxOcurrencias());
         assertEquals(tipoRepeticion, eventoAnual.obtenerTipoRepeticion());
@@ -40,7 +40,7 @@ public class EventoAnualTest {
     @Test
     public void testObtenerSiguienteOcurrenciaValoresDefault() {
 
-        var eventoAnual = new EventoAnual();
+        var eventoAnual = new EventoAnual(LocalDateTime.of(2023,5,15,23,30));
 
         LocalDateTime FechaEsperada = eventoAnual.obtenerFechaInicio().plusYears(1);
         LocalDateTime FechaActual = eventoAnual.calcularSiguienteOcurrencia(eventoAnual.obtenerFechaInicio());
@@ -80,7 +80,7 @@ public class EventoAnualTest {
         int maxOcurrencias = 1;
         int cantidadAnios  = 3;
 
-        var eventoAnual = new EventoAnual();
+        var eventoAnual = new EventoAnual(LocalDateTime.of(2023,12,1,23,0));
 
         eventoAnual.establecerTitulo(titulo);
         eventoAnual.establecerDescripcion(descripcion);

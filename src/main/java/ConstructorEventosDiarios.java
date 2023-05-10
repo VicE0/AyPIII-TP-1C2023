@@ -4,8 +4,8 @@ import java.util.ArrayList;
 public class ConstructorEventosDiarios implements ConstructorEventos{
     private  EventoDiario eventoDiario;
 
-    public ConstructorEventosDiarios(){
-        this.eventoDiario = new EventoDiario();
+    public ConstructorEventosDiarios(LocalDateTime fechaInicio){
+        this.eventoDiario = new EventoDiario(fechaInicio);
     }
 
     public ConstructorEventosDiarios(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias,Repeticion tipoRepeticion,int intervalo){

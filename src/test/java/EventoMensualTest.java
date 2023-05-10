@@ -14,13 +14,13 @@ public class EventoMensualTest {
     @Test
     public void testEventoMensualDefault() {
 
-        var eventoMensual = new EventoMensual();
+        var eventoMensual = new EventoMensual(LocalDateTime.of(2023,5,10,20,30));
 
         String titulo =  "Evento sin titulo";
         String descripcion = "-";
 
-        LocalDate fechaInicio = LocalDate.now();
-        LocalDate fechaFin = fechaInicio.plusDays(1);
+        LocalDateTime fechaInicio = LocalDateTime.of(2023,5,10,20,30);
+        LocalDateTime fechaFin = fechaInicio.plusDays(1);
 
         int ocurrenciasRealizadas = 0;
         int maxOcurrencias = 1;
@@ -28,8 +28,8 @@ public class EventoMensualTest {
 
         assertEquals(titulo, eventoMensual.obtenerTitulo());
         assertEquals(descripcion, eventoMensual.obtenerDescripcion());
-        assertEquals(fechaInicio, eventoMensual.obtenerFechaInicio().toLocalDate());
-        assertEquals(fechaFin, eventoMensual.obtenerFechaFin().toLocalDate());
+        assertEquals(fechaInicio, eventoMensual.obtenerFechaInicio());
+        assertEquals(fechaFin, eventoMensual.obtenerFechaFin());
         assertEquals(ocurrenciasRealizadas, eventoMensual.obtenerOcurrencias());
         assertEquals(maxOcurrencias, eventoMensual.obtenerMaxOcurrencias());
         assertEquals(tipoRepeticion, eventoMensual.obtenerTipoRepeticion());
@@ -41,7 +41,7 @@ public class EventoMensualTest {
     @Test
     public void testObtenerSiguienteOcurrenciaValoresDefault() {
 
-        var eventoMensual = new EventoMensual();
+        var eventoMensual = new EventoMensual(LocalDateTime.of(2023,5,10,20,30));
         LocalDateTime FechaEsperada = eventoMensual.obtenerFechaInicio().plusMonths(1);
         LocalDateTime FechaActual = eventoMensual.calcularSiguienteOcurrencia(eventoMensual.obtenerFechaInicio());
 
@@ -80,7 +80,7 @@ public class EventoMensualTest {
         int maxOcurrencias = 1;
         int cantidadMeses = 3;
 
-        var eventoMensual = new EventoMensual();
+        var eventoMensual = new EventoMensual(LocalDateTime.of(2023,5,10,20,30));
         eventoMensual.establecerTitulo(titulo);
         eventoMensual.establecerDescripcion(descripcion);
         eventoMensual.establecerFechaInicio(fechaInicio);
