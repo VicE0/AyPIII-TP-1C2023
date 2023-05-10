@@ -1,5 +1,4 @@
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 public class EventoMensual extends Evento{
     private int cantidadMeses;

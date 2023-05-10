@@ -2,7 +2,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class ConstructorEventosDiarios implements ConstructorEventos{
-    private  EventoDiario eventoDiario;
+    private final EventoDiario eventoDiario;
 
     public ConstructorEventosDiarios(LocalDateTime fechaInicio){
         this.eventoDiario = new EventoDiario(fechaInicio);
@@ -44,8 +44,7 @@ public class ConstructorEventosDiarios implements ConstructorEventos{
     }
 
     public EventoDiario obtenerEventoCreado(){
-        EventoDiario clase = this.eventoDiario;
-        return clase;
+        return this.eventoDiario;
     }
 
 
@@ -111,7 +110,7 @@ public class ConstructorEventosDiarios implements ConstructorEventos{
                     proximaFecha = eventoDiario.calcularSiguienteOcurrencia(proximaFecha);
 
                     var eventoOcurrenciasNuevo = new EventoDiario(eventoDiario.obtenerTitulo(), eventoDiario.obtenerDescripcion(), proximaFecha, eventoDiario.obtenerFechaFin(), eventoDiario.obtenerMaxOcurrencias(), eventoDiario.obtenerTipoRepeticion(), eventoDiario.obtenerIntervalo());
-                    ;
+
                     eventoOcurrenciasNuevo.establecerFechaInicio(proximaFecha);
 
                     proximosEventos.add(eventoOcurrenciasNuevo);

@@ -1,7 +1,6 @@
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import static org.junit.Assert.*;
@@ -124,9 +123,8 @@ public class EventoMensualTest {
 
         var eventoMensual = new EventoMensual(titulo, descripcion, fechaInicio, fechaFin,maxOcurrencias, tipoRepeticion, cantidadMeses);
 
-        LocalDateTime fechaEsperada = fechaInicio;
         LocalDateTime FechaActual = eventoMensual.calcularSiguienteOcurrencia(fechaInicio);
-        assertEquals(fechaEsperada, FechaActual);
+        assertEquals(fechaInicio, FechaActual);
     }
 
 

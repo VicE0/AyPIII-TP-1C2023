@@ -12,6 +12,12 @@ public class Main {
 //        //Para testear todos los cambios :]
 //        CreadorEventosDiarios creadorEventosDiarios = new CreadorEventosDiarios();
 
+        CreadorDeEventos eventoDiarioCreado      = new CreadorEventosDiarios();
+        CreadorDeEventos eventoSemanalCreado     = new CreadorEventosSemanales();
+        CreadorDeEventos eventoMensualCreado     = new CreadorEventosMensuales();
+        CreadorDeEventos eventoAnualCreado       = new CreadorEventosAnuales();
+        CreadorDeEventos eventoDiaCompletoCreado = new CreadorEventosDiaCompleto();
+
         String titulo = "AAAAAAAAAAAAAAAAAAAAAAA";
         String descripcion = "Evento que se repite hasta llegar a una fecha";
 
@@ -22,7 +28,7 @@ public class Main {
 
         Repeticion tipoRepeticion = Repeticion.HASTA_OCURRENCIAS;
 
-        int intervalo = 2;
+        int intervalo = 1;
 //        Set<DayOfWeek> diasSemana = Set.of(DayOfWeek.MONDAY, DayOfWeek.FRIDAY);
 
 ////        CONSTRUCTOR ACA
@@ -37,42 +43,71 @@ public class Main {
         ConstructorEventos eventoDiaCompletoConstruido = new ConstructorEventosDiaCompleto(fecha);
 
 
-        CreadorDeEventos eventoDiarioCreado = new CreadorEventosDiarios();
-        CreadorDeEventos eventoSemanalCreado = new CreadorEventosSemanales();
-        CreadorDeEventos eventoMensualCreado = new CreadorEventosMensuales();
-        CreadorDeEventos eventoAnualCreado = new CreadorEventosAnuales();
-        CreadorDeEventos eventoDiaCompletoCreado = new CreadorEventosDiaCompleto();
+
+        Evento eventoDiario      =   eventoDiarioCreado.crearEvento(eventoDiarioConstruido);
+        Evento eventoSemanal     =   eventoSemanalCreado.crearEvento(eventoMensualConstruido);
 
 
-        Evento eventoDiario = eventoDiarioCreado.crearEvento(eventoDiarioConstruido);
-        Evento eventoSemanal = eventoSemanalCreado.crearEvento(eventoSemanalConstruido);
-        Evento eventoMensual = eventoMensualCreado.crearEvento(eventoMensualConstruido);
-        Evento eventoAnual = eventoAnualCreado.crearEvento(eventoAnualConstruido);
-        Evento eventoDiaCompleto = eventoDiaCompletoCreado.crearEvento(eventoDiaCompletoConstruido);
+        var Notificacion = new Notificacion();
+        var alarma       = new AlarmaFechaAbsoluta(LocalDateTime.of(2023, 4, 17, 10, 0),Notificacion);
+
+        eventoDiario.agregarAlarmaEvento(alarma);
 
         var calendario = new Calendario();
 
-        //Agrego eventos iguales
-        calendario.agregarEvento(eventoDiario);
-        calendario.agregarEvento(eventoDiario);
-
         calendario.agregarEvento(eventoSemanal);
-        calendario.agregarEvento(eventoMensual);
 
-        calendario.agregarEvento(eventoAnual);
-        calendario.agregarEvento(eventoAnual);
+        ArrayList<Evento> proximosEventos = calendario.proximosEventos(eventoDiarioConstruido);
+        calendario.agregarEventosACalendario(proximosEventos);
 
-        calendario.agregarEvento(eventoDiaCompleto);
+        ArrayList<Evento> todosLosEventos = calendario.obtenerListaEventosTotales();
 
-        ArrayList<Evento> listaEventos = calendario.obtenerListaEventosTotales();
+        calendario.eliminarEvento(todosLosEventos.get(1));
 
-        //Elimino la instancia de EventoDiario y todas sus repeticiones
-        calendario.eliminarEvento(listaEventos.get(0));
-
-        for (Evento evento : listaEventos) {
+        for (Evento evento : todosLosEventos){
             System.out.println(evento.getClass());
 
         }
+
+
+
+//
+//        CreadorDeEventos eventoDiarioCreado = new CreadorEventosDiarios();
+//        CreadorDeEventos eventoSemanalCreado = new CreadorEventosSemanales();
+//        CreadorDeEventos eventoMensualCreado = new CreadorEventosMensuales();
+//        CreadorDeEventos eventoAnualCreado = new CreadorEventosAnuales();
+//        CreadorDeEventos eventoDiaCompletoCreado = new CreadorEventosDiaCompleto();
+//
+//
+//        Evento eventoDiario = eventoDiarioCreado.crearEvento(eventoDiarioConstruido);
+//        Evento eventoSemanal = eventoSemanalCreado.crearEvento(eventoSemanalConstruido);
+//        Evento eventoMensual = eventoMensualCreado.crearEvento(eventoMensualConstruido);
+//        Evento eventoAnual = eventoAnualCreado.crearEvento(eventoAnualConstruido);
+//        Evento eventoDiaCompleto = eventoDiaCompletoCreado.crearEvento(eventoDiaCompletoConstruido);
+//
+//        var calendario = new Calendario();
+//
+//        //Agrego eventos iguales
+//        calendario.agregarEvento(eventoDiario);
+//        calendario.agregarEvento(eventoDiario);
+//
+//        calendario.agregarEvento(eventoSemanal);
+//        calendario.agregarEvento(eventoMensual);
+//
+//        calendario.agregarEvento(eventoAnual);
+//        calendario.agregarEvento(eventoAnual);
+//
+//        calendario.agregarEvento(eventoDiaCompleto);
+//
+//        ArrayList<Evento> listaEventos = calendario.obtenerListaEventosTotales();
+//
+//        //Elimino la instancia de EventoDiario y todas sus repeticiones
+//        calendario.eliminarEvento(listaEventos.get(0));
+//
+//        for (Evento evento : listaEventos) {
+//            System.out.println(evento.getClass());
+//
+//        }
 
 //
 //        Clock clock = Clock.systemUTC().withZone(java.time.ZoneId.of("UTC+1")) ;

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class ConstructorEventosDiaCompleto implements ConstructorEventos {
 
-    private  EventoDiaCompleto eventoDiaCompleto;
+    private  final EventoDiaCompleto eventoDiaCompleto;
 
     public ConstructorEventosDiaCompleto(LocalDate fechaInicio){
         this.eventoDiaCompleto = new EventoDiaCompleto(fechaInicio);
@@ -45,8 +45,7 @@ public class ConstructorEventosDiaCompleto implements ConstructorEventos {
     }
 
     public EventoDiaCompleto obtenerEventoCreado(){
-        EventoDiaCompleto clase = this.eventoDiaCompleto;
-        return clase;
+        return this.eventoDiaCompleto;
     }
 
 
@@ -112,7 +111,7 @@ public class ConstructorEventosDiaCompleto implements ConstructorEventos {
                     proximaFecha = eventoDiaCompleto.calcularSiguienteOcurrencia(proximaFecha);
 
                     var eventoOcurrenciasNuevo = new EventoDiaCompleto(eventoDiaCompleto.obtenerTitulo(), eventoDiaCompleto.obtenerDescripcion(), proximaFecha,proximaFecha.plusDays(1), eventoDiaCompleto.obtenerMaxOcurrencias(), eventoDiaCompleto.obtenerTipoRepeticion());
-                    ;
+
                     eventoOcurrenciasNuevo.establecerFechaInicio(proximaFecha);
 
                     proximosEventos.add(eventoOcurrenciasNuevo);

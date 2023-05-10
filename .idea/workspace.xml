@@ -6,14 +6,18 @@
   <component name="ChangeListManager">
     <list default="true" id="f4a2b6a4-54ae-4808-8225-7104df414da0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/CreadorDeEventos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CreadorDeEventos.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/CreadorEventosAnuales.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CreadorEventosAnuales.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/CreadorEventosDiaCompleto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CreadorEventosDiaCompleto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/CreadorEventosDiarios.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CreadorEventosDiarios.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/CreadorEventosMensuales.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CreadorEventosMensuales.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/CreadorEventosSemanales.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CreadorEventosSemanales.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Calendario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Calendario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/EventoAnual.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/EventoAnual.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/EventoDiaCompleto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/EventoDiaCompleto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/EventoDiario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/EventoDiario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/EventoMensual.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/EventoMensual.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Frecuencia.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/CalendarioTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/CalendarioTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/EventoAnualTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/EventoAnualTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/EventoDiarioTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/EventoDiarioTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/EventoMensualTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/EventoMensualTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/EventoSemanalTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/EventoSemanalTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +73,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="JUnit.CalendarioTest">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="tp-algoIII" />
@@ -95,6 +99,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="EventoDiarioTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="tp-algoIII" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="EventoDiarioTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="EventoMensualTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="tp-algoIII" />
       <option name="PACKAGE_NAME" value="" />
@@ -104,22 +117,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="EventoSemanalTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="tp-algoIII" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="EventoSemanalTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.CalendarioTest" />
-        <item itemvalue="JUnit.EventoDiaCompletoTest" />
-        <item itemvalue="JUnit.EventoSemanalTest" />
         <item itemvalue="JUnit.EventoMensualTest" />
+        <item itemvalue="JUnit.EventoDiaCompletoTest" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.EventoDiarioTest" />
       </list>
     </recent_temporary>
   </component>
