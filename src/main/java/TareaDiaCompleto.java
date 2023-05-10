@@ -5,9 +5,9 @@ public class TareaDiaCompleto extends Tarea {
     private LocalDateTime fechaInicio;
     private LocalDateTime fechaVencimiento;
 
-    public TareaDiaCompleto() {
+    public TareaDiaCompleto(LocalDate fechaInicio) {
         super("Tarea sin titulo", "");
-        this.fechaInicio = LocalDateTime.now();
+        this.fechaInicio = fechaInicio.atTime(0,0,0);
         this.fechaVencimiento = this.fechaInicio.plusDays(1);
     }
 

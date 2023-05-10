@@ -7,11 +7,10 @@ import static org.junit.Assert.*;
 public class TareaConVencimientoTest {
     @Test
     public void testCrearTareaDefalt(){
-        var tarea = new TareaDiaCompleto();
-        assertEquals("Tarea sin titulo",tarea.obtenerTitulo());
+        var tarea = new TareaConVencimiento(LocalDateTime.of(2023,5,10,22,30));        assertEquals("Tarea sin titulo",tarea.obtenerTitulo());
         assertEquals("",tarea.obtenerDescripcion());
-        assertEquals(LocalDateTime.now(),tarea.obtenerFechaInicio());
-        assertEquals(LocalDateTime.now().plusDays(1),tarea.obtenerFechaVencimiento());
+        assertEquals(LocalDateTime.of(2023,5,10,22,30),tarea.obtenerFechaInicio());
+        assertEquals(LocalDateTime.of(2023,5,10,22,30).plusDays(1),tarea.obtenerFechaVencimiento());
 
     }
     @Test
@@ -26,8 +25,7 @@ public class TareaConVencimientoTest {
 
     @Test
     public void testEstablecerAtributosManual(){
-        var tarea = new TareaDiaCompleto();
-        tarea.establecerTitulo("Tarea");
+        var tarea = new TareaConVencimiento(LocalDateTime.of(2023,5,10,22,30));        tarea.establecerTitulo("Tarea");
         tarea.establecerDescripcion("Descripcion");
         tarea.establecerFechaInicio(LocalDateTime.of(2023, 4, 17, 10, 0));
         tarea.establecerFechaVencimiento(LocalDateTime.of(2023, 4, 17, 18, 0));

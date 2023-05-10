@@ -23,7 +23,7 @@ public class CalendarioTest {
     public void testCrearTarea(){
 
         var calendario = new Calendario();
-        var tarea = new TareaConVencimiento();
+        var tarea = new TareaConVencimiento(LocalDateTime.of(2023,5,10,22,0));
 
         calendario.agregarTarea(tarea);
 
@@ -50,8 +50,8 @@ public class CalendarioTest {
 
         var calendario = new Calendario();
 
-        var tareaUno = new TareaConVencimiento();
-        var tareaDos = new TareaDiaCompleto();
+        var tareaUno = new TareaConVencimiento(LocalDateTime.of(2023,5,18,22,0));
+        var tareaDos = new TareaDiaCompleto(LocalDate.of(2023,4,18));
         var tareaTres = new TareaDiaCompleto("Tarea","Hacer la tarea", LocalDate.of(2023,12,22));
 
         calendario.agregarTarea(tareaUno);
@@ -104,10 +104,10 @@ public class CalendarioTest {
 
         var calendario = new Calendario();
 
-        var tareaUno = new TareaConVencimiento();
+        var tareaUno = new TareaConVencimiento(LocalDateTime.of(2023,5,10,22,30));
         int idUno = tareaUno.obtenerId();
 
-        var tareaDos = new TareaDiaCompleto();
+        var tareaDos = new TareaDiaCompleto(LocalDate.of(2023,5,10));
         int idDos = tareaDos.obtenerId();
 
         var tareaTres = new TareaDiaCompleto("Tarea","Hacer la tarea", LocalDate.of(2023,12,22));

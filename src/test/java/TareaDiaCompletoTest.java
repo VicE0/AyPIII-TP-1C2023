@@ -9,11 +9,11 @@ import static org.junit.Assert.*;
 public class TareaDiaCompletoTest {
     @Test
     public void testCrearTareaDefault(){
-        var tarea = new TareaConVencimiento();
+        var tarea = new TareaDiaCompleto(LocalDate.of(2023,5,10));
         assertEquals("Tarea sin titulo", tarea.obtenerTitulo());
         assertEquals("",tarea.obtenerDescripcion());
-        assertEquals(LocalDateTime.now(),tarea.obtenerFechaInicio());
-        assertEquals(LocalDateTime.now().plusDays(1),tarea.obtenerFechaVencimiento());
+        assertEquals(LocalDateTime.of(2023,5,10,0,0),tarea.obtenerFechaInicio());
+        assertEquals(LocalDateTime.of(2023,5,10,0,0).plusDays(1),tarea.obtenerFechaVencimiento());
 
 
     }
@@ -31,12 +31,12 @@ public class TareaDiaCompletoTest {
 
     @Test
     public void testEstablecerAtributosManual(){
-        var tarea = new TareaDiaCompleto();
-        tarea.establecerTitulo("Tarea");
+        var tarea = new TareaDiaCompleto(LocalDate.of(2023,5,10));
+        tarea.establecerTitulo("Trabajo practico");
         tarea.establecerDescripcion("Descripcion");
         tarea.establecerFechaInicio(LocalDateTime.of(2023, 4, 17, 10, 0));
         tarea.establecerFechaVencimiento(LocalDateTime.of(2023, 4, 17, 18, 0));
-        assertEquals("Tarea",tarea.obtenerTitulo());
+        assertEquals("Trabajo practico",tarea.obtenerTitulo());
         assertEquals("Descripcion",tarea.obtenerDescripcion());
         assertEquals(LocalDateTime.of(2023, 4, 17, 10, 0),tarea.obtenerFechaInicio());
         assertEquals(LocalDateTime.of(2023, 4, 17, 18, 0),tarea.obtenerFechaVencimiento());
@@ -45,9 +45,10 @@ public class TareaDiaCompletoTest {
 
     @Test
     public void testTareasTienenDistintoId(){
-        var tarea = new TareaDiaCompleto();
-        var tarea_uno = new TareaDiaCompleto("Tarea", "Descripcion", LocalDate.of(2023, 4, 17));
-        var tarea_dos = new TareaDiaCompleto("Tarea", "Descripcion", LocalDate.of(2023,4,18));
+        var tarea = new TareaDiaCompleto(LocalDate.of(2023,5,10));
+        var tarea_uno = new TareaDiaCompleto("Tarea", "Descripcion", LocalDate.of(2023,4,18));
+        var tarea_dos = new TareaDiaCompleto("Hacer tarea", "Descripcion", LocalDate.of(2023,5,18));
+
         assertNotEquals(tarea_uno.obtenerId(),tarea_dos.obtenerId());
         assertNotEquals(tarea.obtenerId(),tarea_uno.obtenerId());
         assertNotEquals(tarea.obtenerId(),tarea_dos.obtenerId());
@@ -62,7 +63,7 @@ public class TareaDiaCompletoTest {
     }
     @Test
     public void testActivarAlarma(){
-        var tarea = new TareaDiaCompleto();
+        var tarea = new TareaDiaCompleto(LocalDate.of(2023,5,10));
         var Notificacion = new Notificacion();
         var alarma = new AlarmaFechaAbsoluta(LocalDateTime.of(2023, 4, 17, 10, 0),Notificacion);
         tarea.agregarAlarma(alarma);
@@ -72,7 +73,7 @@ public class TareaDiaCompletoTest {
     }
     @Test
     public void testBorrarAlarma(){
-        var tarea = new TareaDiaCompleto();
+        var tarea = new TareaDiaCompleto(LocalDate.of(2023,5,10));
         var notificacion = new Notificacion();
         var sonido = new Sonido();
         var alarma = new AlarmaFechaAbsoluta(tarea.obtenerFechaInicio(),notificacion);
@@ -88,7 +89,7 @@ public class TareaDiaCompletoTest {
     }
     @Test
     public void testAgregarMuchasAlarmas(){
-        var tarea = new TareaDiaCompleto();
+        var tarea = new TareaDiaCompleto(LocalDate.of(2023,5,10));
         var notificacion = new Notificacion();
         var sonido = new Sonido();
         var mail = new Email();
