@@ -158,17 +158,17 @@ public class Calendario {
 
 //ESTE METODO NO ES PEDIDO POR EL ENUNCIADO DE LA ETAPA 1, PERO A RECOMENDACIÓN DE ESSAYA FUE IMPLEMENTADO
 // Método para obtener los eventos correspondientes a una fecha
-    public ArrayList<Evento> obtenerEventosSegunFecha(LocalDate fecha) {
 
-        ArrayList<Evento> eventosEnFecha = new ArrayList<>();
 
-        for (Evento evento : this.eventos) {
-            if (evento.obtenerFechaInicio().toLocalDate().equals(fecha) || evento.obtenerFechaFin().toLocalDate().equals(fecha)) {
-                eventosEnFecha.add(evento);
+    public ArrayList<Evento> obtenerEventosEntreFechas(LocalDate fechaA, LocalDate fechaB){
+        ArrayList<Evento> eventosEnRango = new ArrayList<>();
+        for (Evento evento : this.eventos){
+            LocalDate fechaEvento = evento.obtenerFechaInicio().toLocalDate();
+            if (fechaEvento.isAfter(fechaA) || fechaEvento.isBefore(fechaB)){
+                eventosEnRango.add(evento);
             }
         }
-        return eventosEnFecha;
+        return eventosEnRango;
+
     }
-
-
 }

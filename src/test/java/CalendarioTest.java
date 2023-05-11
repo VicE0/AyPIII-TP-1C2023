@@ -1118,46 +1118,36 @@ public void testObtenerProximosEventosDiaCompleto(){
 //        assertTrue(eventoSemanalRandom.obtenerAlarmasEvento().isEmpty());
 //    }
 //
-//    @Test
-//    public void testObtenerEventosSegunFecha(){
-//
-//        CreadorEventosDiarios creadorEventosDiarios = new CreadorEventosDiarios();
-//        CreadorEventosSemanales creadorEventosSemanales = new CreadorEventosSemanales();
-//        CreadorEventosMensuales creadorEventosMensuales = new CreadorEventosMensuales();
-//        CreadorEventosAnuales creadorEventosAnuales = new CreadorEventosAnuales();
-//
-//        Calendario eventosDiarios = new Calendario(creadorEventosDiarios);
-//        Calendario eventosSemanales = new Calendario(creadorEventosSemanales);
-//        Calendario eventosMensuales = new Calendario(creadorEventosMensuales);
-//        Calendario eventosAnuales = new Calendario(creadorEventosAnuales);
-//
-//        Calendario calendario = new Calendario();
-//
-//        ArrayList<Evento> listaEventosDiarios = eventosDiarios.proximosEventosDiarios("Evento Diario", "Evento Repetido", LocalDateTime.of(2023, 4, 10, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 10, Repeticion.HASTA_OCURRENCIAS, 1);
-//        ArrayList<Evento> listaEventosSemanales = eventosSemanales.proximosEventosSemanales("Evento Semanal", "Evento Repetido", LocalDateTime.of(2023, 4, 11, 9, 0), LocalDateTime.of(2023, 4, 21, 9, 30), 1, Repeticion.HASTA_FECHA_FIN, Set.of(DayOfWeek.MONDAY));
-//        ArrayList<Evento> listaEventosMensuales = eventosMensuales.proximosEventosMensuales("Evento Mensual", "Evento Unico", LocalDateTime.of(2023, 4, 10, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 99, Repeticion.INFINITA, 2);
-//        ArrayList<Evento> listaEventosAnuales = eventosAnuales.proximosEventosAnuales("Evento Anual", "Evento Unico", LocalDateTime.of(2023, 4, 13, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 99, Repeticion.HASTA_FECHA_FIN, 3);
-//
-//
-//        calendario.agregarEventosACalendario(listaEventosDiarios);
-//        calendario.agregarEventosACalendario(listaEventosSemanales);
-//        calendario.agregarEventosACalendario(listaEventosMensuales);
-//        calendario.agregarEventosACalendario(listaEventosAnuales);
-//
-//        ArrayList<Evento>eventosEnFecha = calendario.obtenerEventosSegunFecha(LocalDate.of(2023, 4, 10));
-//
-//        Evento evento1 = eventosEnFecha.get(0);
-//        Evento evento2 = eventosEnFecha.get(1);
-//
-//        assertEquals(2, eventosEnFecha.size());
-//
-//        //Me aseguro que sea el mismo objeto
-//        assertEquals(evento1.getClass(), listaEventosDiarios.get(0).getClass());
-//        assertEquals(evento2.getClass(), listaEventosMensuales.get(0).getClass());
-//
-//        assertEquals(evento1.obtenerTitulo(), listaEventosDiarios.get(0).obtenerTitulo());
-//        assertEquals(evento2.obtenerTitulo(), listaEventosMensuales.get(0).obtenerTitulo());
-//
-//
-//    }
+    @Test
+    public void testObtenerEventosSegunFecha(){
+
+        ConstructorEventos eventoDiarioConstruido      = new ConstructorEventosDiarios("Evento Diario", "Evento Repetido", LocalDateTime.of(2023, 4, 10, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 10, Repeticion.HASTA_OCURRENCIAS, 1);
+        ConstructorEventos eventoSemanalConstruido     = new ConstructorEventosSemanales("Evento Semanal", "Evento Repetido", LocalDateTime.of(2023, 4, 11, 9, 0), LocalDateTime.of(2023, 4, 21, 9, 30), 1, Repeticion.HASTA_FECHA_FIN, Set.of(DayOfWeek.MONDAY));
+        ConstructorEventos eventoMensualConstruido     = new ConstructorEventosMensuales("Evento Mensual", "Evento Unico", LocalDateTime.of(2023, 4, 12, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 99, Repeticion.INFINITA, 2);
+        ConstructorEventos eventoAnualConstruido       = new ConstructorEventosAnuales("Evento Anual", "Evento Unico", LocalDateTime.of(2023, 4, 13, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 10, Repeticion.HASTA_FECHA_FIN, 3);
+        ConstructorEventos eventoDiaCompletoConstruido = new ConstructorEventosDiaCompleto("Evento Dia Completo", "Evento Unico", LocalDateTime.of(2023, 4, 20, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 10, Repeticion.HASTA_OCURRENCIAS );
+
+        Evento eventoDiario      = eventoDiarioCreado.crearEvento(eventoDiarioConstruido);
+        Evento eventoSemanal     = eventoSemanalCreado.crearEvento(eventoSemanalConstruido);
+        Evento eventoMensual     = eventoMensualCreado.crearEvento(eventoMensualConstruido);
+        Evento eventoAnual       = eventoAnualCreado.crearEvento(eventoAnualConstruido);
+        Evento eventoDiaCompleto = eventoDiaCompletoCreado.crearEvento(eventoDiaCompletoConstruido);
+
+        var calendario = new Calendario();
+
+        calendario.agregarEvento(eventoDiario);
+        calendario.agregarEvento(eventoDiario);
+        calendario.agregarEvento(eventoDiario);
+        calendario.agregarEvento(eventoSemanal);
+        calendario.agregarEvento(eventoSemanal);
+        calendario.agregarEvento(eventoSemanal);
+        calendario.agregarEvento(eventoSemanal);
+        calendario.agregarEvento(eventoMensual);
+        calendario.agregarEvento(eventoAnual);
+        calendario.agregarEvento(eventoDiaCompleto);
+
+        ArrayList<Evento> eventosEnRango = calendario.obtenerEventosEntreFechas(LocalDate.of(2023,4,9),LocalDate.of(2023,4,13));
+        assertEquals(10,eventosEnRango.size());
+
+    }
 }
