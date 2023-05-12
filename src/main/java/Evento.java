@@ -25,6 +25,7 @@ public abstract class Evento
         this.ocurrenciasRealizadas = 0;
         this.tipoRepeticion = Repeticion.HASTA_FECHA_FIN;
         this.alarmasEvento = new ArrayList<>();
+
     }
 
     // PRE: Pido los datos necesarios para la creación de un evento
@@ -40,6 +41,7 @@ public abstract class Evento
         this.tipoRepeticion = tipoRepeticion;
         this.alarmasEvento = new ArrayList<>();
 
+
     }
 
 //GETTERS
@@ -53,6 +55,7 @@ public abstract class Evento
     public ArrayList<Alarma> obtenerAlarmasEvento(){
         return alarmasEvento;
     }
+
 
 //    public ArrayList<Evento> obtenerProximosEventos(Evento evento)
 //    {

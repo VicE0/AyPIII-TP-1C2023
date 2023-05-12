@@ -300,6 +300,7 @@ public class CalendarioTest {
 
         assertEquals(5,calendario.obtenerListaEventosTotales().size());
         assertEquals(2, calendario.obtenerTareas().size());
+
         assertTrue(calendario.obtenerTareas().contains(tarea));
     }
 
@@ -964,7 +965,6 @@ public void testObtenerProximosEventosDiaCompleto(){
 
         var calendario = new Calendario();
 
-
         ArrayList<Evento> proximosEventos = calendario.proximosEventos(eventoDiaCompletoConstruido);
         calendario.agregarEventosACalendario(proximosEventos);
 
@@ -974,6 +974,40 @@ public void testObtenerProximosEventosDiaCompleto(){
         //Por temas de claridad visual, se agrega tambien el primer dia, entonces el array pasa a tener 100 elementos en vez de 99
         assertEquals(100, todosLosEventos.size());
     }
+
+    @Test
+    public void modificoEventosYSeModificanTodasSusRepeticiones(){
+
+    ConstructorEventos eventoDiaCompletoConstruido = new ConstructorEventosDiaCompleto("Evento Dia Completo", "Evento Unico", LocalDateTime.of(2023, 4, 13, 9, 0), LocalDateTime.of(2023, 4, 16, 9, 30), 5, Repeticion.INFINITA );
+    Evento eventoDiaCompleto      =   eventoDiaCompletoCreado.crearEvento(eventoDiaCompletoConstruido);
+
+    assertTrue(eventoDiaCompleto.obtenerAlarmasEvento().isEmpty());
+
+    var calendario = new Calendario();
+
+
+    ArrayList<Evento> proximosEventos = calendario.proximosEventos(eventoDiaCompletoConstruido);
+    calendario.agregarEventosACalendario(proximosEventos);
+
+    calendario.modificarEvento(eventoDiaCompleto,"Titulo modificado","Descripcion nueva",null,null,null,null);
+
+
+
+    ArrayList<Evento> todosLosEventos = calendario.obtenerListaEventosTotales();
+
+
+
+    assertEquals(6, proximosEventos.size());
+    //Pruebo que se modificaron todas las repeticiones
+    for (Evento evento : todosLosEventos){
+        assertEquals("Titulo modificado",evento.obtenerTitulo());
+        assertEquals("Descripcion nueva",evento.obtenerDescripcion());
+
+    }
+
+    }
+
+
 
 
 ///////ULTIMOS TESTS A CORREGIR//////
@@ -1019,105 +1053,8 @@ public void testObtenerProximosEventosDiaCompleto(){
 //
 //    }
 //
-//    //Tests para verificar que modificarEvento modifique todas las repeticiones del evento
-//    @Test
-//    public void testModificarTodasLasOcurrenciasDeEvento(){
-//
-//        //En este caso, pruebo con eventos diarios
-//        CreadorEventosDiarios creadorEventosDiarios = new CreadorEventosDiarios();
-//        CreadorEventosSemanales creadorEventosSemanales = new CreadorEventosSemanales();
-//        CreadorEventosMensuales creadorEventosMensuales = new CreadorEventosMensuales();
-//        CreadorEventosAnuales creadorEventosAnuales = new CreadorEventosAnuales();
-//
-//        Calendario eventosDiarios = new Calendario(creadorEventosDiarios);
-//        Calendario eventosSemanales = new Calendario(creadorEventosSemanales);
-//        Calendario eventosMensuales = new Calendario(creadorEventosMensuales);
-//        Calendario eventosAnuales = new Calendario(creadorEventosAnuales);
-//
-//        Calendario calendario = new Calendario();
-//
-//        ArrayList<Evento> listaEventosDiarios   = eventosDiarios.proximosEventosDiarios("Evento Diario", "Evento Repetido", LocalDateTime.of(2023, 4, 10, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 2, Repeticion.HASTA_OCURRENCIAS, 1);
-//
-//        //Le agrego alarmas a eventos diarios
-//        for (Evento eventoDiario : listaEventosDiarios){
-//
-//            var mail        = new Email();
-//            var alarmaMail  = new AlarmaFechaAbsoluta(LocalDateTime.of(2023, 4, 17, 10, 0),mail);
-//            eventoDiario.agregarAlarmaEvento(alarmaMail);
-//        }
-//
-//        ArrayList<Evento> listaEventosSemanales = eventosSemanales.proximosEventosSemanales("Evento Semanal", "Evento Repetido", LocalDateTime.of(2023, 4, 11, 9, 0), LocalDateTime.of(2023, 4, 21, 9, 30), 3, Repeticion.HASTA_OCURRENCIAS, Set.of(DayOfWeek.MONDAY));
-//        ArrayList<Evento> listaEventosMensuales = eventosMensuales.proximosEventosMensuales("Evento Mensual", "Evento Unico", LocalDateTime.of(2023, 4, 12, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 4, Repeticion.INFINITA, 2);
-//
-//        ArrayList<Evento> listaEventosAnuales   = eventosAnuales.proximosEventosAnuales("Evento Anual", "Evento Unico", LocalDateTime.of(2023, 4, 13, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 1, Repeticion.HASTA_FECHA_FIN, 3);
-//        //Le agrego alarmas a eventos Anuales
-//        for (Evento eventoAnual : listaEventosAnuales){
-//
-//            var Sonido        = new Sonido();
-//            var alarmaSonido  = new AlarmaFechaAbsoluta(LocalDateTime.of(2023, 4, 17, 10, 0),Sonido);
-//
-//            eventoAnual.agregarAlarmaEvento(alarmaSonido);
-//        }
-//
-//        calendario.agregarEventosACalendario(listaEventosDiarios);
-//        calendario.agregarEventosACalendario(listaEventosSemanales);
-//        calendario.agregarEventosACalendario(listaEventosMensuales);
-//        calendario.agregarEventosACalendario(listaEventosAnuales);
-//
-//
-//        ArrayList<Evento> listaTodosLosEventos = calendario.obtenerListaEventosTotales();
-//
-//        var eventoModificado = new EventoDiario("Evento Modificado", "Evento Unico", LocalDateTime.of(2023, 4, 13, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 99, Repeticion.HASTA_FECHA_FIN, 3);
-//
-//        LocalDateTime nuevaFechaYHoraAlarma = LocalDateTime.of(2023, 4, 12, 10, 0);
-//
-//        var mail        = new Email();
-//        var alarmaMail  = new AlarmaFechaAbsoluta(nuevaFechaYHoraAlarma,mail);
-//        eventoModificado.agregarAlarmaEvento(alarmaMail);
-//
-//
-//
-//        for (Evento evento : listaTodosLosEventos) {
-//
-//            if (evento.getClass().equals(eventoModificado.getClass())){
-//                calendario.modificarEvento(evento, eventoModificado, evento.obtenerAlarmasEvento().get(0),nuevaFechaYHoraAlarma );
-//            }
-//        }
-//
-//        Evento primerEventoDiario = calendario.obtenerListaEventosTotales().get(0);
-//        Evento segundoEventoDiario = calendario.obtenerListaEventosTotales().get(1);
-//
-//        //Dentro de la lista de eventos totales del calendario, hay 3 eventos semanales. Agarro uno al azar con respecto a su indice y pruebo que no ha sido modificado
-//        Evento eventoSemanalRandom = calendario.obtenerListaEventosTotales().get(2);
-//
-//        assertEquals(primerEventoDiario.obtenerTitulo(), eventoModificado.obtenerTitulo());
-//        assertEquals(primerEventoDiario.obtenerDescripcion(), eventoModificado.obtenerDescripcion());
-//        assertEquals(primerEventoDiario.obtenerFechaInicio(), eventoModificado.obtenerFechaInicio());
-//        assertEquals(primerEventoDiario.obtenerFechaFin(), eventoModificado.obtenerFechaFin());
-//        assertEquals(primerEventoDiario.obtenerMaxOcurrencias(), eventoModificado.obtenerMaxOcurrencias());
-//        assertEquals(primerEventoDiario.obtenerTipoRepeticion(), eventoModificado.obtenerTipoRepeticion());
-//        assertEquals(primerEventoDiario.obtenerAlarmasEvento().get(0).obtenerFechaYHora(), eventoModificado.obtenerAlarmasEvento().get(0).obtenerFechaYHora());
-//
-//        assertEquals(segundoEventoDiario.obtenerTitulo(), eventoModificado.obtenerTitulo());
-//        assertEquals(segundoEventoDiario.obtenerDescripcion(), eventoModificado.obtenerDescripcion());
-//        assertEquals(segundoEventoDiario.obtenerFechaInicio(), eventoModificado.obtenerFechaInicio());
-//        assertEquals(segundoEventoDiario.obtenerFechaFin(), eventoModificado.obtenerFechaFin());
-//        assertEquals(segundoEventoDiario.obtenerMaxOcurrencias(), eventoModificado.obtenerMaxOcurrencias());
-//        assertEquals(segundoEventoDiario.obtenerTipoRepeticion(), eventoModificado.obtenerTipoRepeticion());
-//        assertEquals(segundoEventoDiario.obtenerAlarmasEvento().get(0).obtenerFechaYHora(), eventoModificado.obtenerAlarmasEvento().get(0).obtenerFechaYHora());
-//
-//        //Verifico que no ha sido modificado
-//        assertNotEquals(eventoSemanalRandom.obtenerTitulo(), eventoModificado.obtenerTitulo());
-//        assertNotEquals(eventoSemanalRandom.obtenerDescripcion(), eventoModificado.obtenerDescripcion());
-//        assertNotEquals(eventoSemanalRandom.obtenerFechaInicio(), eventoModificado.obtenerFechaInicio());
-//        assertNotEquals(eventoSemanalRandom.obtenerFechaFin(), eventoModificado.obtenerFechaFin());
-//        assertNotEquals(eventoSemanalRandom.obtenerMaxOcurrencias(), eventoModificado.obtenerMaxOcurrencias());
-//        assertNotEquals(eventoSemanalRandom.obtenerTipoRepeticion(), eventoModificado.obtenerTipoRepeticion());
-//
-//       //Como para evento semanal no cree una alarma, me aseguro que no se haya creado  uno despues de la modificacion
-//        assertTrue(eventoSemanalRandom.obtenerAlarmasEvento().isEmpty());
-//    }
-//
+    //Tests para verificar que modificarEvento modifique todas las repeticiones del evento
+
     @Test
     public void testObtenerEventosSegunFecha(){
 
@@ -1146,8 +1083,8 @@ public void testObtenerProximosEventosDiaCompleto(){
         calendario.agregarEvento(eventoAnual);
         calendario.agregarEvento(eventoDiaCompleto);
 
-        ArrayList<Evento> eventosEnRango = calendario.obtenerEventosEntreFechas(LocalDate.of(2023,4,9),LocalDate.of(2023,4,13));
-        assertEquals(10,eventosEnRango.size());
+        ArrayList<Evento> eventosEnRango = calendario.obtenerEventosEntreFechas(LocalDate.of(2023,4,8),LocalDate.of(2023,4,12));
+        assertEquals(7,eventosEnRango.size());
 
     }
 }

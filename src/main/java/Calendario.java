@@ -69,30 +69,23 @@ public class Calendario {
     }
 
 
-    public void modificarEvento(Evento eventoOriginal, Evento eventoModificado, Alarma alarma, LocalDateTime nuevaFechaAlarma) {
-
-        ArrayList<Evento> eventosAModificar = new ArrayList<>();
-
-        for (Evento nuevoEvento : this.eventos) {
-
-            if (nuevoEvento.getClass().equals(eventoOriginal.getClass()) && nuevoEvento.obtenerTitulo().equals(eventoOriginal.obtenerTitulo())) {
-                eventosAModificar.add(nuevoEvento);
+    public void modificarEvento(Evento eventoOriginal, String nuevoTitulo, String nuevaDescripcion, LocalDateTime nuevaFechaInicio, LocalDateTime nuevaFechaFin, Alarma alarma, LocalDateTime nuevaFechaAlarma) {
+        for (Evento evento : eventos) {
+            if (evento.getClass().equals(eventoOriginal.getClass())) {
+                evento.establecerTitulo(nuevoTitulo != null ? nuevoTitulo : evento.obtenerTitulo());
+                evento.establecerDescripcion(nuevaDescripcion != null ? nuevaDescripcion : evento.obtenerDescripcion());
+                evento.establecerFechaInicio(nuevaFechaInicio != null ? nuevaFechaInicio : evento.obtenerFechaInicio());
+                evento.establecerFechaFin(nuevaFechaFin != null ? nuevaFechaFin : evento.obtenerFechaFin());
+                if (alarma != null) {
+                    evento.modificarAlarmaEvento(alarma, nuevaFechaAlarma);
+                }
             }
         }
-        for (Evento nuevoEvento : eventosAModificar) {
-            nuevoEvento.establecerTitulo(eventoModificado.obtenerTitulo());
-            nuevoEvento.establecerDescripcion(eventoModificado.obtenerDescripcion());
-            nuevoEvento.establecerFechaInicio(eventoModificado.obtenerFechaInicio());
-            nuevoEvento.establecerFechaFin(eventoModificado.obtenerFechaFin());
-            nuevoEvento.establecerMaxOcurrencias(eventoModificado.obtenerMaxOcurrencias());
-            nuevoEvento.establecerTipoRepeticion(eventoModificado.obtenerTipoRepeticion());
 
-            if (eventoOriginal.obtenerAlarmasEvento() != null){
-                nuevoEvento.modificarAlarmaEvento(alarma, nuevaFechaAlarma);
-            }
-        }
+
+
+
     }
-
 
     public void agregarTarea(Tarea tarea) {
         tareas.add(tarea);
@@ -114,6 +107,7 @@ public class Calendario {
                 encontrada = true;
             }
         }
+
     }
 
     public void eliminarTarea(int id) {
@@ -164,7 +158,7 @@ public class Calendario {
         ArrayList<Evento> eventosEnRango = new ArrayList<>();
         for (Evento evento : this.eventos){
             LocalDate fechaEvento = evento.obtenerFechaInicio().toLocalDate();
-            if (fechaEvento.isAfter(fechaA) || fechaEvento.isBefore(fechaB)){
+            if (fechaEvento.isAfter(fechaA) && fechaEvento.isBefore(fechaB)){
                 eventosEnRango.add(evento);
             }
         }
