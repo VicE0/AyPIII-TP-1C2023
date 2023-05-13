@@ -60,20 +60,6 @@ public abstract class Evento
     }
 
 
-//    public ArrayList<Evento> obtenerProximosEventos(Evento evento)
-//    {
-//        ArrayList<Evento> proximosEventos = new ArrayList<>();
-//
-//        // Añade la primera fecha ingresada
-//        proximosEventos.add(evento);
-//        sumarOcurrencias();
-//
-//        LocalDateTime proximaFecha = calcularSiguienteOcurrencia(fechaInicio);
-//
-//        return switchCaseRepeticion(proximaFecha, proximosEventos);
-//    }
-
-
 //SETTERS
     public void establecerTitulo(String titulo) {
         this.titulo = titulo;

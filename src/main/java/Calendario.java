@@ -5,7 +5,6 @@ import java.util.Iterator;
 
 public class Calendario {
 
-//    private CreadorDeEventos creadorDeEventos;
     private  final ArrayList<Evento> eventos;
     private final ArrayList<Tarea> tareas;
 
@@ -26,7 +25,6 @@ public class Calendario {
 
         this.eventos.addAll(listaEventos);
     }
-
 
     public ArrayList<Evento> proximosEventos(ConstructorEventos constructor){
 
@@ -49,8 +47,6 @@ public class Calendario {
     }
 
 
-
-
     //PRE: Recibe una el objeto Evento a eliminar
     //POS: Itera por toda la lista de los eventos totales almacenados en la clase calendario. Si las clases del elemento a eliminar y el
     // evento encontrado en la lista coinciden, entonces lo elimina. Esto asegura que se eliminen todas las ocurrencias de dicho objeto
@@ -70,7 +66,9 @@ public class Calendario {
 
 
     public void modificarEvento(Evento eventoOriginal, String nuevoTitulo, String nuevaDescripcion, LocalDateTime nuevaFechaInicio, LocalDateTime nuevaFechaFin, Alarma alarma, LocalDateTime nuevaFechaAlarma) {
+
         for (Evento evento : eventos){
+
             if ( eventoOriginal.obtenerId() == evento.obtenerId()){
                 evento.establecerTitulo(nuevoTitulo != null ? nuevoTitulo : evento.obtenerTitulo());
                 evento.establecerDescripcion(nuevaDescripcion != null ? nuevaDescripcion : evento.obtenerDescripcion());
@@ -149,9 +147,7 @@ public class Calendario {
     }
 
 
-//ESTE METODO NO ES PEDIDO POR EL ENUNCIADO DE LA ETAPA 1, PERO A RECOMENDACIÓN DE ESSAYA FUE IMPLEMENTADO
-// Método para obtener los eventos correspondientes a una fecha
-
+// Método para obtener los eventos correspondientes entre dos fechas
 
     public ArrayList<Evento> obtenerEventosEntreFechas(LocalDate fechaA, LocalDate fechaB){
         ArrayList<Evento> eventosEnRango = new ArrayList<>();

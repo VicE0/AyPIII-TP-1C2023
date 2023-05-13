@@ -6,18 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f4a2b6a4-54ae-4808-8225-7104df414da0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Calendario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Calendario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/EventoAnual.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/EventoAnual.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/EventoDiaCompleto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/EventoDiaCompleto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/EventoDiario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/EventoDiario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/EventoMensual.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/EventoMensual.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Frecuencia.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/CalendarioTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/CalendarioTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/EventoAnualTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/EventoAnualTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/EventoDiarioTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/EventoDiarioTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/EventoMensualTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/EventoMensualTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/EventoSemanalTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/EventoSemanalTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,9 +109,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.CalendarioTest" />
+        <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.EventoMensualTest" />
         <item itemvalue="JUnit.EventoDiaCompletoTest" />
-        <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.EventoDiarioTest" />
       </list>
     </recent_temporary>
