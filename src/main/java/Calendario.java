@@ -70,19 +70,18 @@ public class Calendario {
 
 
     public void modificarEvento(Evento eventoOriginal, String nuevoTitulo, String nuevaDescripcion, LocalDateTime nuevaFechaInicio, LocalDateTime nuevaFechaFin, Alarma alarma, LocalDateTime nuevaFechaAlarma) {
-        for (Evento evento : eventos) {
-            if (evento.getClass().equals(eventoOriginal.getClass())) {
+        for (Evento evento : eventos){
+            if ( eventoOriginal.obtenerId() == evento.obtenerId()){
                 evento.establecerTitulo(nuevoTitulo != null ? nuevoTitulo : evento.obtenerTitulo());
                 evento.establecerDescripcion(nuevaDescripcion != null ? nuevaDescripcion : evento.obtenerDescripcion());
                 evento.establecerFechaInicio(nuevaFechaInicio != null ? nuevaFechaInicio : evento.obtenerFechaInicio());
                 evento.establecerFechaFin(nuevaFechaFin != null ? nuevaFechaFin : evento.obtenerFechaFin());
+
                 if (alarma != null) {
                     evento.modificarAlarmaEvento(alarma, nuevaFechaAlarma);
                 }
             }
         }
-
-
 
 
     }

@@ -8,10 +8,12 @@ public class ConstructorEventosDiaCompleto implements ConstructorEventos {
 
     public ConstructorEventosDiaCompleto(LocalDate fechaInicio){
         this.eventoDiaCompleto = new EventoDiaCompleto(fechaInicio);
+
     }
 
     public ConstructorEventosDiaCompleto(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion){
         this.eventoDiaCompleto = new EventoDiaCompleto(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion);
+
     }
 
     public void setTitulo() {
@@ -61,7 +63,7 @@ public class ConstructorEventosDiaCompleto implements ConstructorEventos {
 
             case INFINITA -> {
                 var eventoInfinito = new EventoDiaCompleto(eventoDiaCompleto.obtenerTitulo(), eventoDiaCompleto.obtenerDescripcion(), eventoDiaCompleto.obtenerFechaInicio(), proximaFecha.plusDays(1), eventoDiaCompleto.obtenerMaxOcurrencias(), eventoDiaCompleto.obtenerTipoRepeticion());
-
+                eventoInfinito.establecerId(eventoDiaCompleto.obtenerId());
                 proximosEventos.add(eventoInfinito);
 
                 while (eventoDiaCompleto.obtenerOcurrencias() < eventoDiaCompleto.obtenerMaxOcurrencias()) {
@@ -69,7 +71,7 @@ public class ConstructorEventosDiaCompleto implements ConstructorEventos {
                     proximaFecha = eventoDiaCompleto.calcularSiguienteOcurrencia(proximaFecha);
 
                     var eventoInfinitoNuevo = new EventoDiaCompleto(eventoDiaCompleto.obtenerTitulo(), eventoDiaCompleto.obtenerDescripcion(), proximaFecha,proximaFecha.plusDays(1), eventoDiaCompleto.obtenerMaxOcurrencias(), eventoDiaCompleto.obtenerTipoRepeticion());
-
+                    eventoInfinitoNuevo.establecerId(eventoDiaCompleto.obtenerId());
                     proximosEventos.add(eventoInfinitoNuevo);
 
                     eventoDiaCompleto.sumarOcurrencias();
@@ -82,7 +84,7 @@ public class ConstructorEventosDiaCompleto implements ConstructorEventos {
                 if (!eventoDiaCompleto.fechaFinNula()) {
 
                     var eventoFechaFin = new EventoDiaCompleto(eventoDiaCompleto.obtenerTitulo(), eventoDiaCompleto.obtenerDescripcion(), proximaFecha, proximaFecha.plusDays(1), eventoDiaCompleto.obtenerMaxOcurrencias(), eventoDiaCompleto.obtenerTipoRepeticion());
-
+                    eventoFechaFin.establecerId(eventoDiaCompleto.obtenerId());
                     proximosEventos.add(eventoFechaFin);
                 }
 
@@ -91,7 +93,7 @@ public class ConstructorEventosDiaCompleto implements ConstructorEventos {
                     proximaFecha = eventoDiaCompleto.calcularSiguienteOcurrencia(proximaFecha);
 
                     var eventoFechaFinNuevo = new EventoDiaCompleto(eventoDiaCompleto.obtenerTitulo(), eventoDiaCompleto.obtenerDescripcion(), proximaFecha, proximaFecha.plusDays(1), eventoDiaCompleto.obtenerMaxOcurrencias(), eventoDiaCompleto.obtenerTipoRepeticion());
-
+                    eventoFechaFinNuevo.establecerId(eventoDiaCompleto.obtenerId());
                     eventoFechaFinNuevo.establecerFechaInicio(proximaFecha);
                     proximosEventos.add(eventoFechaFinNuevo);
 
@@ -102,6 +104,7 @@ public class ConstructorEventosDiaCompleto implements ConstructorEventos {
             case HASTA_OCURRENCIAS -> {
 
                 var eventoOcurrencias = new EventoDiaCompleto(eventoDiaCompleto.obtenerTitulo(), eventoDiaCompleto.obtenerDescripcion(), proximaFecha, proximaFecha.plusDays(1), eventoDiaCompleto.obtenerMaxOcurrencias(), eventoDiaCompleto.obtenerTipoRepeticion());
+                eventoOcurrencias.establecerId(eventoDiaCompleto.obtenerId());
                 proximosEventos.add(eventoOcurrencias);
 
                 eventoDiaCompleto.sumarOcurrencias();
@@ -111,7 +114,7 @@ public class ConstructorEventosDiaCompleto implements ConstructorEventos {
                     proximaFecha = eventoDiaCompleto.calcularSiguienteOcurrencia(proximaFecha);
 
                     var eventoOcurrenciasNuevo = new EventoDiaCompleto(eventoDiaCompleto.obtenerTitulo(), eventoDiaCompleto.obtenerDescripcion(), proximaFecha,proximaFecha.plusDays(1), eventoDiaCompleto.obtenerMaxOcurrencias(), eventoDiaCompleto.obtenerTipoRepeticion());
-
+                    eventoOcurrenciasNuevo.establecerId(eventoDiaCompleto.obtenerId());
                     eventoOcurrenciasNuevo.establecerFechaInicio(proximaFecha);
 
                     proximosEventos.add(eventoOcurrenciasNuevo);

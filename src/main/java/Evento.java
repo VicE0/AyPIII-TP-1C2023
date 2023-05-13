@@ -10,6 +10,8 @@ public abstract class Evento
     private int maxOcurrencias;
     private int ocurrenciasRealizadas;
     private Repeticion tipoRepeticion;
+
+
     private final ArrayList<Alarma> alarmasEvento;
 
 
@@ -50,6 +52,7 @@ public abstract class Evento
     public LocalDateTime obtenerFechaInicio() {return fechaInicio;}
     public LocalDateTime obtenerFechaFin() {return fechaFin;}
     public int obtenerMaxOcurrencias() {return maxOcurrencias;}
+
     public int obtenerOcurrencias() {return ocurrenciasRealizadas;}
     public Repeticion obtenerTipoRepeticion() {return tipoRepeticion;}
     public ArrayList<Alarma> obtenerAlarmasEvento(){
@@ -120,6 +123,8 @@ public abstract class Evento
     public void sumarOcurrencias(){
         ocurrenciasRealizadas++;
     }
+    public abstract void establecerId(int id);
+    public abstract int obtenerId();
 
 }
 

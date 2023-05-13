@@ -4,15 +4,19 @@ import java.util.Set;
 
 public class EventoSemanal extends Evento {
     private Set<DayOfWeek> diasSemana;
+    private int id;
+    private static int idSiguiente = 0;
 
     public EventoSemanal(LocalDateTime fechaInicio) {
         super(fechaInicio);
         this.diasSemana = null;
+        this.id = idSiguiente++;
     }
 
     public EventoSemanal(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin,int maxOcurrencias,Repeticion tipoRepeticion ,Set<DayOfWeek> diasSemana) {
         super(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias,tipoRepeticion);
         this.diasSemana = diasSemana;
+        this.id = idSiguiente++;
     }
 
     public Set<DayOfWeek> obtenerDiasSemana() {
@@ -22,7 +26,10 @@ public class EventoSemanal extends Evento {
     public void establecerDiasSemana(Set<DayOfWeek> diasSemana) {
         this.diasSemana = diasSemana;
     }
-
+    public void establecerId(int id){
+        this.id = id;
+    }
+    public int obtenerId(){ return id;}
     @Override
     protected LocalDateTime calcularSiguienteOcurrencia(LocalDateTime fecha) {
         if (diasSemana == null || diasSemana.isEmpty()) {

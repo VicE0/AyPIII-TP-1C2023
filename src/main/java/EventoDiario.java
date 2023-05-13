@@ -2,17 +2,24 @@ import java.time.LocalDateTime;
 
 public class EventoDiario extends Evento{
     private int intervalo;
+    private int id;
+    private static int idSiguiente = 0;
 
     public EventoDiario(LocalDateTime fechaInicio) {
         super(fechaInicio);
         this.intervalo = 1;
+        this.id = idSiguiente++;
     }
 
     public EventoDiario(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias,Repeticion tipoRepeticion,int intervalo) {
         super(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion);
         this.intervalo = intervalo;
+        this.id = idSiguiente++;
     }
-
+    public void establecerId(int id){
+        this.id = id;
+    }
+    public int obtenerId(){ return id;}
     public int obtenerIntervalo() {
         return intervalo;
     }

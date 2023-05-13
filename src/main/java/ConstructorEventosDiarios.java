@@ -60,7 +60,7 @@ public class ConstructorEventosDiarios implements ConstructorEventos{
 
             case INFINITA -> {
                 var eventoInfinito = new EventoDiario(eventoDiario.obtenerTitulo(), eventoDiario.obtenerDescripcion(), eventoDiario.obtenerFechaInicio(), eventoDiario.obtenerFechaFin(), eventoDiario.obtenerMaxOcurrencias(), eventoDiario.obtenerTipoRepeticion(), eventoDiario.obtenerIntervalo());
-
+                eventoInfinito.establecerId(eventoDiario.obtenerId());
                 proximosEventos.add(eventoInfinito);
 
                 while (eventoDiario.obtenerOcurrencias() < eventoDiario.obtenerMaxOcurrencias()) {
@@ -68,7 +68,7 @@ public class ConstructorEventosDiarios implements ConstructorEventos{
                     proximaFecha = eventoDiario.calcularSiguienteOcurrencia(proximaFecha);
 
                     var eventoInfinitoNuevo = new EventoDiario(eventoDiario.obtenerTitulo(), eventoDiario.obtenerDescripcion(), proximaFecha, eventoDiario.obtenerFechaFin(), eventoDiario.obtenerMaxOcurrencias(), eventoDiario.obtenerTipoRepeticion(), eventoDiario.obtenerIntervalo());
-
+                    eventoInfinitoNuevo.establecerId(eventoDiario.obtenerId());
                     proximosEventos.add(eventoInfinitoNuevo);
 
                     eventoDiario.sumarOcurrencias();
@@ -81,6 +81,7 @@ public class ConstructorEventosDiarios implements ConstructorEventos{
                 if (!eventoDiario.fechaFinNula()) {
 
                     var eventoFechaFin = new EventoDiario(eventoDiario.obtenerTitulo(), eventoDiario.obtenerDescripcion(), proximaFecha, eventoDiario.obtenerFechaFin(), eventoDiario.obtenerMaxOcurrencias(), eventoDiario.obtenerTipoRepeticion(), eventoDiario.obtenerIntervalo());
+                    eventoFechaFin.establecerId(eventoDiario.obtenerId());
 
                     proximosEventos.add(eventoFechaFin);
                 }
@@ -90,6 +91,7 @@ public class ConstructorEventosDiarios implements ConstructorEventos{
                     proximaFecha = eventoDiario.calcularSiguienteOcurrencia(proximaFecha);
 
                     var eventoFechaFinNuevo = new EventoDiario(eventoDiario.obtenerTitulo(), eventoDiario.obtenerDescripcion(), proximaFecha, eventoDiario.obtenerFechaFin(), eventoDiario.obtenerMaxOcurrencias(), eventoDiario.obtenerTipoRepeticion(), eventoDiario.obtenerIntervalo());
+                    eventoFechaFinNuevo.establecerId(eventoDiario.obtenerId());
 
                     eventoFechaFinNuevo.establecerFechaInicio(proximaFecha);
                     proximosEventos.add(eventoFechaFinNuevo);
@@ -101,6 +103,8 @@ public class ConstructorEventosDiarios implements ConstructorEventos{
             case HASTA_OCURRENCIAS -> {
 
                 var eventoOcurrencias = new EventoDiario(eventoDiario.obtenerTitulo(), eventoDiario.obtenerDescripcion(), proximaFecha, eventoDiario.obtenerFechaFin(), eventoDiario.obtenerMaxOcurrencias(), eventoDiario.obtenerTipoRepeticion(), eventoDiario.obtenerIntervalo());
+                eventoOcurrencias.establecerId(eventoDiario.obtenerId());
+
                 proximosEventos.add(eventoOcurrencias);
 
                 eventoDiario.sumarOcurrencias();
@@ -110,6 +114,7 @@ public class ConstructorEventosDiarios implements ConstructorEventos{
                     proximaFecha = eventoDiario.calcularSiguienteOcurrencia(proximaFecha);
 
                     var eventoOcurrenciasNuevo = new EventoDiario(eventoDiario.obtenerTitulo(), eventoDiario.obtenerDescripcion(), proximaFecha, eventoDiario.obtenerFechaFin(), eventoDiario.obtenerMaxOcurrencias(), eventoDiario.obtenerTipoRepeticion(), eventoDiario.obtenerIntervalo());
+                    eventoOcurrenciasNuevo.establecerId(eventoDiario.obtenerId());
 
                     eventoOcurrenciasNuevo.establecerFechaInicio(proximaFecha);
 

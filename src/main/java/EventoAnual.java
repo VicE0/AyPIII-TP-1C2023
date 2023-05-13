@@ -2,15 +2,19 @@ import java.time.LocalDateTime;
 
 public class EventoAnual extends Evento {
     private int cantidadAnios;
+    private int id;
+    private static int idSiguiente = 0;
 
     public EventoAnual(LocalDateTime fechaInicio) {
         super(fechaInicio);
         this.cantidadAnios = 1;
+        this.id = idSiguiente++;
     }
 
     public EventoAnual(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion, int cantidadAnios) {
         super(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion);
         this.cantidadAnios = cantidadAnios;
+        this.id = idSiguiente++;
     }
 
 
@@ -22,7 +26,10 @@ public class EventoAnual extends Evento {
         this.cantidadAnios = cantidadAnios;
     }
 
-
+    public void establecerId(int id){
+        this.id = id;
+    }
+    public int obtenerId(){ return id;}
     protected LocalDateTime calcularSiguienteOcurrencia(LocalDateTime fecha) {
         if (cantidadAnios > 1) {
             fecha = fecha.plusYears(cantidadAnios - 1);

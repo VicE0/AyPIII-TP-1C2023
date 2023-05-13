@@ -2,17 +2,28 @@ import java.time.LocalDateTime;
 
 public class EventoMensual extends Evento{
     private int cantidadMeses;
+    private int id;
+    private static int idSiguiente = 0;
 
     public EventoMensual(LocalDateTime fechaInicio){
         super(fechaInicio);
         this.cantidadMeses = 1;
+        this.id = idSiguiente++;
     }
 
     public EventoMensual(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion, int cantidadMeses) {
         super(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias,tipoRepeticion);
         this.cantidadMeses = cantidadMeses;
+        this.id = idSiguiente++;
     }
 
+
+
+    public void establecerId(int id){
+        this.id = id;
+    }
+
+    public int obtenerId(){ return id;}
 
     public int obtenerCantidadMeses() {
         return cantidadMeses;

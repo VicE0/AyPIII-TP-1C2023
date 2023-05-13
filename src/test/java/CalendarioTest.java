@@ -976,83 +976,100 @@ public void testObtenerProximosEventosDiaCompleto(){
     }
 
     @Test
-    public void modificoEventosYSeModificanTodasSusRepeticiones(){
+    public void testModificoEventosYSeModificanTodasSusRepeticiones() {
 
-    ConstructorEventos eventoDiaCompletoConstruido = new ConstructorEventosDiaCompleto("Evento Dia Completo", "Evento Unico", LocalDateTime.of(2023, 4, 13, 9, 0), LocalDateTime.of(2023, 4, 16, 9, 30), 5, Repeticion.INFINITA );
-    Evento eventoDiaCompleto      =   eventoDiaCompletoCreado.crearEvento(eventoDiaCompletoConstruido);
-
-    assertTrue(eventoDiaCompleto.obtenerAlarmasEvento().isEmpty());
-
-    var calendario = new Calendario();
+        ConstructorEventos eventoDiaCompletoConstruido = new ConstructorEventosDiaCompleto("Evento Dia Completo", "Evento Unico", LocalDateTime.of(2023, 4, 13, 9, 0), LocalDateTime.of(2023, 4, 16, 9, 30), 5, Repeticion.INFINITA);
+        Evento eventoDiaCompleto = eventoDiaCompletoCreado.crearEvento(eventoDiaCompletoConstruido);
+        ConstructorEventos eventoAnualConstruido = new ConstructorEventosAnuales("Evento Anual", "Evento Unico", LocalDateTime.of(2023, 4, 10, 9, 30), LocalDateTime.of(2027, 4, 17, 9, 30), 99, Repeticion.INFINITA, 2);
+        Evento eventoAnual = eventoAnualCreado.crearEvento(eventoAnualConstruido);
 
 
-    ArrayList<Evento> proximosEventos = calendario.proximosEventos(eventoDiaCompletoConstruido);
-    calendario.agregarEventosACalendario(proximosEventos);
+        assertTrue(eventoDiaCompleto.obtenerAlarmasEvento().isEmpty());
 
-    calendario.modificarEvento(eventoDiaCompleto,"Titulo modificado","Descripcion nueva",null,null,null,null);
+        var calendario = new Calendario();
+
+        ArrayList<Evento> proximosEventos = calendario.proximosEventos(eventoDiaCompletoConstruido);
+        calendario.agregarEventosACalendario(proximosEventos);
+
+        calendario.modificarEvento(eventoDiaCompleto, "Titulo modificado", "Descripcion nueva", null, null, null, null);
+
+        ArrayList<Evento> todosLosEventos = calendario.obtenerListaEventosTotales();
+
+        assertEquals(6,todosLosEventos.size());
+        for (Evento evento : todosLosEventos){
+            assertEquals("Titulo modificado",evento.obtenerTitulo());
+        }
+    }
+    @Test
+    public void testModificaLasRepeticionesDeElEventoCorrespondiente() {
+
+        ConstructorEventos eventoDiaCompletoConstruido = new ConstructorEventosDiaCompleto("Evento Dia Completo", "Evento Unico", LocalDateTime.of(2023, 4, 13, 9, 0), LocalDateTime.of(2023, 4, 16, 9, 30), 5, Repeticion.INFINITA);
+        Evento eventoDiaCompleto = eventoDiaCompletoCreado.crearEvento(eventoDiaCompletoConstruido);
+        ConstructorEventos eventoAnualConstruido = new ConstructorEventosAnuales("Evento Anual", "Evento Unico", LocalDateTime.of(2023, 4, 10, 9, 30), LocalDateTime.of(2027, 4, 17, 9, 30), 99, Repeticion.INFINITA, 2);
+        Evento eventoAnual = eventoAnualCreado.crearEvento(eventoAnualConstruido);
 
 
+        assertTrue(eventoDiaCompleto.obtenerAlarmasEvento().isEmpty());
 
-    ArrayList<Evento> todosLosEventos = calendario.obtenerListaEventosTotales();
+        var calendario = new Calendario();
+
+        ArrayList<Evento> proximosEventos0 = calendario.proximosEventos(eventoAnualConstruido);
+        calendario.agregarEventosACalendario(proximosEventos0);
+        ArrayList<Evento> proximosEventos = calendario.proximosEventos(eventoDiaCompletoConstruido);
+        calendario.agregarEventosACalendario(proximosEventos);
+
+        calendario.modificarEvento(eventoDiaCompleto, "Titulo modificado", "Descripcion nueva", null, null, null, null);
 
 
+        ArrayList<Evento> todosLosEventos = calendario.obtenerListaEventosTotales();
 
-    assertEquals(6, proximosEventos.size());
-    //Pruebo que se modificaron todas las repeticiones
-    for (Evento evento : todosLosEventos){
-        assertEquals("Titulo modificado",evento.obtenerTitulo());
-        assertEquals("Descripcion nueva",evento.obtenerDescripcion());
+        assertEquals(106, todosLosEventos.size());
+        int contadorEventosModificados = 0;
+        //Pruebo solo las modificaciones correspondientes
+        for (Evento evento : todosLosEventos) {
+            if (evento.obtenerTitulo().equals("Titulo modificado")) {
+                contadorEventosModificados++;
+            }
+        }
+        assertEquals(6,contadorEventosModificados);
+    }
+
+    @Test
+    public void testSiHayEventosDeLaMismaClaseYNoSonRepeticionesNoLosModifica() {
+
+        ConstructorEventos eventoDiaCompletoConstruido = new ConstructorEventosDiaCompleto("Evento Dia Completo", "Evento Unico", LocalDateTime.of(2023, 4, 13, 9, 0), LocalDateTime.of(2023, 4, 16, 9, 30), 5, Repeticion.INFINITA);
+        Evento eventoDiaCompleto = eventoDiaCompletoCreado.crearEvento(eventoDiaCompletoConstruido);
+        ConstructorEventos eventoDiaCompletoDosConstruido = new ConstructorEventosDiaCompleto("Evento Dia Completo 2", "Evento Unico", LocalDateTime.of(2023, 4, 10, 9, 30), LocalDateTime.of(2027, 4, 17, 9, 30), 99, Repeticion.INFINITA);
+        Evento eventoDiaCompletoDos = eventoAnualCreado.crearEvento(eventoDiaCompletoDosConstruido);
+
+
+        assertTrue(eventoDiaCompleto.obtenerAlarmasEvento().isEmpty());
+
+        var calendario = new Calendario();
+
+        ArrayList<Evento> proximosEventos0 = calendario.proximosEventos(eventoDiaCompletoDosConstruido);
+        calendario.agregarEventosACalendario(proximosEventos0);
+        ArrayList<Evento> proximosEventos = calendario.proximosEventos(eventoDiaCompletoConstruido);
+        calendario.agregarEventosACalendario(proximosEventos);
+
+        calendario.modificarEvento(eventoDiaCompleto, "Titulo modificado", "Descripcion nueva", null, null, null, null);
+
+
+        ArrayList<Evento> todosLosEventos = calendario.obtenerListaEventosTotales();
+
+
+        assertEquals(106, todosLosEventos.size());
+        //Pruebo solo las modificaciones correspondientes
+        int contador = 0;
+        for (Evento evento : todosLosEventos) {
+            if (evento.obtenerTitulo().equals("Titulo modificado")){
+                contador++;
+            }
+        }
+        assertEquals(6,contador);
 
     }
 
-    }
-
-
-
-
-///////ULTIMOS TESTS A CORREGIR//////
-
-//
-//    //Modifico un evento default a uno con valores por parametro
-//    @Test
-//    public void testModificarEvento(){
-//
-//        //Testeo con eventos anuales en este caso
-//        CreadorEventosAnuales creadorEventosAnuales = new CreadorEventosAnuales();
-//        Calendario eventosAnualesLista = new Calendario(creadorEventosAnuales);
-//
-//        var eventoOriginal = new EventoAnual("Evento Original", "Evento que quiero modificar", LocalDateTime.of(2023, 4, 3, 9, 0),LocalDateTime.of(2023, 4, 10, 9, 0),3,Repeticion.HASTA_OCURRENCIAS,1 );
-//
-//        var mail        = new Email();
-//        var alarmaMail  = new AlarmaFechaAbsoluta(LocalDateTime.of(2023, 4, 17, 10, 0),mail);
-//
-//        eventoOriginal.agregarAlarmaEvento(alarmaMail);
-//
-//        eventosAnualesLista.crearEvento(eventoOriginal.obtenerTitulo(), eventoOriginal.obtenerDescripcion(), eventoOriginal.obtenerFechaInicio(),eventoOriginal.obtenerFechaFin(),eventoOriginal.obtenerMaxOcurrencias(),eventoOriginal.obtenerTipoRepeticion(),eventoOriginal.obtenerCantidadAnios(), null);
-//
-//        var eventoModificado = new EventoAnual("Evento Modificado", "Evento Unico", LocalDateTime.of(2023, 4, 13, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 99, Repeticion.HASTA_FECHA_FIN, 3);
-//
-//        LocalDateTime nuevaFechaYHoraAlarma = LocalDateTime.of(2023, 4, 15, 10, 0);
-//
-//        eventosAnualesLista.modificarEvento(eventoOriginal, eventoModificado, alarmaMail,nuevaFechaYHoraAlarma );
-//
-//
-//        for(Evento evento :eventosAnualesLista.obtenerListaEventosTotales() ){
-//
-//            assertEquals(evento.obtenerTitulo(), eventoModificado.obtenerTitulo());
-//            assertEquals(evento.obtenerDescripcion(), eventoModificado.obtenerDescripcion());
-//            assertEquals(evento.obtenerFechaInicio(), eventoModificado.obtenerFechaInicio());
-//            assertEquals(evento.obtenerFechaFin(), eventoModificado.obtenerFechaFin());
-//            assertEquals(evento.obtenerMaxOcurrencias(), eventoModificado.obtenerMaxOcurrencias());
-//            assertEquals(evento.obtenerTipoRepeticion(), eventoModificado.obtenerTipoRepeticion());
-//            assertEquals(evento.obtenerAlarmasEvento(), eventoModificado.obtenerAlarmasEvento());
-//
-//        }
-//
-//        assertNotEquals(eventoOriginal.obtenerCantidadAnios(), eventoModificado.obtenerCantidadAnios());
-//
-//    }
-//
     //Tests para verificar que modificarEvento modifique todas las repeticiones del evento
 
     @Test

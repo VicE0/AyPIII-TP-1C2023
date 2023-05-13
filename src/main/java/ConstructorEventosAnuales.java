@@ -5,12 +5,16 @@ public class ConstructorEventosAnuales implements ConstructorEventos{
 
     private final EventoAnual eventoAnual;
 
+
     public ConstructorEventosAnuales(LocalDateTime fechaInicio){
+
         this.eventoAnual = new EventoAnual(fechaInicio);
+
     }
 
     public ConstructorEventosAnuales(String titulo, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, int maxOcurrencias, Repeticion tipoRepeticion, int intervalo){
         this.eventoAnual = new EventoAnual(titulo, descripcion, fechaInicio, fechaFin, maxOcurrencias, tipoRepeticion, intervalo);
+
     }
 
 
@@ -65,6 +69,7 @@ public class ConstructorEventosAnuales implements ConstructorEventos{
 
             case INFINITA -> {
                 var eventoInfinito = new EventoAnual(eventoAnual.obtenerTitulo(), eventoAnual.obtenerDescripcion(), eventoAnual.obtenerFechaInicio(), eventoAnual.obtenerFechaFin(), eventoAnual.obtenerMaxOcurrencias(), eventoAnual.obtenerTipoRepeticion(), eventoAnual.obtenerCantidadAnios());
+                eventoInfinito.establecerId(eventoAnual.obtenerId());
 
                 proximosEventos.add(eventoInfinito);
 
@@ -73,6 +78,7 @@ public class ConstructorEventosAnuales implements ConstructorEventos{
                     proximaFecha = eventoAnual.calcularSiguienteOcurrencia(proximaFecha);
 
                     var eventoInfinitoNuevo = new EventoAnual(eventoAnual.obtenerTitulo(), eventoAnual.obtenerDescripcion(), proximaFecha, eventoAnual.obtenerFechaFin(), eventoAnual.obtenerMaxOcurrencias(), eventoAnual.obtenerTipoRepeticion(), eventoAnual.obtenerCantidadAnios());
+                    eventoInfinitoNuevo.establecerId(eventoAnual.obtenerId());
 
                     proximosEventos.add(eventoInfinitoNuevo);
 
@@ -86,6 +92,7 @@ public class ConstructorEventosAnuales implements ConstructorEventos{
                 if (!eventoAnual.fechaFinNula()) {
 
                     var eventoFechaFin = new EventoAnual(eventoAnual.obtenerTitulo(), eventoAnual.obtenerDescripcion(), proximaFecha, eventoAnual.obtenerFechaFin(), eventoAnual.obtenerMaxOcurrencias(), eventoAnual.obtenerTipoRepeticion(), eventoAnual.obtenerCantidadAnios());
+                    eventoFechaFin.establecerId(eventoAnual.obtenerId());
 
                     proximosEventos.add(eventoFechaFin);
                 }
@@ -95,6 +102,7 @@ public class ConstructorEventosAnuales implements ConstructorEventos{
                     proximaFecha = eventoAnual.calcularSiguienteOcurrencia(proximaFecha);
 
                     var eventoFechaFinNuevo = new EventoAnual(eventoAnual.obtenerTitulo(), eventoAnual.obtenerDescripcion(), proximaFecha, eventoAnual.obtenerFechaFin(), eventoAnual.obtenerMaxOcurrencias(), eventoAnual.obtenerTipoRepeticion(), eventoAnual.obtenerCantidadAnios());
+                    eventoFechaFinNuevo.establecerId(eventoAnual.obtenerId());
 
                     eventoFechaFinNuevo.establecerFechaInicio(proximaFecha);
                     proximosEventos.add(eventoFechaFinNuevo);
@@ -106,6 +114,7 @@ public class ConstructorEventosAnuales implements ConstructorEventos{
             case HASTA_OCURRENCIAS -> {
 
                 var eventoOcurrencias = new EventoAnual(eventoAnual.obtenerTitulo(), eventoAnual.obtenerDescripcion(), proximaFecha, eventoAnual.obtenerFechaFin(), eventoAnual.obtenerMaxOcurrencias(), eventoAnual.obtenerTipoRepeticion(), eventoAnual.obtenerCantidadAnios());
+                eventoOcurrencias.establecerId(eventoAnual.obtenerId());
                 proximosEventos.add(eventoOcurrencias);
 
                 eventoAnual.sumarOcurrencias();
@@ -115,6 +124,7 @@ public class ConstructorEventosAnuales implements ConstructorEventos{
                     proximaFecha = eventoAnual.calcularSiguienteOcurrencia(proximaFecha);
 
                     var eventoOcurrenciasNuevo = new EventoAnual(eventoAnual.obtenerTitulo(), eventoAnual.obtenerDescripcion(), proximaFecha, eventoAnual.obtenerFechaFin(), eventoAnual.obtenerMaxOcurrencias(), eventoAnual.obtenerTipoRepeticion(), eventoAnual.obtenerCantidadAnios());
+                    eventoOcurrenciasNuevo.establecerId(eventoAnual.obtenerId());
 
                     eventoOcurrenciasNuevo.establecerFechaInicio(proximaFecha);
 

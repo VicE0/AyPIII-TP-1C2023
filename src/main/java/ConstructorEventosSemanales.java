@@ -68,7 +68,7 @@ public class ConstructorEventosSemanales implements ConstructorEventos{
 
             case INFINITA -> {
                 var eventoInfinito = new EventoSemanal(eventoSemanal.obtenerTitulo(), eventoSemanal.obtenerDescripcion(), eventoSemanal.obtenerFechaInicio(), eventoSemanal.obtenerFechaFin(), eventoSemanal.obtenerMaxOcurrencias(), eventoSemanal.obtenerTipoRepeticion(), eventoSemanal.obtenerDiasSemana());
-
+                eventoInfinito.establecerId(eventoSemanal.obtenerId());
                 proximosEventos.add(eventoInfinito);
 
                 while (eventoSemanal.obtenerOcurrencias() < eventoSemanal.obtenerMaxOcurrencias()) {
@@ -76,7 +76,7 @@ public class ConstructorEventosSemanales implements ConstructorEventos{
                     proximaFecha = eventoSemanal.calcularSiguienteOcurrencia(proximaFecha);
 
                     var eventoInfinitoNuevo = new EventoSemanal(eventoSemanal.obtenerTitulo(), eventoSemanal.obtenerDescripcion(), proximaFecha, eventoSemanal.obtenerFechaFin(), eventoSemanal.obtenerMaxOcurrencias(), eventoSemanal.obtenerTipoRepeticion(), eventoSemanal.obtenerDiasSemana());
-
+                    eventoInfinitoNuevo.establecerId(eventoSemanal.obtenerId());
                     proximosEventos.add(eventoInfinitoNuevo);
 
                     eventoSemanal.sumarOcurrencias();
@@ -89,7 +89,7 @@ public class ConstructorEventosSemanales implements ConstructorEventos{
                 if (!eventoSemanal.fechaFinNula()) {
 
                     var eventoFechaFin = new EventoSemanal(eventoSemanal.obtenerTitulo(), eventoSemanal.obtenerDescripcion(), proximaFecha, eventoSemanal.obtenerFechaFin(), eventoSemanal.obtenerMaxOcurrencias(), eventoSemanal.obtenerTipoRepeticion(), eventoSemanal.obtenerDiasSemana());
-
+                    eventoFechaFin.establecerId(eventoSemanal.obtenerId());
                     proximosEventos.add(eventoFechaFin);
                 }
 
@@ -98,7 +98,7 @@ public class ConstructorEventosSemanales implements ConstructorEventos{
                     proximaFecha = eventoSemanal.calcularSiguienteOcurrencia(proximaFecha);
 
                     var eventoFechaFinNuevo = new EventoSemanal(eventoSemanal.obtenerTitulo(), eventoSemanal.obtenerDescripcion(), proximaFecha, eventoSemanal.obtenerFechaFin(), eventoSemanal.obtenerMaxOcurrencias(), eventoSemanal.obtenerTipoRepeticion(), eventoSemanal.obtenerDiasSemana());
-
+                    eventoFechaFinNuevo.establecerId(eventoSemanal.obtenerId());
                     eventoFechaFinNuevo.establecerFechaInicio(proximaFecha);
                     proximosEventos.add(eventoFechaFinNuevo);
 
@@ -109,6 +109,7 @@ public class ConstructorEventosSemanales implements ConstructorEventos{
             case HASTA_OCURRENCIAS -> {
 
                 var eventoOcurrencias = new EventoSemanal(eventoSemanal.obtenerTitulo(), eventoSemanal.obtenerDescripcion(), proximaFecha, eventoSemanal.obtenerFechaFin(), eventoSemanal.obtenerMaxOcurrencias(), eventoSemanal.obtenerTipoRepeticion(), eventoSemanal.obtenerDiasSemana());
+                eventoOcurrencias.establecerId(eventoSemanal.obtenerId());
                 proximosEventos.add(eventoOcurrencias);
 
                 eventoSemanal.sumarOcurrencias();
@@ -118,7 +119,7 @@ public class ConstructorEventosSemanales implements ConstructorEventos{
                     proximaFecha = eventoSemanal.calcularSiguienteOcurrencia(proximaFecha);
 
                     var eventoOcurrenciasNuevo = new EventoSemanal(eventoSemanal.obtenerTitulo(), eventoSemanal.obtenerDescripcion(), proximaFecha, eventoSemanal.obtenerFechaFin(), eventoSemanal.obtenerMaxOcurrencias(), eventoSemanal.obtenerTipoRepeticion(), eventoSemanal.obtenerDiasSemana());
-
+                    eventoOcurrenciasNuevo.establecerId(eventoSemanal.obtenerId());
                     eventoOcurrenciasNuevo.establecerFechaInicio(proximaFecha);
 
                     proximosEventos.add(eventoOcurrenciasNuevo);

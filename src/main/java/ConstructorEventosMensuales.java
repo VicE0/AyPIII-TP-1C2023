@@ -64,7 +64,7 @@ public class ConstructorEventosMensuales implements ConstructorEventos{
 
             case INFINITA -> {
                 var eventoInfinito = new EventoMensual(eventoMensual.obtenerTitulo(), eventoMensual.obtenerDescripcion(), eventoMensual.obtenerFechaInicio(), eventoMensual.obtenerFechaFin(), eventoMensual.obtenerMaxOcurrencias(), eventoMensual.obtenerTipoRepeticion(), eventoMensual.obtenerCantidadMeses());
-
+                eventoInfinito.establecerId(eventoMensual.obtenerId());
                 proximosEventos.add(eventoInfinito);
 
                 while (eventoMensual.obtenerOcurrencias() < eventoMensual.obtenerMaxOcurrencias()) {
@@ -72,7 +72,7 @@ public class ConstructorEventosMensuales implements ConstructorEventos{
                     proximaFecha = eventoMensual.calcularSiguienteOcurrencia(proximaFecha);
 
                     var eventoInfinitoNuevo = new EventoMensual(eventoMensual.obtenerTitulo(), eventoMensual.obtenerDescripcion(), proximaFecha, eventoMensual.obtenerFechaFin(), eventoMensual.obtenerMaxOcurrencias(), eventoMensual.obtenerTipoRepeticion(), eventoMensual.obtenerCantidadMeses());
-
+                    eventoInfinitoNuevo.establecerId(eventoMensual.obtenerId());
                     proximosEventos.add(eventoInfinitoNuevo);
 
                     eventoMensual.sumarOcurrencias();
@@ -85,7 +85,7 @@ public class ConstructorEventosMensuales implements ConstructorEventos{
                 if (!eventoMensual.fechaFinNula()) {
 
                     var eventoFechaFin = new EventoMensual(eventoMensual.obtenerTitulo(), eventoMensual.obtenerDescripcion(), proximaFecha, eventoMensual.obtenerFechaFin(), eventoMensual.obtenerMaxOcurrencias(), eventoMensual.obtenerTipoRepeticion(), eventoMensual.obtenerCantidadMeses());
-
+                    eventoFechaFin.establecerId(eventoMensual.obtenerId());
                     proximosEventos.add(eventoFechaFin);
                 }
 
@@ -94,7 +94,7 @@ public class ConstructorEventosMensuales implements ConstructorEventos{
                     proximaFecha = eventoMensual.calcularSiguienteOcurrencia(proximaFecha);
 
                     var eventoFechaFinNuevo = new EventoMensual(eventoMensual.obtenerTitulo(), eventoMensual.obtenerDescripcion(), proximaFecha, eventoMensual.obtenerFechaFin(), eventoMensual.obtenerMaxOcurrencias(), eventoMensual.obtenerTipoRepeticion(), eventoMensual.obtenerCantidadMeses());
-
+                    eventoFechaFinNuevo.establecerId(eventoMensual.obtenerId());
                     eventoFechaFinNuevo.establecerFechaInicio(proximaFecha);
                     proximosEventos.add(eventoFechaFinNuevo);
 
@@ -114,7 +114,7 @@ public class ConstructorEventosMensuales implements ConstructorEventos{
                     proximaFecha = eventoMensual.calcularSiguienteOcurrencia(proximaFecha);
 
                     var eventoOcurrenciasNuevo = new EventoMensual(eventoMensual.obtenerTitulo(), eventoMensual.obtenerDescripcion(), proximaFecha, eventoMensual.obtenerFechaFin(), eventoMensual.obtenerMaxOcurrencias(), eventoMensual.obtenerTipoRepeticion(), eventoMensual.obtenerCantidadMeses());
-
+                    eventoOcurrenciasNuevo.establecerId(eventoMensual.obtenerId());
                     eventoOcurrenciasNuevo.establecerFechaInicio(proximaFecha);
 
                     proximosEventos.add(eventoOcurrenciasNuevo);
