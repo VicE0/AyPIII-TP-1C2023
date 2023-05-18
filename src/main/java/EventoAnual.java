@@ -1,10 +1,16 @@
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 
 public class EventoAnual extends Evento {
+    @JsonProperty("cantidadAnios")
     private int cantidadAnios;
+    @JsonProperty("id")
     private int id;
     private static int idSiguiente = 0;
 
+    public EventoAnual(){
+
+    }
     public EventoAnual(LocalDateTime fechaInicio) {
         super(fechaInicio);
         this.cantidadAnios = 1;

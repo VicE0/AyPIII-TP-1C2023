@@ -1,12 +1,19 @@
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.LocalDateTime;
 import java.time.DayOfWeek;
 import java.util.Set;
 
 public class EventoSemanal extends Evento {
+    @JsonProperty("diasSemana")
     private Set<DayOfWeek> diasSemana;
+    @JsonProperty("id")
     private int id;
     private static int idSiguiente = 0;
 
+    public EventoSemanal(){
+
+    }
     public EventoSemanal(LocalDateTime fechaInicio) {
         super(fechaInicio);
         this.diasSemana = null;

@@ -1,10 +1,16 @@
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.LocalDateTime;
 
 public class EventoDiario extends Evento{
     private int intervalo;
+    @JsonProperty("id")
     private int id;
     private static int idSiguiente = 0;
 
+    public EventoDiario(){
+
+    }
     public EventoDiario(LocalDateTime fechaInicio) {
         super(fechaInicio);
         this.intervalo = 1;

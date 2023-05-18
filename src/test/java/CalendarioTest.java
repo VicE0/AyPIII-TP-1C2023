@@ -1,9 +1,14 @@
 import org.junit.Test;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 import static org.junit.Assert.*;
 
@@ -15,6 +20,7 @@ public class CalendarioTest {
     CreadorDeEventos eventoMensualCreado     = new CreadorEventosMensuales();
     CreadorDeEventos eventoAnualCreado       = new CreadorEventosAnuales();
     CreadorDeEventos eventoDiaCompletoCreado = new CreadorEventosDiaCompleto();
+
 
 
     @Test
@@ -1104,4 +1110,112 @@ public void testObtenerProximosEventosDiaCompleto(){
         assertEquals(7,eventosEnRango.size());
 
     }
-}
+
+    @Test
+    public void testSerializarYDeserializarCalendario()   {
+        String nombreArchivo = "calendario.json";
+
+        Calendario calendarioOriginal = new Calendario();
+        Tarea tarea1 = new TareaDiaCompleto(LocalDate.of(2023, 5, 15));
+        Tarea tarea2 = new TareaConVencimiento(LocalDateTime.of(2023,5,18,20,30));
+        ConstructorEventos eventoDiarioConstruido      = new ConstructorEventosDiarios("Evento Diario", "Evento Repetido", LocalDateTime.of(2023, 4, 10, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 10, Repeticion.HASTA_OCURRENCIAS, 1);
+        Evento eventoDiario      = eventoDiarioCreado.crearEvento(eventoDiarioConstruido);
+        calendarioOriginal.agregarEvento(eventoDiario);
+        calendarioOriginal.agregarTarea(tarea1);
+        calendarioOriginal.agregarTarea(tarea2);
+
+
+        calendarioOriginal.serializarCalendario(nombreArchivo);
+
+        Calendario calendarioSerializado = calendarioOriginal.deserializarCalendario(nombreArchivo);
+
+        assertEquals(1,calendarioSerializado.obtenerListaEventosTotales().size());
+        assertEquals(eventoDiario.obtenerTitulo(),calendarioSerializado.obtenerListaEventosTotales().get(0).obtenerTitulo());
+        assertEquals(eventoDiario.obtenerDescripcion(),calendarioSerializado.obtenerListaEventosTotales().get(0).obtenerDescripcion());
+        assertEquals(eventoDiario.obtenerFechaInicio(),calendarioSerializado.obtenerListaEventosTotales().get(0).obtenerFechaInicio());
+        assertEquals(eventoDiario.obtenerFechaFin(),calendarioSerializado.obtenerListaEventosTotales().get(0).obtenerFechaFin());
+        assertEquals(eventoDiario.obtenerId(),calendarioSerializado.obtenerListaEventosTotales().get(0).obtenerId());
+
+
+
+        assertEquals(2,calendarioSerializado.obtenerTareas().size());
+        assertEquals(tarea1.obtenerTitulo(),calendarioSerializado.obtenerTareas().get(0).obtenerTitulo());
+        assertEquals(tarea1.obtenerDescripcion(),calendarioSerializado.obtenerTareas().get(0).obtenerDescripcion());
+        assertEquals(tarea1.obtenerFechaInicio(),calendarioSerializado.obtenerTareas().get(0).obtenerFechaInicio());
+        assertEquals(tarea1.obtenerFechaVencimiento(),calendarioSerializado.obtenerTareas().get(0).obtenerFechaVencimiento());
+        assertEquals(tarea1.obtenerId(),calendarioSerializado.obtenerTareas().get(0).obtenerId());
+        assertEquals(tarea1.obtenerAlarmas(),calendarioSerializado.obtenerTareas().get(0).obtenerAlarmas());
+
+
+
+        assertEquals(tarea2.obtenerTitulo(),calendarioSerializado.obtenerTareas().get(1).obtenerTitulo());
+        assertEquals(tarea2.obtenerDescripcion(),calendarioSerializado.obtenerTareas().get(1).obtenerDescripcion());
+        assertEquals(tarea2.obtenerFechaInicio(),calendarioSerializado.obtenerTareas().get(1).obtenerFechaInicio());
+        assertEquals(tarea2.obtenerFechaVencimiento(),calendarioSerializado.obtenerTareas().get(1).obtenerFechaVencimiento());
+        assertEquals(tarea2.obtenerId(),calendarioSerializado.obtenerTareas().get(1).obtenerId());
+        assertEquals(tarea2.obtenerAlarmas(),calendarioSerializado.obtenerTareas().get(1).obtenerAlarmas());
+    }
+    @Test
+    public void testPuedoSerializarTodoTipoDeEvento(){
+        String nombreArchivo = "calendarioEventos.json";
+        ConstructorEventos eventoSemanalConstruido     = new ConstructorEventosSemanales("Evento Semanal", "Evento Repetido", LocalDateTime.of(2023, 4, 11, 9, 0), LocalDateTime.of(2023, 4, 21, 9, 30), 1, Repeticion.HASTA_FECHA_FIN, Set.of(DayOfWeek.MONDAY));
+        ConstructorEventos eventoMensualConstruido     = new ConstructorEventosMensuales("Evento Mensual", "Evento Unico", LocalDateTime.of(2023, 4, 12, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 99, Repeticion.INFINITA, 2);
+        ConstructorEventos eventoAnualConstruido       = new ConstructorEventosAnuales("Evento Anual", "Evento Unico", LocalDateTime.of(2023, 4, 13, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 10, Repeticion.HASTA_FECHA_FIN, 3);
+        ConstructorEventos eventoDiaCompletoConstruido = new ConstructorEventosDiaCompleto("Evento Dia Completo", "Evento Unico", LocalDateTime.of(2023, 4, 20, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 10, Repeticion.HASTA_OCURRENCIAS );
+
+        Evento eventoSemanal     = eventoSemanalCreado.crearEvento(eventoSemanalConstruido);
+        Evento eventoMensual     = eventoMensualCreado.crearEvento(eventoMensualConstruido);
+        Evento eventoAnual       = eventoAnualCreado.crearEvento(eventoAnualConstruido);
+        Evento eventoDiaCompleto = eventoDiaCompletoCreado.crearEvento(eventoDiaCompletoConstruido);
+
+        Calendario calendarioOriginal = new Calendario();
+
+        calendarioOriginal.agregarEvento(eventoSemanal);
+        calendarioOriginal.agregarEvento(eventoMensual);
+        calendarioOriginal.agregarEvento(eventoAnual);
+        calendarioOriginal.agregarEvento(eventoDiaCompleto);
+
+        calendarioOriginal.serializarCalendario(nombreArchivo);
+
+        Calendario calendarioSerializado = calendarioOriginal.deserializarCalendario(nombreArchivo);
+
+        assertEquals(4,calendarioSerializado.obtenerListaEventosTotales().size());
+        assertEquals(eventoSemanal.obtenerTitulo(),calendarioSerializado.obtenerListaEventosTotales().get(0).obtenerTitulo());
+        assertEquals(eventoSemanal.obtenerDescripcion(),calendarioSerializado.obtenerListaEventosTotales().get(0).obtenerDescripcion());
+        assertEquals(eventoSemanal.obtenerFechaInicio(),calendarioSerializado.obtenerListaEventosTotales().get(0).obtenerFechaInicio());
+        assertEquals(eventoSemanal.obtenerFechaFin(),calendarioSerializado.obtenerListaEventosTotales().get(0).obtenerFechaFin());
+        assertEquals(eventoSemanal.obtenerId(),calendarioSerializado.obtenerListaEventosTotales().get(0).obtenerId());
+        assertEquals(eventoSemanal.obtenerAlarmasEvento(),calendarioSerializado.obtenerListaEventosTotales().get(0).obtenerAlarmasEvento());
+
+
+        assertEquals(4,calendarioSerializado.obtenerListaEventosTotales().size());
+        assertEquals(eventoMensual.obtenerTitulo(),calendarioSerializado.obtenerListaEventosTotales().get(1).obtenerTitulo());
+        assertEquals(eventoMensual.obtenerDescripcion(),calendarioSerializado.obtenerListaEventosTotales().get(1).obtenerDescripcion());
+        assertEquals(eventoMensual.obtenerFechaInicio(),calendarioSerializado.obtenerListaEventosTotales().get(1).obtenerFechaInicio());
+        assertEquals(eventoMensual.obtenerFechaFin(),calendarioSerializado.obtenerListaEventosTotales().get(1).obtenerFechaFin());
+        assertEquals(eventoMensual.obtenerId(),calendarioSerializado.obtenerListaEventosTotales().get(1).obtenerId());
+        assertEquals(eventoMensual.obtenerAlarmasEvento(),calendarioSerializado.obtenerListaEventosTotales().get(1).obtenerAlarmasEvento());
+
+
+        assertEquals(4,calendarioSerializado.obtenerListaEventosTotales().size());
+        assertEquals(eventoAnual.obtenerTitulo(),calendarioSerializado.obtenerListaEventosTotales().get(2).obtenerTitulo());
+        assertEquals(eventoAnual.obtenerDescripcion(),calendarioSerializado.obtenerListaEventosTotales().get(2).obtenerDescripcion());
+        assertEquals(eventoAnual.obtenerFechaInicio(),calendarioSerializado.obtenerListaEventosTotales().get(2).obtenerFechaInicio());
+        assertEquals(eventoAnual.obtenerFechaFin(),calendarioSerializado.obtenerListaEventosTotales().get(2).obtenerFechaFin());
+        assertEquals(eventoAnual.obtenerId(),calendarioSerializado.obtenerListaEventosTotales().get(2).obtenerId());
+        assertEquals(eventoAnual.obtenerAlarmasEvento(),calendarioSerializado.obtenerListaEventosTotales().get(2).obtenerAlarmasEvento());
+
+
+
+        assertEquals(4,calendarioSerializado.obtenerListaEventosTotales().size());
+        assertEquals(eventoDiaCompleto.obtenerTitulo(),calendarioSerializado.obtenerListaEventosTotales().get(3).obtenerTitulo());
+        assertEquals(eventoDiaCompleto.obtenerDescripcion(),calendarioSerializado.obtenerListaEventosTotales().get(3).obtenerDescripcion());
+        assertEquals(eventoDiaCompleto.obtenerFechaInicio(),calendarioSerializado.obtenerListaEventosTotales().get(3).obtenerFechaInicio());
+        assertEquals(eventoDiaCompleto.obtenerFechaFin(),calendarioSerializado.obtenerListaEventosTotales().get(3).obtenerFechaFin());
+        assertEquals(eventoDiaCompleto.obtenerId(),calendarioSerializado.obtenerListaEventosTotales().get(3).obtenerId());
+        assertEquals(eventoDiaCompleto.obtenerAlarmasEvento(),calendarioSerializado.obtenerListaEventosTotales().get(3).obtenerAlarmasEvento());
+    }
+
+
+    }
+

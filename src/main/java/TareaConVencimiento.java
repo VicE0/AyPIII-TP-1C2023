@@ -1,9 +1,22 @@
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import java.time.LocalDateTime;
 
 public class TareaConVencimiento extends Tarea{
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonProperty("fechaInicio")
     private LocalDateTime fechaInicio;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonProperty("fechaVencimiento")
     private LocalDateTime fechaVencimiento;
 
+    public TareaConVencimiento(){
+        super("","");
+    }
     public TareaConVencimiento(LocalDateTime fechaInicio){
         super("Tarea sin titulo","");
         this.fechaInicio = fechaInicio;
