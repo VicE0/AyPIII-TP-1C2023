@@ -1,14 +1,11 @@
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Set;
-import java.util.concurrent.Callable;
+
 
 import static org.junit.Assert.*;
 
@@ -1127,8 +1124,9 @@ public void testObtenerProximosEventosDiaCompleto(){
 
         calendarioOriginal.serializarCalendario(nombreArchivo);
 
-        Calendario calendarioSerializado = calendarioOriginal.deserializarCalendario(nombreArchivo);
+        Calendario calendarioSerializado = Calendario.deserializarCalendario(nombreArchivo);
 
+        assert calendarioSerializado != null;
         assertEquals(1,calendarioSerializado.obtenerListaEventosTotales().size());
         assertEquals(eventoDiario.obtenerTitulo(),calendarioSerializado.obtenerListaEventosTotales().get(0).obtenerTitulo());
         assertEquals(eventoDiario.obtenerDescripcion(),calendarioSerializado.obtenerListaEventosTotales().get(0).obtenerDescripcion());
@@ -1177,8 +1175,9 @@ public void testObtenerProximosEventosDiaCompleto(){
 
         calendarioOriginal.serializarCalendario(nombreArchivo);
 
-        Calendario calendarioSerializado = calendarioOriginal.deserializarCalendario(nombreArchivo);
+        Calendario calendarioSerializado = Calendario.deserializarCalendario(nombreArchivo);
 
+        assert calendarioSerializado != null;
         assertEquals(4,calendarioSerializado.obtenerListaEventosTotales().size());
         assertEquals(eventoSemanal.obtenerTitulo(),calendarioSerializado.obtenerListaEventosTotales().get(0).obtenerTitulo());
         assertEquals(eventoSemanal.obtenerDescripcion(),calendarioSerializado.obtenerListaEventosTotales().get(0).obtenerDescripcion());
@@ -1214,6 +1213,29 @@ public void testObtenerProximosEventosDiaCompleto(){
         assertEquals(eventoDiaCompleto.obtenerFechaFin(),calendarioSerializado.obtenerListaEventosTotales().get(3).obtenerFechaFin());
         assertEquals(eventoDiaCompleto.obtenerId(),calendarioSerializado.obtenerListaEventosTotales().get(3).obtenerId());
         assertEquals(eventoDiaCompleto.obtenerAlarmasEvento(),calendarioSerializado.obtenerListaEventosTotales().get(3).obtenerAlarmasEvento());
+    }
+    @Test
+    public void testSerializaYDeserializaTareasYEventosConAlarma(){
+        String nombreArchivo = "calendarioAlarmas.json";
+        Calendario calendarioOriginal = new Calendario();
+        Efecto notificacion = new Notificacion();
+        Alarma alarma = new AlarmaFechaAbsoluta(LocalDateTime.of(2023, 12, 22, 0, 0), notificacion);
+        Alarma alarma1 = new AlarmaIntervalo(LocalDateTime.of(2023,5,22,15,30),30,notificacion);
+        Tarea tarea = new TareaDiaCompleto(LocalDate.of(2023, 5, 15));
+        tarea.agregarAlarma(alarma);
+        tarea.agregarAlarma(alarma1);
+        calendarioOriginal.agregarTarea(tarea);
+        calendarioOriginal.serializarCalendario(nombreArchivo);
+
+        Calendario calendarioSerializado = Calendario.deserializarCalendario(nombreArchivo);
+        assert calendarioSerializado != null;
+        assertEquals(0,calendarioSerializado.obtenerListaEventosTotales().size());
+        assertEquals(1,calendarioSerializado.obtenerTareas().size());
+        assertEquals(2,calendarioSerializado.obtenerTareas().get(0).obtenerAlarmas().size());
+        assertEquals(LocalDateTime.of(2023, 12, 22, 0, 0),calendarioSerializado.obtenerTareas().get(0).obtenerAlarmas().get(0).obtenerFechaYHora());
+        assertEquals(LocalDateTime.of(2023, 5, 22, 15, 0),calendarioSerializado.obtenerTareas().get(0).obtenerAlarmas().get(1).obtenerFechaYHora());
+
+
     }
 
 
