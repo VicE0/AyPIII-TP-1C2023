@@ -9,8 +9,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 
-public class Calendario {
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+
+public class Calendario implements Serializable {
 
 
     @JsonProperty("eventos")
@@ -172,32 +178,66 @@ public class Calendario {
         return eventosEnRango;
     }
 
-    public void serializarCalendario(String nombreArchivo) {
+    public String serializarCalendario(Calendario calendario) {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
 
         try {
-            objectMapper.writeValue(new File(nombreArchivo), this);
-        } catch (IOException e) {
+            return objectMapper.writeValueAsString(calendario);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void escribirEnDocumento(String informacionSerializada, String nombreArchivo) {
+        try (PrintWriter writer = new PrintWriter(nombreArchivo)) {
+            writer.write(informacionSerializada);
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    public static Calendario deserializarCalendario(String nombreArchivo) {
+    public static Calendario deserializarCalendario(String informacionSerializada) {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
 
-        File file = new File(nombreArchivo);
-        if (file.exists()) {
-            try {
-                return objectMapper.readValue(file, Calendario.class);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        try {
+            return objectMapper.readValue(informacionSerializada, Calendario.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return null;
         }
-
-        return null;
     }
+
+
+//METODOS DE SERIALIZACION/DESERIALIZACION QUE UTILIZAN EL ARCHIVO
+//    public void serializarCalendario(String nombreArchivo) {
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        objectMapper.registerModule(new JavaTimeModule());
+//
+//        try {
+//            objectMapper.writeValue(new File(nombreArchivo), this);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+//    public static Calendario deserializarCalendario(String nombreArchivo) {
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        objectMapper.registerModule(new JavaTimeModule());
+//
+//        File file = new File(nombreArchivo);
+//        if (file.exists()) {
+//            try {
+//                return objectMapper.readValue(file, Calendario.class);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        return null;
+//    }
 }
 
 

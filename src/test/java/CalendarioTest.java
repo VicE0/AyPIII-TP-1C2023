@@ -1110,7 +1110,7 @@ public void testObtenerProximosEventosDiaCompleto(){
 
     @Test
     public void testSerializarYDeserializarCalendario()   {
-        String nombreArchivo = "calendario.json";
+        String nombreArchivo = "calendarioCorreccion.json";
 
         Calendario calendarioOriginal = new Calendario();
         Tarea tarea1 = new TareaDiaCompleto(LocalDate.of(2023, 5, 15));
@@ -1122,9 +1122,12 @@ public void testObtenerProximosEventosDiaCompleto(){
         calendarioOriginal.agregarTarea(tarea2);
 
 
-        calendarioOriginal.serializarCalendario(nombreArchivo);
+        String informacionSerializada = calendarioOriginal.serializarCalendario(calendarioOriginal);
 
-        Calendario calendarioSerializado = Calendario.deserializarCalendario(nombreArchivo);
+        //Creo el archivo de forma independiente a la serializacion
+        calendarioOriginal.escribirEnDocumento(informacionSerializada, nombreArchivo);
+
+        Calendario calendarioSerializado = Calendario.deserializarCalendario(informacionSerializada);
 
         assert calendarioSerializado != null;
         assertEquals(1,calendarioSerializado.obtenerListaEventosTotales().size());
@@ -1155,7 +1158,7 @@ public void testObtenerProximosEventosDiaCompleto(){
     }
     @Test
     public void testPuedoSerializarTodoTipoDeEvento(){
-        String nombreArchivo = "calendarioEventos.json";
+
         ConstructorEventos eventoSemanalConstruido     = new ConstructorEventosSemanales("Evento Semanal", "Evento Repetido", LocalDateTime.of(2023, 4, 11, 9, 0), LocalDateTime.of(2023, 4, 21, 9, 30), 1, Repeticion.HASTA_FECHA_FIN, Set.of(DayOfWeek.MONDAY));
         ConstructorEventos eventoMensualConstruido     = new ConstructorEventosMensuales("Evento Mensual", "Evento Unico", LocalDateTime.of(2023, 4, 12, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 99, Repeticion.INFINITA, 2);
         ConstructorEventos eventoAnualConstruido       = new ConstructorEventosAnuales("Evento Anual", "Evento Unico", LocalDateTime.of(2023, 4, 13, 9, 0), LocalDateTime.of(2023, 4, 17, 9, 30), 10, Repeticion.HASTA_FECHA_FIN, 3);
@@ -1173,9 +1176,9 @@ public void testObtenerProximosEventosDiaCompleto(){
         calendarioOriginal.agregarEvento(eventoAnual);
         calendarioOriginal.agregarEvento(eventoDiaCompleto);
 
-        calendarioOriginal.serializarCalendario(nombreArchivo);
-
-        Calendario calendarioSerializado = Calendario.deserializarCalendario(nombreArchivo);
+        //En este caso, no creo el archivop y pruebo que la serializacion y la deserializacion son independientes del archivo
+        String informacionSerializada = calendarioOriginal.serializarCalendario(calendarioOriginal);
+        Calendario calendarioSerializado = Calendario.deserializarCalendario(informacionSerializada);
 
         assert calendarioSerializado != null;
         assertEquals(4,calendarioSerializado.obtenerListaEventosTotales().size());
@@ -1214,6 +1217,8 @@ public void testObtenerProximosEventosDiaCompleto(){
         assertEquals(eventoDiaCompleto.obtenerId(),calendarioSerializado.obtenerListaEventosTotales().get(3).obtenerId());
         assertEquals(eventoDiaCompleto.obtenerAlarmasEvento(),calendarioSerializado.obtenerListaEventosTotales().get(3).obtenerAlarmasEvento());
     }
+
+
     @Test
     public void testSerializaYDeserializaTareasYEventosConAlarma(){
         String nombreArchivo = "calendarioAlarmas.json";
@@ -1225,9 +1230,10 @@ public void testObtenerProximosEventosDiaCompleto(){
         tarea.agregarAlarma(alarma);
         tarea.agregarAlarma(alarma1);
         calendarioOriginal.agregarTarea(tarea);
-        calendarioOriginal.serializarCalendario(nombreArchivo);
 
-        Calendario calendarioSerializado = Calendario.deserializarCalendario(nombreArchivo);
+        String informacionSerializada = calendarioOriginal.serializarCalendario(calendarioOriginal);
+        Calendario calendarioSerializado = Calendario.deserializarCalendario(informacionSerializada);
+
         assert calendarioSerializado != null;
         assertEquals(0,calendarioSerializado.obtenerListaEventosTotales().size());
         assertEquals(1,calendarioSerializado.obtenerTareas().size());
