@@ -1176,7 +1176,7 @@ public void testObtenerProximosEventosDiaCompleto(){
         calendarioOriginal.agregarEvento(eventoAnual);
         calendarioOriginal.agregarEvento(eventoDiaCompleto);
 
-        //En este caso, no creo el archivop y pruebo que la serializacion y la deserializacion son independientes del archivo
+        //En este caso, no creo el archivo y pruebo que la serializacion y la deserializacion son independientes del archivo
         String informacionSerializada = calendarioOriginal.serializarCalendario(calendarioOriginal);
         Calendario calendarioSerializado = Calendario.deserializarCalendario(informacionSerializada);
 
@@ -1221,7 +1221,7 @@ public void testObtenerProximosEventosDiaCompleto(){
 
     @Test
     public void testSerializaYDeserializaTareasYEventosConAlarma(){
-        String nombreArchivo = "calendarioAlarmas.json";
+
         Calendario calendarioOriginal = new Calendario();
         Efecto notificacion = new Notificacion();
         Alarma alarma = new AlarmaFechaAbsoluta(LocalDateTime.of(2023, 12, 22, 0, 0), notificacion);
