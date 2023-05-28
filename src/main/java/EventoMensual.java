@@ -1,9 +1,15 @@
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 
 public class EventoMensual extends Evento{
+    @JsonProperty("cantidadMeses")
     private int cantidadMeses;
+    @JsonProperty("id")
     private int id;
     private static int idSiguiente = 0;
+    public EventoMensual(){
+
+    }
 
     public EventoMensual(LocalDateTime fechaInicio){
         super(fechaInicio);

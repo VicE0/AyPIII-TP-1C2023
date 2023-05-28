@@ -1,22 +1,50 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 
-public abstract class Evento
-{
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "Tipo de evento")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = EventoDiario.class, name = "Evento Diario"),
+        @JsonSubTypes.Type(value = EventoSemanal.class, name = "Evento Semanal"),
+        @JsonSubTypes.Type(value = EventoMensual.class, name = "Evento mensual"),
+        @JsonSubTypes.Type(value = EventoAnual.class, name = "Evento anual"),
+        @JsonSubTypes.Type(value = EventoDiaCompleto.class, name = "Evento dia completo")
+
+
+})
+public abstract class Evento {
+
+    @JsonProperty("titulo")
     private String titulo;
+    @JsonProperty("descripcion")
     private String descripcion;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonProperty("fechaInicio")
     private LocalDateTime fechaInicio;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonProperty("fechaFin")
     private LocalDateTime fechaFin;
+    @JsonProperty("maxOcurrencias")
     private int maxOcurrencias;
+    @JsonProperty("ocurrenciasRealizadas")
     private int ocurrenciasRealizadas;
+    @JsonProperty("tipoRepeticion")
     private Repeticion tipoRepeticion;
-
-
+    @JsonProperty("alarmasEvento")
     private final ArrayList<Alarma> alarmasEvento;
 
 
-    //Constructor default con los valores iniciales
-    //Por Default, el evento será de dia completo
+    public Evento() {
+        alarmasEvento = new ArrayList<>();
+
+    }
     public Evento(LocalDateTime fechaInicio){
 
         this.titulo = "Evento sin titulo";
