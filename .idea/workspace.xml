@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f4a2b6a4-54ae-4808-8225-7104df414da0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+    <list default="true" id="f4a2b6a4-54ae-4808-8225-7104df414da0" name="Changes" comment="Resuelvo errores de pulleo">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/GUIControlador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUIControlador.java" afterDir="false" />
@@ -27,6 +26,19 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="740f839b-751f-4ad6-912b-a1c76344d18a" />
+        <option name="url" value="https://github.com/VicE0/AyPIII-TP-1C2023.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -145,7 +157,27 @@
       <option name="presentableId" value="Default" />
       <updated>1683302753701</updated>
     </task>
+    <task id="LOCAL-00001" summary="Logica para visualizar el calendario con eventos/tareas">
+      <created>1686642628797</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1686642628797</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Resuelvo errores de pulleo">
+      <created>1686642734776</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1686642734776</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Logica para visualizar el calendario con eventos/tareas" />
+    <MESSAGE value="Resuelvo errores de pulleo" />
+    <option name="LAST_COMMIT_MESSAGE" value="Resuelvo errores de pulleo" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/AyPIII_TP_1C2023$CalendarioTest.ic" NAME="CalendarioTest Coverage Results" MODIFIED="1683953958183" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

@@ -1,16 +1,16 @@
 import javafx.collections.FXCollections;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,14 +18,15 @@ import java.util.List;
 public class GUIVista {
     private GUIControlador controlador;
 
+    private GridPane calendarioGrid;
+    private Label mesAnioActualLabel;
     private Stage primaryStage;
+
     private Label tituloLabel;
     private Label descripcionLabel;
     private Label fechaInicioLabel;
     private Label horarioInicioLabel;
-
     private Label fechaVencimientoLabel;
-
     private Label fechaFinLabel;
     private Label horarioFinLabel;
     private Label horarioVencimientoLabel;
@@ -51,8 +52,11 @@ public class GUIVista {
     private DatePicker fechaFinSinHoraPicker;
 
 
-    public GUIVista(Stage primaryStage) {
+    public GUIVista(Stage primaryStage, GridPane calendarioGrid, Label mesAnioActualLabel) {
+
         this.primaryStage = primaryStage;
+        this.calendarioGrid = calendarioGrid;
+        this.mesAnioActualLabel = mesAnioActualLabel;
 
         this.tituloLabel = new Label("Título:");
         tituloField = new TextField();
@@ -87,7 +91,6 @@ public class GUIVista {
         this.agregarTareaDiaCompletoButton = new Button("Agregar Tarea Día Completo");
         this.agregarEventoTerminadoButton = new Button("Agregar");
 
-
     }
 
     public void setControlador(GUIControlador controlador) {
@@ -95,6 +98,34 @@ public class GUIVista {
     }
 
 
+    public void mostrarCalendarioCompleto(Stage primaryStage) {
+
+        HBox headerBox = new HBox(10);
+        headerBox.setAlignment(Pos.CENTER);
+        headerBox.setPadding(new Insets(10));
+
+        Button mesAnteriorBoton = new Button("<<");
+        mesAnteriorBoton.setOnAction(e -> controlador.mostrarMesAnterior());
+
+        Button mesSiguienteBoton = new Button(">>");
+        mesSiguienteBoton.setOnAction(e -> controlador.mostrarMesSiguiente());
+
+        mesAnioActualLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
+        controlador.actualizarLabel();
+
+        headerBox.getChildren().addAll(mesAnteriorBoton, mesAnioActualLabel, mesSiguienteBoton);
+
+        GridPane root = new GridPane();
+        root.setPadding(new Insets(10));
+        root.setAlignment(Pos.TOP_CENTER);
+        root.add(headerBox, 0, 0);
+        root.add(calendarioGrid, 0, 1);
+
+        Scene scene = new Scene(root, 500, 500);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Calendario");
+        primaryStage.show();
+    }
 
 
     public Scene Escena() {
