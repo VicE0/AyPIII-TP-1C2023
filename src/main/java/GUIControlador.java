@@ -41,6 +41,8 @@ public class GUIControlador {
         return this.tareaConVencimiento;
     }
 
+    public Evento obtenerObjetoEventoAnual(){ return this.eventoAnual; }
+
 
     public void agregarTarea(Tarea tarea) {
         calendario.agregarTarea(tarea);
@@ -49,7 +51,9 @@ public class GUIControlador {
 //        vista.gridlayout(listaTareas);
 //        vista.limpiarCampos();
     }
-
+    public void agregarEvento(Evento evento){
+        calendario.agregarEvento(evento);
+    }
 
 
 
