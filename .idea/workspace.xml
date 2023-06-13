@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f4a2b6a4-54ae-4808-8225-7104df414da0" name="Changes" comment="Resuelvo errores de pulleo">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Event.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/GUIControlador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUIControlador.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/GUIVista.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUIVista.java" afterDir="false" />

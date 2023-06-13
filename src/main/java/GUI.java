@@ -20,28 +20,18 @@ public class GUI extends Application {
 
         vista.setControlador(controlador);
 
+        Stage interfazCalendario= new Stage();
         controlador.crearCalendario();
-        vista.mostrarCalendarioCompleto(primaryStage);
+        vista.mostrarCalendarioCompleto(interfazCalendario);
 
-//        primaryStage.setScene(vista.Escena());
-//        primaryStage.show();
+        Stage interfazIngresoDatos = new Stage();
+        interfazIngresoDatos.setTitle("Ventana de ingreso de datos");
+        interfazIngresoDatos.setScene(vista.Escena());
+        interfazIngresoDatos.show();
 
     }
 }
 
-//    @Override
-//    public void start(Stage primaryStage) {
-//        Calendario calendario = new Calendario();
-//        GUIVista vista = new GUIVista(primaryStage);
-//        GUIControlador controlador = new GUIControlador(calendario, vista);
-//
-//        vista.setControlador(controlador)
-//        primaryStage.setTitle("Calendario");
-
-//        primaryStage.setTitle("Calendario");
-//        primaryStage.setScene(vista.Escena());
-//        primaryStage.show();
-//    }
 
 
 

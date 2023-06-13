@@ -12,44 +12,43 @@ import java.util.stream.IntStream;
 public class GUIControlador {
 
     private Calendario calendario;
-
     private Tarea tareaDiaCompleto;
     private Tarea tareaConVencimiento;
 
-    private Evento eventoDiario;
-    private Evento eventoSemanal;
-    private Evento eventoMensual;
-    private Evento eventoAnual;
-    private Evento eventoDiaCompleto;
-
-
     private GUIVista vista;
     private ListView<Tarea> listaTareas;
+    private ListView<Evento> listaEventos;
 
     private YearMonth mesAnioActual;
     private Label mesAnioActualLabel;
-    private List<Event> eventos;
+
     private GridPane calendarioGrid;
 
     public GUIControlador(Calendario calendario, GUIVista vista, GridPane calendarioGrid, Label mesAnioActualLabel) {
         this.calendario = calendario;
         this.vista = vista;
         this.vista.setControlador(this);
+
         this.listaTareas = new ListView<>();
+        this.listaEventos = new ListView<>();
+
         this.tareaDiaCompleto = new TareaDiaCompleto();
         this.tareaConVencimiento = new TareaConVencimiento();
+
         this.mesAnioActualLabel = mesAnioActualLabel;
-        this.mesAnioActual = YearMonth.now();
         this.calendarioGrid = calendarioGrid;
 
-//SON SUSTITOS PARA LA VERDADERA LISTA DE EVENTOS, SOLO QUIERO PROBAR FUNCIONABILIDAD
-        this.eventos = new ArrayList<>();
+        this.mesAnioActual = YearMonth.now();
+;
 
-        eventosEjemplo();
     }
 
     public ListView<Tarea> obtenerListaTareas(){
         return this.listaTareas;
+    }
+
+    public ListView<Evento> obtenerListaEventos(){
+        return this.listaEventos;
     }
 
     public Tarea obtenerObjetoTareaDiaCompleto(){
@@ -59,8 +58,6 @@ public class GUIControlador {
     public Tarea obtenerObjetoTareaConVencimiento(){
         return this.tareaConVencimiento;
     }
-
-    public Evento obtenerObjetoEventoAnual(){ return this.eventoAnual; }
 
 
     public void agregarTarea(Tarea tarea) {
@@ -121,11 +118,18 @@ public class GUIControlador {
             LocalDate fechaDeseada = mesAnioActual.atDay(diaMes);
 
             if (tieneEventosEnFecha(fechaDeseada)) {
-                diaLabel.setStyle("-fx-font-weight: bold; -fx-background-color: yellow;");
+                diaLabel.setStyle("-fx-font-weight: bold; -fx-background-color: lightsalmon;");
             }
+
+            if (tieneTareasEnFecha(fechaDeseada)){
+                diaLabel.setStyle("-fx-font-weight: bold; -fx-background-color: lightblue;");
+            }
+
+            //Sí tiene tareas y eventos → color = 	GREENYELLOW
 
             int finalDiaMes = diaMes;
             diaLabel.setOnMouseClicked(e -> mostrarEventosDelDia(finalDiaMes)); //Muestra los eventos del dia al hacer click
+            diaLabel.setOnMouseClicked(e -> mostrarTareasDelDia(finalDiaMes));
 
             if (columna == 6){
                 fila++;
@@ -137,13 +141,25 @@ public class GUIControlador {
 
     private boolean tieneEventosEnFecha(LocalDate fechaDeseada) {
 
-        for (Event event : eventos) {
-            if (event.getFecha().isEqual(fechaDeseada)) {
+        for (Evento evento : listaEventos.getItems()) {
+            if (evento.obtenerFechaInicio().toLocalDate().isEqual(fechaDeseada)) {
                 return true;
             }
         }
         return false;
     }
+
+
+    private boolean tieneTareasEnFecha(LocalDate fechaDeseada) {
+
+        for (Tarea tarea : listaTareas.getItems()) {
+            if (tarea.obtenerFechaInicio().toLocalDate().isEqual(fechaDeseada)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public void actualizarLabel() {
 
@@ -154,7 +170,7 @@ public class GUIControlador {
     public void mostrarEventosDelDia(int diaMes) {
 
         LocalDate diaSeleccionado = mesAnioActual.atDay(diaMes);
-        List<Event> eventosDelDia = obtenerEventosDelDia(diaSeleccionado);
+        List<Evento> eventosDelDia = obtenerEventosDelDia(diaSeleccionado);
 
         if (eventosDelDia.isEmpty()) {
             mostrarMensaje("No hay eventos", "No hay eventos asignados a este dia.");
@@ -162,42 +178,83 @@ public class GUIControlador {
         } else {
             StringBuilder tituloPopUp = new StringBuilder();
 
-            for (Event event : eventosDelDia) {
-                tituloPopUp.append(event.getTitulo()).append("\n");
+            for (Evento evento : eventosDelDia) {
+                tituloPopUp.append(evento.obtenerTitulo()).append("\n");
             }
-            mostrarMensaje("Eventos: ", tituloPopUp.toString());
+            mostrarMensaje("Eventos ", tituloPopUp.toString());
         }
     }
 
-    private List<Event> obtenerEventosDelDia(LocalDate date) {
-        List<Event> eventosDia = new ArrayList<>();
+    public void mostrarTareasDelDia(int diaMes) {
 
-        for (Event event : eventos) {
+        LocalDate diaSeleccionado = mesAnioActual.atDay(diaMes);
+        List<Tarea> tareasDelDia = obtenerTareasDelDia(diaSeleccionado);
 
-            if (event.getFecha().equals(date)) {
+        if (tareasDelDia.isEmpty()) {
+            mostrarMensaje("No hay tareas", "No hay tareas asignadas a este dia.");
 
-                eventosDia.add(event);
+        } else {
+            StringBuilder tituloPopUp = new StringBuilder();
+
+            for (Tarea tarea : tareasDelDia) {
+                tituloPopUp.append(tarea.obtenerTitulo()).append("\n");
+                tituloPopUp.append(tarea.obtenerDescripcion()).append("\n");
+                tituloPopUp.append(("Inicio: ") + tarea.obtenerFechaInicio()).append("\n");
+                tituloPopUp.append(("Vencimiento: ") + tarea.obtenerFechaVencimiento()).append("\n");
+
+                if(tarea.estaCompleta()){
+                    tituloPopUp.append("Tarea completada \n");
+                }
+                else{
+                    tituloPopUp.append("Tarea no completada \n");
+                }
+
+            }
+            mostrarMensaje("Tarea del dia ", tituloPopUp.toString());
+        }
+    }
+
+    private List<Evento> obtenerEventosDelDia(LocalDate fecha) {
+        List<Evento> eventosDia = new ArrayList<>();
+
+        for (Evento evento : listaEventos.getItems()) {
+            if (evento.obtenerFechaInicio().toLocalDate().equals(fecha)) {
+                eventosDia.add(evento);
             }
         }
         return eventosDia;
     }
 
+
+    private List<Tarea> obtenerTareasDelDia(LocalDate fecha) {
+        List<Tarea> TareasDia = new ArrayList<>();
+
+        for (Tarea tarea : listaTareas.getItems()) {
+
+            if (tarea.obtenerFechaInicio().toLocalDate().equals(fecha)) {
+                TareasDia.add(tarea);
+            }
+        }
+        return TareasDia;
+    }
+
+
     private void mostrarMensaje(String titulo, String contenido) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(titulo);
-        alert.setHeaderText(null);
-        alert.setContentText(contenido);
-        alert.showAndWait();
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(contenido);
+        alerta.showAndWait();
     }
 
 
-    ///SOLO ESTAN PARA PROBAR QUE SE CARGUE BIEN LA INFO
-    private void eventosEjemplo() {
-        eventos.add(new Event(LocalDate.of(2023, 6, 1), "Evento 1"));
-        eventos.add(new Event(LocalDate.of(2023, 6, 5), "Evento 2"));
-        eventos.add(new Event(LocalDate.of(2023, 6, 10), "Evento 3"));
-        eventos.add(new Event(LocalDate.of(2023, 6, 15), "Evento 4"));
-        eventos.add(new Event(LocalDate.of(2023, 6, 20), "Evento 5"));
-
-    }
+//    ///SOLO ESTAN PARA PROBAR QUE SE CARGUE BIEN LA INFO
+//    private void eventosEjemplo() {
+//        eventos.add(new Event(LocalDate.of(2023, 6, 1), "Evento 1"));
+//        eventos.add(new Event(LocalDate.of(2023, 7, 5), "Evento 2"));
+//        eventos.add(new Event(LocalDate.of(2023, 6, 10), "Evento 3"));
+//        eventos.add(new Event(LocalDate.of(2023, 6, 15), "Evento 4"));
+//        eventos.add(new Event(LocalDate.of(2023, 6, 20), "Evento 5"));
+//
+//    }
 }

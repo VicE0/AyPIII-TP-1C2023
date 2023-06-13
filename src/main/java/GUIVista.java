@@ -18,6 +18,13 @@ import java.util.List;
 public class GUIVista {
     private GUIControlador controlador;
 
+    private CreadorDeEventos eventoDiarioCreado;
+    private CreadorDeEventos eventoSemanalCreado;
+    private CreadorDeEventos eventoMensualCreado;
+    private CreadorDeEventos eventoAnualCreado;
+    private CreadorDeEventos eventoDiaCompletoCreado;
+
+
     private GridPane calendarioGrid;
     private Label mesAnioActualLabel;
     private Stage primaryStage;
@@ -30,6 +37,11 @@ public class GUIVista {
     private Label fechaFinLabel;
     private Label horarioFinLabel;
     private Label horarioVencimientoLabel;
+    private Label maxOcurrenciasPermitidasLabel;
+    private Label intervaloLabel;
+
+    private Label tipoRepeticionLabel;
+
     private Button agregarTareaButton;
     private Button agregarTareaConVencimientoButton;
     private Button agregarEventoButton;
@@ -42,14 +54,19 @@ public class GUIVista {
     private TextField horarioInicioTextField;
     private TextField minutosInicioTextField;
     private TextField horarioVencimientoTextField;
-
     private TextField minutosVencimientoTextField;
     private TextField horarioFinTextField;
     private TextField minutosFinTextField;
+    private TextField maxOcurrenciasPermitidasTextField;
+    private TextField intervaloTextField;
+    private TextField diasSemanaRepeticionTextField;
 
     private DatePicker fechaInicioPicker;
     private DatePicker fechaVencimientoSinHoraPicker;
     private DatePicker fechaFinSinHoraPicker;
+
+    private ChoiceBox<Repeticion> tipoRepeticionChoiceBox;
+
 
 
     public GUIVista(Stage primaryStage, GridPane calendarioGrid, Label mesAnioActualLabel) {
@@ -85,11 +102,28 @@ public class GUIVista {
         horarioVencimientoTextField = new TextField();
         minutosVencimientoTextField = new TextField();
 
+        this.maxOcurrenciasPermitidasLabel = new Label("Maximas ocurrencias del evento");
+        maxOcurrenciasPermitidasTextField = new TextField();
+
+        this.intervaloLabel = new Label("Intervalo ");
+        intervaloTextField = new TextField();
+
+        this.tipoRepeticionLabel = new Label("Tipo de repetición:");
+        this.tipoRepeticionChoiceBox = new ChoiceBox<>();
+        tipoRepeticionChoiceBox.getItems().addAll(Repeticion.values());
+
         this.agregarTareaButton = new Button("Agregar Tarea");
         this.agregarEventoButton = new Button("Agregar Evento");
         this.agregarTareaConVencimientoButton = new Button(("Agregar Tarea Con Vencimiento"));
         this.agregarTareaDiaCompletoButton = new Button("Agregar Tarea Día Completo");
         this.agregarEventoTerminadoButton = new Button("Agregar");
+
+
+        this.eventoDiarioCreado      = new CreadorEventosDiarios();
+        this.eventoSemanalCreado     = new CreadorEventosSemanales();
+        this.eventoMensualCreado     = new CreadorEventosMensuales();
+        this.eventoAnualCreado       = new CreadorEventosAnuales();
+        this.eventoDiaCompletoCreado = new CreadorEventosDiaCompleto();
 
     }
 
@@ -133,7 +167,6 @@ public class GUIVista {
         agregarEventoButton.setOnAction(e -> mostrarVentanaAgregarEvento());
         ingresarTareaConVencimiento();
         ingresarTareaDiaCompleto();
-        ingresarEvento();
         return gridlayout(controlador.obtenerListaTareas());
     }
 
@@ -161,8 +194,9 @@ public class GUIVista {
 
         layout.getChildren().addAll(tituloLabel, tituloField, descripcionLabel, descripcionField, fechaInicioLabel,
                 fechaInicioPicker, horarioInicioLabel, horarioInicioTextField, minutosInicioTextField,
-                fechaFinLabel, fechaFinSinHoraPicker, horarioFinLabel,
-                horarioFinTextField, minutosFinTextField, agregarEventoTerminadoButton);
+                fechaFinLabel, fechaFinSinHoraPicker, horarioFinLabel, horarioFinTextField, minutosFinTextField, maxOcurrenciasPermitidasLabel,
+                maxOcurrenciasPermitidasTextField,intervaloLabel, intervaloTextField,
+                tipoRepeticionLabel, tipoRepeticionChoiceBox,agregarEventoTerminadoButton);
 
         Scene scene = new Scene(layout);
         ventanaAgregarEvento.setScene(scene);
@@ -255,11 +289,19 @@ public class GUIVista {
                 });
 
     }
-    public void ingresarEvento(){
+    public void ingresarEventoDiario(){
         agregarEventoTerminadoButton.setOnAction(e ->{
             String titulo = tituloField.getText();
             String descripcion = descripcionField.getText();
+//            LocalDate fechaInicio = fechaInicioPicker.getValue();
+//            LocalDate fechaFin = fechaFinSinHoraPicker.getValue();
+//
+//            ConstructorEventos eventoDiarioConstruido = new ConstructorEventosDiarios(titulo,descripcion, fechaInicio, fechaFin, );
+//            Evento eventoDiario = eventoDiarioCreado.crearEvento(eventoDiarioConstruido);
 
+//En los tests se encuentra la logica para agregar los eventos, el problema esta que la fecha de inicio picker y la fecha fin picker funcionan con LocalDate
+// No me hago una idea de como agregar correctamente el paramtero :[
+//Se deberia hacer como las tareas que se puede agregar manualmente el evento diario / semanal /mensual etc, segun la cantidad de clases de eventos que hay
         });
     }
 
