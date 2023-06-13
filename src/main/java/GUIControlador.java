@@ -21,12 +21,12 @@ public class GUIControlador {
     private ListView<Tarea> listaTareas;
 
     public GUIControlador(Calendario calendario, GUIVista vista) {
-            this.calendario = calendario;
-            this.vista = vista;
-            this.vista.setControlador(this);
-            this.listaTareas = new ListView<>();
-            this.tareaDiaCompleto = new TareaDiaCompleto();
-            this.tareaConVencimiento = new TareaConVencimiento();
+        this.calendario = calendario;
+        this.vista = vista;
+        this.vista.setControlador(this);
+        this.listaTareas = new ListView<>();
+        this.tareaDiaCompleto = new TareaDiaCompleto();
+        this.tareaConVencimiento = new TareaConVencimiento();
     }
 
     public ListView<Tarea> obtenerListaTareas(){
@@ -41,6 +41,8 @@ public class GUIControlador {
         return this.tareaConVencimiento;
     }
 
+    public Evento obtenerObjetoEventoAnual(){ return this.eventoAnual; }
+
 
     public void agregarTarea(Tarea tarea) {
         calendario.agregarTarea(tarea);
@@ -49,7 +51,9 @@ public class GUIControlador {
 //        vista.gridlayout(listaTareas);
 //        vista.limpiarCampos();
     }
-
+    public void agregarEvento(Evento evento){
+        calendario.agregarEvento(evento);
+    }
 
 
 

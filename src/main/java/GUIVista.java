@@ -5,10 +5,12 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,9 +25,15 @@ public class GUIVista {
     private Label horarioInicioLabel;
 
     private Label fechaVencimientoLabel;
+
+    private Label fechaFinLabel;
+    private Label horarioFinLabel;
     private Label horarioVencimientoLabel;
     private Button agregarTareaButton;
+    private Button agregarTareaConVencimientoButton;
     private Button agregarEventoButton;
+
+    private Button agregarEventoTerminadoButton;
     private Button agregarTareaDiaCompletoButton;
 
     private TextField tituloField;
@@ -33,11 +41,14 @@ public class GUIVista {
     private TextField horarioInicioTextField;
     private TextField minutosInicioTextField;
     private TextField horarioVencimientoTextField;
+
     private TextField minutosVencimientoTextField;
+    private TextField horarioFinTextField;
+    private TextField minutosFinTextField;
 
     private DatePicker fechaInicioPicker;
     private DatePicker fechaVencimientoSinHoraPicker;
-
+    private DatePicker fechaFinSinHoraPicker;
 
 
     public GUIVista(Stage primaryStage) {
@@ -56,6 +67,13 @@ public class GUIVista {
         horarioInicioTextField = new TextField();
         minutosInicioTextField = new TextField();
 
+        this.fechaFinLabel = new Label("Fecha de finalizacion del evento:");
+        fechaFinSinHoraPicker = new DatePicker();
+
+        this.horarioFinLabel = new Label("Horario (Incluye horas y minutos):");
+        horarioFinTextField = new TextField();
+        minutosFinTextField = new TextField();
+
         this.fechaVencimientoLabel = new Label("Fecha de Vencimiento:");
         fechaVencimientoSinHoraPicker = new DatePicker();
 
@@ -63,37 +81,78 @@ public class GUIVista {
         horarioVencimientoTextField = new TextField();
         minutosVencimientoTextField = new TextField();
 
-        this.agregarTareaButton = new Button("Agregar Tarea con vencimiento");
+        this.agregarTareaButton = new Button("Agregar Tarea");
         this.agregarEventoButton = new Button("Agregar Evento");
+        this.agregarTareaConVencimientoButton = new Button(("Agregar Tarea Con Vencimiento"));
         this.agregarTareaDiaCompletoButton = new Button("Agregar Tarea Día Completo");
+        this.agregarEventoTerminadoButton = new Button("Agregar");
+
+
     }
 
     public void setControlador(GUIControlador controlador) {
         this.controlador = controlador;
     }
 
+
+
+
     public Scene Escena() {
-
-
-        ingresarTareaConVencimiento(agregarTareaButton);
-        ingresarTareaDiaCompleto(agregarTareaDiaCompletoButton);
+        agregarTareaButton.setOnAction(e -> mostrarVentanaAgregarTarea());
+        agregarEventoButton.setOnAction(e -> mostrarVentanaAgregarEvento());
+        ingresarTareaConVencimiento();
+        ingresarTareaDiaCompleto();
+        ingresarEvento();
         return gridlayout(controlador.obtenerListaTareas());
     }
 
+    private void mostrarVentanaAgregarTarea() {
+        Stage ventanaAgregarTarea = new Stage();
+        ventanaAgregarTarea.setTitle("Agregar Tarea");
+        VBox layout = new VBox(10);
+        layout.setPadding(new Insets(10));
 
-    public void ingresarTareaConVencimiento(Button agregarTareaButton) {
+        layout.getChildren().addAll(tituloLabel, tituloField, descripcionLabel, descripcionField, fechaInicioLabel,
+                fechaInicioPicker, horarioInicioLabel, horarioInicioTextField, minutosInicioTextField,
+                fechaVencimientoLabel, fechaVencimientoSinHoraPicker, horarioVencimientoLabel,
+                horarioVencimientoTextField, minutosVencimientoTextField, agregarTareaConVencimientoButton,agregarTareaDiaCompletoButton);
+
+        Scene scene = new Scene(layout);
+        ventanaAgregarTarea.setScene(scene);
+        ventanaAgregarTarea.show();
+    }
+
+    public void mostrarVentanaAgregarEvento(){
+        Stage ventanaAgregarEvento= new Stage();
+        ventanaAgregarEvento.setTitle("Agregar Evento");
+        VBox layout = new VBox(10);
+        layout.setPadding(new Insets(10));
+
+        layout.getChildren().addAll(tituloLabel, tituloField, descripcionLabel, descripcionField, fechaInicioLabel,
+                fechaInicioPicker, horarioInicioLabel, horarioInicioTextField, minutosInicioTextField,
+                fechaFinLabel, fechaFinSinHoraPicker, horarioFinLabel,
+                horarioFinTextField, minutosFinTextField, agregarEventoTerminadoButton);
+
+        Scene scene = new Scene(layout);
+        ventanaAgregarEvento.setScene(scene);
+        ventanaAgregarEvento.show();
+    }
+
+
+
+    public void ingresarTareaConVencimiento() {
 
         Tarea tareaConVencimeitno = controlador.obtenerObjetoTareaConVencimiento();
 
-        agregarTareaButton.setOnAction(e -> {
+        agregarTareaConVencimientoButton.setOnAction(e -> {
 
             String titulo = tituloField.getText();
-            if (titulo.isEmpty()){
+            if (titulo.isEmpty()) {
                 titulo = tareaConVencimeitno.obtenerTitulo();
             }
 
             String descripcion = descripcionField.getText();
-            if (descripcion.isEmpty()){
+            if (descripcion.isEmpty()) {
                 descripcion = tareaConVencimeitno.obtenerDescripcion();
             }
 
@@ -137,37 +196,46 @@ public class GUIVista {
                 return;
             }
 
-            controlador.agregarTarea(new TareaConVencimiento(titulo,descripcion, fechaInicioPicker.getValue().atTime(horaInicio, minutosInicio), fechaVencimientoSinHoraPicker.getValue().atTime(horaVencimiento, minutosVencimiento)));
+            controlador.agregarTarea(new TareaConVencimiento(titulo, descripcion, fechaInicioPicker.getValue().atTime(horaInicio, minutosInicio), fechaVencimientoSinHoraPicker.getValue().atTime(horaVencimiento, minutosVencimiento)));
+            limpiarCampos();
         });
-}
 
-    public  void ingresarTareaDiaCompleto(Button agregarTareaDiaCompletoButton) {
+    }
+
+    public void ingresarTareaDiaCompleto() {
 
         Tarea tareaDiaCompleto = controlador.obtenerObjetoTareaDiaCompleto();
 
         agregarTareaDiaCompletoButton.setOnAction(e -> {
 
             String titulo = tituloField.getText();
-            if (titulo.isEmpty()){
-               titulo = tareaDiaCompleto.obtenerTitulo();
+            if (titulo.isEmpty()) {
+                titulo = tareaDiaCompleto.obtenerTitulo();
             }
 
             String descripcion = descripcionField.getText();
-            if (descripcion.isEmpty()){
+            if (descripcion.isEmpty()) {
                 descripcion = tareaDiaCompleto.obtenerDescripcion();
             }
 
             LocalDate fechaInicio = fechaInicioPicker.getValue();
+            controlador.agregarTarea(new TareaDiaCompleto(titulo, descripcion, fechaInicio));
+            limpiarCampos();
+        });
 
-           controlador.agregarTarea(new TareaDiaCompleto(titulo, descripcion, fechaInicio));
-        }
-        );
-}
+    }
+    public void ingresarEvento(){
+        agregarEventoTerminadoButton.setOnAction(e ->{
+            String titulo = tituloField.getText();
+            String descripcion = descripcionField.getText();
+
+        });
+    }
 
     //GRID
     public void mostarListaTareas(ArrayList<Tarea> tareasCalendario) {
 
-        ListView<Tarea>listaTareas = controlador.obtenerListaTareas();
+        ListView<Tarea> listaTareas = controlador.obtenerListaTareas();
 
         listaTareas.setItems(FXCollections.observableArrayList(tareasCalendario));
 
@@ -177,9 +245,7 @@ public class GUIVista {
                 super.updateItem(tarea, empty);
                 if (empty || tarea == null) {
                     setText(null);
-                } else
-
-                {
+                } else {
                     setText("Tarea:" + "\n" + "Título: " + tarea.obtenerTitulo() + "\n" +
                             "Descripción: " + tarea.obtenerDescripcion() + "\n" +
                             "Fecha de Inicio: " + tarea.obtenerFechaInicio() + "\n" +
@@ -195,21 +261,18 @@ public class GUIVista {
             if (tareaSeleccionada != null) {
                 mostrarDetallesTarea(tareaSeleccionada);
             }
+
         });
     }
 
 
     //GRID / LISTA
-    public Scene gridlayout(ListView<Tarea> listaTareas){
+    public Scene gridlayout(ListView<Tarea> listaTareas) {
 
         VBox layout = new VBox(10);
         layout.setPadding(new Insets(10));
 
-        layout.getChildren().addAll(tituloLabel, tituloField, descripcionLabel, descripcionField, fechaInicioLabel,
-                fechaInicioPicker, horarioInicioLabel, horarioInicioTextField, minutosInicioTextField,
-                fechaVencimientoLabel, fechaVencimientoSinHoraPicker, horarioVencimientoLabel,
-                horarioVencimientoTextField, minutosVencimientoTextField, agregarTareaButton, agregarEventoButton,
-                agregarTareaDiaCompletoButton, listaTareas);
+        layout.getChildren().addAll(agregarTareaButton,agregarEventoButton,listaTareas);
 
 
         Scene scene = new Scene(layout, 300, 400);
@@ -219,7 +282,7 @@ public class GUIVista {
     }
 
 
-    public Button agregarAlarma(){
+    public Button agregarAlarma() {
 
         Button agregarAlarmaButton = new Button("Agregar alarma");
         agregarAlarmaButton.setOnAction(e -> {
@@ -269,5 +332,4 @@ public class GUIVista {
             fechaVencimientoSinHoraPicker.setValue(null);
         }
     }
-
 }
