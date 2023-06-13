@@ -208,20 +208,20 @@ public class GUIVista {
 
         agregarTareaDiaCompletoButton.setOnAction(e -> {
 
-            String titulo = tituloField.getText();
-            if (titulo.isEmpty()) {
-                titulo = tareaDiaCompleto.obtenerTitulo();
-            }
+                    String titulo = tituloField.getText();
+                    if (titulo.isEmpty()) {
+                        titulo = tareaDiaCompleto.obtenerTitulo();
+                    }
 
-            String descripcion = descripcionField.getText();
-            if (descripcion.isEmpty()) {
-                descripcion = tareaDiaCompleto.obtenerDescripcion();
-            }
+                    String descripcion = descripcionField.getText();
+                    if (descripcion.isEmpty()) {
+                        descripcion = tareaDiaCompleto.obtenerDescripcion();
+                    }
 
-            LocalDate fechaInicio = fechaInicioPicker.getValue();
-            controlador.agregarTarea(new TareaDiaCompleto(titulo, descripcion, fechaInicio));
-            limpiarCampos();
-        });
+                    LocalDate fechaInicio = fechaInicioPicker.getValue();
+                    controlador.agregarTarea(new TareaDiaCompleto(titulo, descripcion, fechaInicio));
+                limpiarCampos();
+                });
 
     }
     public void ingresarEvento(){
