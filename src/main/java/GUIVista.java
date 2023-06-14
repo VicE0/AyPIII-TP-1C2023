@@ -8,7 +8,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -173,6 +172,15 @@ public class GUIVista {
         this.controlador = controlador;
     }
 
+    public Scene Escena() {
+
+        agregarTareaButton.setOnAction(e -> mostrarVentanaAgregarTarea());
+        agregarEventoButton.setOnAction(e -> mostrarVentanaAgregarEvento());
+        ingresarTareaConVencimiento();
+        ingresarTareaDiaCompleto();
+        ingresarEvento();
+        return gridlayout(controlador.obtenerListaTareas(), controlador.obtenerListaEventos());
+    }
 
     public void mostrarCalendarioCompleto(Stage primaryStage) {
 
@@ -209,7 +217,20 @@ public class GUIVista {
 
         VBox mensajeBox = new VBox(10);
         mensajeBox.setAlignment(Pos.CENTER);
-        mensajeBox.getChildren().addAll(instruccionesLabel, importanteLabel,tareasLabel, eventosLabel, tareasYeventosLabel);
+        Button buttonTarea = new Button("Agregar Tarea");
+        Button buttonEvento = new Button("Agregar Evento");
+        buttonTarea.setOnAction(e->{
+           mostrarVentanaAgregarTarea();
+        });
+        buttonEvento.setOnAction(e ->{
+            mostrarVentanaAgregarEvento();
+        });
+        agregarTareaButton.setOnAction(e -> mostrarVentanaAgregarTarea());
+        agregarEventoButton.setOnAction(e -> mostrarVentanaAgregarEvento());
+        ingresarTareaConVencimiento();
+        ingresarTareaDiaCompleto();
+        ingresarEvento();
+        mensajeBox.getChildren().addAll(instruccionesLabel, importanteLabel,tareasLabel, eventosLabel, tareasYeventosLabel,buttonTarea,buttonEvento);
 
 
         GridPane root = new GridPane();
@@ -227,15 +248,7 @@ public class GUIVista {
     }
 
 
-    public Scene Escena() {
 
-        agregarTareaButton.setOnAction(e -> mostrarVentanaAgregarTarea());
-        agregarEventoButton.setOnAction(e -> mostrarVentanaAgregarEvento());
-        ingresarTareaConVencimiento();
-        ingresarTareaDiaCompleto();
-        ingresarEvento();
-        return gridlayout(controlador.obtenerListaTareas(), controlador.obtenerListaEventos());
-    }
 
     private void mostrarVentanaAgregarTarea() {
         Stage ventanaAgregarTarea = new Stage();
@@ -417,6 +430,11 @@ public class GUIVista {
                 minutosVencimiento = Integer.parseInt(minutosVencimientoText);
 
             } catch (NumberFormatException ex) {
+                Alert alertaError = new Alert(Alert.AlertType.ERROR);
+                alertaError.setTitle("Error");
+                alertaError.setHeaderText("Se produjo un error al agregar la tarea");
+                alertaError.setContentText("Por favor, intentalo nuevamente");
+                alertaError.showAndWait();
                 horarioInicioTextField.clear();
                 minutosInicioTextField.clear();
                 horarioVencimientoTextField.clear();
@@ -425,6 +443,12 @@ public class GUIVista {
             }
 
             controlador.agregarTarea(new TareaConVencimiento(titulo, descripcion, fechaInicioPicker.getValue().atTime(horaInicio, minutosInicio), fechaVencimientoSinHoraPicker.getValue().atTime(horaVencimiento, minutosVencimiento)));
+            Alert mensaje = new Alert(Alert.AlertType.INFORMATION);
+            mensaje.setTitle("Tarea agregada");
+            mensaje.setHeaderText(null);
+            mensaje.setContentText("La tarea se ha agregado correctamente.");
+            mensaje.showAndWait();
+
             limpiarCampos();
         });
 
@@ -448,7 +472,12 @@ public class GUIVista {
 
                     LocalDate fechaInicio = fechaInicioPicker.getValue();
                     controlador.agregarTarea(new TareaDiaCompleto(titulo, descripcion, fechaInicio));
-                limpiarCampos();
+                    Alert mensaje = new Alert(Alert.AlertType.INFORMATION);
+                    mensaje.setTitle("Tarea agregada");
+                    mensaje.setHeaderText(null);
+                    mensaje.setContentText("La tarea se ha agregado correctamente.");
+                    mensaje.showAndWait();
+                    limpiarCampos();
                 });
 
     }
@@ -497,6 +526,11 @@ public class GUIVista {
                 minutosFin = Integer.parseInt(minutosFinText);
 
             } catch (NumberFormatException ex) {
+                Alert alertaError = new Alert(Alert.AlertType.ERROR);
+                alertaError.setTitle("Error");
+                alertaError.setHeaderText("Se produjo un error al agregar el evento");
+                alertaError.setContentText("Por favor, intentalo nuevamente");
+                alertaError.showAndWait();
                 horarioInicioTextField.clear();
                 minutosInicioTextField.clear();
                 horarioVencimientoTextField.clear();
@@ -510,23 +544,52 @@ public class GUIVista {
             if (tipo == "Evento dia completo"){
                 ConstructorEventos eventoDiaCompletoConstruido = new ConstructorEventosDiaCompleto(titulo, descripcion, fechaInicioPicker.getValue().atTime(horaInicio, minutosInicio), fechaFinSinHoraPicker.getValue().atTime(horaFin, minutosFin), intervalo,repeticiones);
                 controlador.agregarEvento(eventoDiaCompletoConstruido);
+                Alert mensaje = new Alert(Alert.AlertType.INFORMATION);
+                mensaje.setTitle("Evento agregado");
+                mensaje.setHeaderText(null);
+                mensaje.setContentText("El evento se ha agregado correctamente.");
+                mensaje.showAndWait();
+                limpiarCampos();
             }
             if (tipo == "Evento Diario") {
                 ConstructorEventos eventoDiarioConstruido = new ConstructorEventosDiarios(titulo, descripcion, fechaInicioPicker.getValue().atTime(horaInicio, minutosInicio), fechaFinSinHoraPicker.getValue().atTime(horaFin, minutosFin), ocurrencias, repeticiones, intervalo);
-
                 controlador.agregarEvento(eventoDiarioConstruido);
+                Alert mensaje = new Alert(Alert.AlertType.INFORMATION);
+                mensaje.setTitle("Evento agregado");
+                mensaje.setHeaderText(null);
+                mensaje.setContentText("El evento se ha agregado correctamente.");
+                mensaje.showAndWait();
+                limpiarCampos();
             }
             if (tipo == "Evento Semanal"){
                 ConstructorEventos eventoSemanalConstruido = new ConstructorEventosSemanales(titulo,descripcion,fechaInicioPicker.getValue().atTime(horaInicio,minutosInicio),fechaFinSinHoraPicker.getValue().atTime(horaFin,minutosFin),ocurrencias,repeticiones, Set.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY));
                 controlador.agregarEvento(eventoSemanalConstruido);
+                Alert mensaje = new Alert(Alert.AlertType.INFORMATION);
+                mensaje.setTitle("Evento agregado");
+                mensaje.setHeaderText(null);
+                mensaje.setContentText("El evento se ha agregado correctamente.");
+                mensaje.showAndWait();
+                limpiarCampos();
             }
             if (tipo == "Evento Mensual"){
                 ConstructorEventos eventoMensualConstruido = new ConstructorEventosMensuales(titulo, descripcion, fechaInicioPicker.getValue().atTime(horaInicio, minutosInicio), fechaFinSinHoraPicker.getValue().atTime(horaFin, minutosFin), ocurrencias, repeticiones, intervalo);
                 controlador.agregarEvento(eventoMensualConstruido);
+                Alert mensaje = new Alert(Alert.AlertType.INFORMATION);
+                mensaje.setTitle("Evento agregado");
+                mensaje.setHeaderText(null);
+                mensaje.setContentText("El evento se ha agregado correctamente.");
+                mensaje.showAndWait();
+                limpiarCampos();
             }
             if (tipo == "Evento Anual"){
                 ConstructorEventos eventoAnualConstruido = new ConstructorEventosAnuales(titulo, descripcion, fechaInicioPicker.getValue().atTime(horaInicio, minutosInicio), fechaFinSinHoraPicker.getValue().atTime(horaFin, minutosFin), ocurrencias, repeticiones, intervalo);
                 controlador.agregarEvento(eventoAnualConstruido);
+                Alert mensaje = new Alert(Alert.AlertType.INFORMATION);
+                mensaje.setTitle("Evento agregado");
+                mensaje.setHeaderText(null);
+                mensaje.setContentText("El evento se ha agregado correctamente.");
+                mensaje.showAndWait();
+                limpiarCampos();
             }
         });
     }
