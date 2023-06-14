@@ -1,6 +1,12 @@
+
+import javafx.collections.FXCollections;
 import javafx.geometry.HPos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.TextStyle;
@@ -47,10 +53,12 @@ public class GUIControlador {
     }
 
     public ListView<Tarea> obtenerListaTareas() {
+        this.listaTareas.setItems(FXCollections.observableArrayList(calendario.obtenerTareas()));
         return this.listaTareas;
     }
 
     public ListView<Evento> obtenerListaEventos() {
+        this.listaEventos.setItems(FXCollections.observableArrayList(calendario.obtenerListaEventosTotales()));
         return this.listaEventos;
     }
 
@@ -70,6 +78,7 @@ public class GUIControlador {
     public void agregarTarea(Tarea tarea) {
         calendario.agregarTarea(tarea);
         vista.mostarListaTareas(calendario.obtenerTareas());
+        Calendario.guardarCalendarioEnArchivo(calendario, "calendario.json");
 //
 //        vista.gridlayout(listaTareas);
 //        vista.limpiarCampos();
@@ -82,6 +91,7 @@ public class GUIControlador {
         calendario.agregarEventosACalendario(proximosEventos);
         listaEventos.getItems().addAll(calendario.obtenerListaEventosTotales());
         vista.mostarListaEventos(calendario.obtenerListaEventosTotales());
+        Calendario.guardarCalendarioEnArchivo(calendario,"calendario.json");
     }
 
     public void tareaAgregarAlarma(Tarea tarea, Alarma alarma) {
@@ -277,7 +287,6 @@ public class GUIControlador {
         return eventosDia;
     }
 
-
     private List<Tarea> obtenerTareasDelDia(LocalDate fecha) {
         List<Tarea> TareasDia = new ArrayList<>();
 
@@ -297,6 +306,18 @@ public class GUIControlador {
         alerta.setHeaderText(null);
         alerta.setContentText(contenido);
         alerta.showAndWait();
+    }
+
+    public void iniciarAplicacion() {
+        calendario = Calendario.cargarCalendarioDesdeArchivo("calendario.json");
+        if (calendario == null) {
+            // Si no se pudo cargar desde el archivo, crea un nuevo calendario
+            calendario = new Calendario();
+        }
+    }
+
+    public void cerrarAplicacion() {
+        Calendario.guardarCalendarioEnArchivo(calendario, "calendario.json");
     }
 
 

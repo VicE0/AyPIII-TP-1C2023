@@ -681,7 +681,6 @@ public class GUIVista {
 
 
 
-
     //POP-UP
     public void mostrarDetallesTarea(Tarea tarea) {
         Stage stage = new Stage();
