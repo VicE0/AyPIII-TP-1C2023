@@ -14,7 +14,9 @@ public class GUIControlador {
     private Calendario calendario;
     private Tarea tareaDiaCompleto;
     private Tarea tareaConVencimiento;
+    private CreadorDeEventos eventoDiarioCreado;
 
+    private Evento eventoDiario;
     private GUIVista vista;
     private ListView<Tarea> listaTareas;
     private ListView<Evento> listaEventos;
@@ -37,7 +39,7 @@ public class GUIControlador {
 
         this.mesAnioActualLabel = mesAnioActualLabel;
         this.calendarioGrid = calendarioGrid;
-
+        this.eventoDiarioCreado = new CreadorEventosDiarios();
         this.mesAnioActual = YearMonth.now();
 ;
 
@@ -59,7 +61,7 @@ public class GUIControlador {
         return this.tareaConVencimiento;
     }
 
-
+    public Evento obtenerObjetoEventoDiario(){ return this.eventoDiario;}
     public void agregarTarea(Tarea tarea) {
         calendario.agregarTarea(tarea);
         vista.mostarListaTareas(calendario.obtenerTareas());
@@ -67,8 +69,17 @@ public class GUIControlador {
 //        vista.gridlayout(listaTareas);
 //        vista.limpiarCampos();
     }
-    public void agregarEvento(Evento evento){
-        calendario.agregarEvento(evento);
+    public void agregarEvento(ConstructorEventos constructorEventos){
+        Evento eventoDiarioFin  = eventoDiarioCreado.crearEvento(constructorEventos);
+        ArrayList<Evento> proximosEventos = calendario.proximosEventos(constructorEventos);
+        calendario.agregarEventosACalendario(proximosEventos);
+        listaEventos.getItems().addAll(calendario.obtenerListaEventosTotales());
+    }
+
+    public void tareaAgregarAlarma(Tarea tarea, Alarma alarma){
+        tarea.agregarAlarma(alarma);
+
+
     }
 
     public void mostrarMesAnterior() {
