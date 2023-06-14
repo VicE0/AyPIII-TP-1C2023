@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -191,13 +192,35 @@ public class GUIVista {
         headerBox.getChildren().addAll(mesAnteriorBoton, mesAnioActualLabel, mesSiguienteBoton);
 
 
+        Label instruccionesLabel = new Label("Haz clic en un día para obtener informacion sobre los eventos y tareas creados");
+        instruccionesLabel.setStyle("-fx-font-size: 14px;");
+
+        Label importanteLabel = new Label("IMPORTANTE: Los eventos y tareas se cargan exitosamente, sin embargo hay que refrescar el mes (avanzando o retrocediendo el mes) para ver el color");
+        importanteLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: darkslategrey;");
+
+        Label tareasLabel = new Label("Las tareas son resaltadas con celeste");
+        tareasLabel.setStyle("-fx-font-weight: bold; -fx-background-color: lightblue;");
+
+        Label eventosLabel = new Label("Los eventos son resaltados con naranja");
+        eventosLabel.setStyle("-fx-font-weight: bold; -fx-background-color: lightsalmon;");
+
+        Label tareasYeventosLabel = new Label("Las tareas y eventos en un mismo dia son resaltadas con verde");
+        tareasYeventosLabel.setStyle("-fx-font-weight: bold; -fx-background-color: greenyellow;");
+
+        VBox mensajeBox = new VBox(10);
+        mensajeBox.setAlignment(Pos.CENTER);
+        mensajeBox.getChildren().addAll(instruccionesLabel, importanteLabel,tareasLabel, eventosLabel, tareasYeventosLabel);
+
+
         GridPane root = new GridPane();
         root.setPadding(new Insets(10));
         root.setAlignment(Pos.TOP_CENTER);
         root.add(headerBox, 0, 0);
         root.add(calendarioGrid, 0, 1);
+        root.add(mensajeBox, 0, 2); // Agregar el mensaje debajo del calendario
 
-        Scene scene = new Scene(root, 500, 500);
+
+        Scene scene = new Scene(root, 955, 550);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Calendario");
         primaryStage.show();
@@ -253,18 +276,20 @@ public class GUIVista {
         VBox layout = new VBox(5);
         layout.setPadding(new Insets(5));
         Button conIntervalo = new Button("Horario absoluto");
+
         conIntervalo.setOnAction(e-> {
-            mostrarVentanaAgregarAlarmaFechaAbsouluta(tarea, null);
+            mostrarVentanaAgregarAlarmaFechaAbsouluta(tarea, evento);
                 });
+
         Button conHoraAbsoluto = new Button("Con Intervalo");
         conHoraAbsoluto.setOnAction(e->{
-            mostrarVentanaAgregarAlarmaIntervalo(tarea,null);
+            mostrarVentanaAgregarAlarmaIntervalo(tarea, evento);
         });
+
         layout.getChildren().addAll(conIntervalo,conHoraAbsoluto);
         Scene scene = new Scene(layout);
         ventanaAgregarEvento.setScene(scene);
         ventanaAgregarEvento.show();
-
 
     }
 
@@ -282,8 +307,17 @@ public class GUIVista {
             efecto = null;
         }
         agregar.setOnAction(e -> {
-            Alarma alarma = new AlarmaFechaAbsoluta(tarea.obtenerFechaInicio(), efecto);
-            controlador.tareaAgregarAlarma(tarea,alarma);
+
+            if (evento != null) {
+
+                Alarma alarma = new AlarmaFechaAbsoluta(evento.obtenerFechaInicio(), efecto);
+                controlador.eventoAgregarAlarma(evento, alarma);
+
+            } else {
+
+                Alarma alarma = new AlarmaFechaAbsoluta(tarea.obtenerFechaInicio(), efecto);
+                controlador.tareaAgregarAlarma(tarea, alarma);
+            }
         });
         layout.getChildren().addAll(tipoAlarmaLabel,tipoAlarmaChoiceBox,fechaAlarmaLabel,fechaAlarma,horasYMinutosLabel,horaInicioAlarmaTextField,minutosInicioAlarmaTextField,agregar);
         Scene scene = new Scene(layout);
@@ -298,12 +332,16 @@ public class GUIVista {
         layout.setPadding(new Insets(5));
         Button agregar = new Button("Agregar");
         int intervalo = 0;
+
         try {
+
             intervalo = Integer.parseInt(intervaloTextField.getText());
+
         }catch (NumberFormatException e){
             intervaloAlarmaTextField.clear();
         }
         Efecto efecto;
+
         if (tipoAlarmaChoiceBox.getValue() == "Notificacion"){
             efecto = new Notificacion();
         } else {
@@ -311,8 +349,17 @@ public class GUIVista {
         }
         int finalIntervalo = intervalo;
         agregar.setOnAction(e -> {
-            Alarma alarma = new AlarmaIntervalo(tarea.obtenerFechaInicio(), finalIntervalo,efecto);
-            controlador.tareaAgregarAlarma(tarea,alarma);
+
+            if (evento != null) {
+
+                Alarma alarma = new AlarmaIntervalo(evento.obtenerFechaInicio(), finalIntervalo, efecto);
+                controlador.eventoAgregarAlarma(evento, alarma);
+
+            } else {
+
+                Alarma alarma = new AlarmaIntervalo(tarea.obtenerFechaInicio(), finalIntervalo, efecto);
+                controlador.tareaAgregarAlarma(tarea, alarma);
+            }
         });
 
         layout.getChildren().addAll(tipoAlarmaLabel,tipoAlarmaChoiceBox,intervaloAlarmaLabel,intervaloAlarmaTextField,agregar);
@@ -407,6 +454,7 @@ public class GUIVista {
     }
     public void ingresarEvento(){
         Evento eventoDiario = controlador.obtenerObjetoEventoDiario();
+
         agregarEventoTerminadoButton.setOnAction(e ->{
             String titulo = tituloField.getText();
             if (titulo.isEmpty()){
@@ -419,7 +467,7 @@ public class GUIVista {
             }
             String horarioInicioText = horarioInicioTextField.getText();
 //            if (horarioInicioText.isEmpty()){
-//                horarioInicioText = Integer.toString(tareaConVencimeitno.obtenerFechaInicio().getHour());
+//                horarioInicioText = Integer.toString(eventoDiario.obtenerFechaInicio().getHour());
 //            }
 
             String minutosInicioText = minutosInicioTextField.getText();
@@ -480,15 +528,6 @@ public class GUIVista {
                 ConstructorEventos eventoAnualConstruido = new ConstructorEventosAnuales(titulo, descripcion, fechaInicioPicker.getValue().atTime(horaInicio, minutosInicio), fechaFinSinHoraPicker.getValue().atTime(horaFin, minutosFin), ocurrencias, repeticiones, intervalo);
                 controlador.agregarEvento(eventoAnualConstruido);
             }
-//            LocalDate fechaInicio = fechaInicioPicker.getValue();
-//            LocalDate fechaFin = fechaFinSinHoraPicker.getValue();
-//
-//            ConstructorEventos eventoDiarioConstruido = new ConstructorEventosDiarios(titulo,descripcion, fechaInicio, fechaFin, );
-//            Evento eventoDiario = eventoDiarioCreado.crearEvento(eventoDiarioConstruido);
-
-//En los tests se encuentra la logica para agregar los eventos, el problema esta que la fecha de inicio picker y la fecha fin picker funcionan con LocalDate
-// No me hago una idea de como agregar correctamente el paramtero :[
-//Se deberia hacer como las tareas que se puede agregar manualmente el evento diario / semanal /mensual etc, segun la cantidad de clases de eventos que hay
         });
     }
 
@@ -522,6 +561,40 @@ public class GUIVista {
             Tarea tareaSeleccionada = listaTareas.getSelectionModel().getSelectedItem();
             if (tareaSeleccionada != null) {
                 mostrarDetallesTarea(tareaSeleccionada);
+            }
+
+        });
+    }
+
+    public void mostarListaEventos(ArrayList<Evento> eventosCalendario) {
+
+        ListView<Evento> listaEventos = controlador.obtenerListaEventos();
+
+
+        listaEventos.setItems(FXCollections.observableArrayList(eventosCalendario));
+
+        listaEventos.setCellFactory(parametro -> new ListCell<>() {
+            @Override
+
+            protected void updateItem(Evento evento, boolean empty) {
+                super.updateItem(evento, empty);
+                if (empty || evento == null) {
+                    setText(null);
+                } else {
+                    setText("Evento:" + "\n" + "Título: " + evento.obtenerTitulo() + "\n" +
+                            "Descripción: " + evento.obtenerDescripcion() + "\n" +
+                            "Fecha de Inicio: " + evento.obtenerFechaInicio() + "\n" +
+                            "Fecha Fin: " + evento.obtenerFechaFin() + "\n" +
+                            "Tipo de repeticion: " + evento.obtenerTipoRepeticion()+ "\n" +
+                            "Alamas:" + evento.obtenerAlarmasEvento() + "\n" ) ;
+                }
+            }
+        });
+
+        listaEventos.setOnMouseClicked(event -> {
+            Evento eventoSeleccionado = listaEventos.getSelectionModel().getSelectedItem();
+            if (eventoSeleccionado != null) {
+                mostrarDetallesEvento(eventoSeleccionado);
             }
 
         });
@@ -575,6 +648,34 @@ public class GUIVista {
         stage.setScene(scene);
         stage.show();
     }
+
+    //POP-UP
+    public void mostrarDetallesEvento(Evento evento) {
+        Stage stage = new Stage();
+        stage.setTitle("Detalles de la Tarea");
+
+        VBox layout = new VBox(10);
+        layout.setPadding(new Insets(10));
+
+        Label tituloLabel = new Label("Título: " + evento.obtenerTitulo());
+        Label descripcionLabel = new Label("Descripción: " + evento.obtenerDescripcion());
+        Label fechaInicioLabel = new Label("Fecha de Inicio: " + evento.obtenerFechaInicio());
+        Label fechaFinLabel = new Label("Fecha Final: " + evento.obtenerFechaFin());
+        Label tipoRepeticionLabel = new Label("Tipo de repeticion: " + evento.obtenerTipoRepeticion());
+        Label alarmas = new Label("Alarmas" + evento.obtenerAlarmasEvento());
+
+        agregarAlarmaButton.setOnAction(e ->{
+            mostrarVentanaAgregarAlarma(null,evento);
+        });
+
+        layout.getChildren().addAll(tituloLabel, descripcionLabel, fechaInicioLabel, fechaVencimientoLabel,
+                fechaFinLabel,tipoRepeticionLabel,alarmas,agregarAlarmaButton);
+
+        Scene scene = new Scene(layout);
+        stage.setScene(scene);
+        stage.show();
+    }
+
 
 
     public void limpiarCampos() {

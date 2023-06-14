@@ -9,8 +9,8 @@ public class GUI extends Application {
     public void start(Stage primaryStage) {
 
         GridPane calendarioGrid = new GridPane();
-        calendarioGrid.setHgap(10);
-        calendarioGrid.setVgap(10);
+        calendarioGrid.setHgap(50);
+        calendarioGrid.setVgap(40);
 
         Label mesAnioActualLabel = new Label();
 
