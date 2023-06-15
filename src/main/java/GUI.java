@@ -16,7 +16,7 @@ public class GUI extends Application {
 
         Calendario calendario = new Calendario();
 
-        GUIVista vista = new GUIVista(primaryStage, calendarioGrid, mesAnioActualLabel);
+        GUIVista vista = new GUIVista(calendarioGrid, mesAnioActualLabel);
         GUIControlador controlador = new GUIControlador(calendario, vista, calendarioGrid, mesAnioActualLabel);
 
         //Lee desde el archivo

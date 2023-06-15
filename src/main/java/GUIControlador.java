@@ -16,9 +16,9 @@ public class GUIControlador {
     private Calendario calendario;
     private final Tarea tareaDiaCompleto;
     private final Tarea tareaConVencimiento;
-    private final CreadorDeEventos eventoDiarioCreado;
 
-    private final Evento eventoDiario;
+
+
     private final GUIVista vista;
     private final ListView<Tarea> listaTareas;
     private final ListView<Evento> listaEventos;
@@ -43,11 +43,11 @@ public class GUIControlador {
 
         this.tareaDiaCompleto = new TareaDiaCompleto();
         this.tareaConVencimiento = new TareaConVencimiento();
-        this.eventoDiario = new EventoDiario();
+
 
         this.mesAnioActualLabel = mesAnioActualLabel;
         this.calendarioGrid = calendarioGrid;
-        this.eventoDiarioCreado = new CreadorEventosDiarios();
+
         this.mesAnioActual = YearMonth.now();
 
     }
@@ -70,24 +70,21 @@ public class GUIControlador {
         return this.tareaConVencimiento;
     }
 
-    public Evento obtenerObjetoEventoDiario() {
-        return this.eventoDiario;
-    }
 
 
     public void agregarTarea(Tarea tarea) {
         calendario.agregarTarea(tarea);
-        vista.mostrarListaTareas(calendario.obtenerTareas());
+        vista.mostrarListaTareasPorLista();
         Calendario.guardarCalendarioEnArchivo(calendario, "calendario.json");
     }
 
 
     public void agregarEvento(ConstructorEventos constructorEventos) {
-        Evento eventoDiarioFin = eventoDiarioCreado.crearEvento(constructorEventos);
+
         ArrayList<Evento> proximosEventos = calendario.proximosEventos(constructorEventos);
         calendario.agregarEventosACalendario(proximosEventos);
         listaEventos.getItems().addAll(calendario.obtenerListaEventosTotales());
-        vista.mostarListaEventos(calendario.obtenerListaEventosTotales());
+        vista.mostarListaEventos();
         Calendario.guardarCalendarioEnArchivo(calendario,"calendario.json");
     }
 
