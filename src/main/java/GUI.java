@@ -27,16 +27,18 @@ public class GUI extends Application {
         Stage interfazCalendario= new Stage();
         controlador.crearCalendario();
 
-        vista.mostrarCalendarioCompleto(interfazCalendario);
-
-        Stage interfazIngresoDatos = new Stage();
-        interfazIngresoDatos.setTitle("Ventana de ingreso de datos");
-        interfazIngresoDatos.setScene(vista.Escena());
-        interfazIngresoDatos.show();
+        vista.mostrarCalendarioCompleto(interfazCalendario, controlador.obtenerListaTareas(), controlador.obtenerListaEventos());
 
         //Cuando se cierra, guarda todo en el archivo
         primaryStage.setOnCloseRequest(event -> controlador.cerrarAplicacion());
 
 
     }
+
+
+    //Logica implementada en el calendario completo, funciona, pero queda algo desprolijo
+//        Stage interfazIngresoDatos = new Stage();
+//        interfazIngresoDatos.setTitle("Ventana de ingreso de datos");
+//        interfazIngresoDatos.setScene(vista.Escena());
+//        interfazIngresoDatos.show();
 }

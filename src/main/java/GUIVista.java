@@ -156,7 +156,7 @@ public class GUIVista {
     }
 
 
-    public void mostrarCalendarioCompleto(Stage primaryStage) {
+    public void mostrarCalendarioCompleto(Stage primaryStage, ListView<Tarea> listaTareas, ListView<Evento> listEventos) {
 
         HBox headerBox = new HBox(10);
 
@@ -203,7 +203,9 @@ public class GUIVista {
         ingresarTareaConVencimiento();
         ingresarTareaDiaCompleto();
         ingresarEvento();
-        mensajeBox.getChildren().addAll(instruccionesLabel, importanteLabel, importanteLabel2,tareasLabel, eventosLabel, tareasYeventosLabel,buttonTarea,buttonEvento);
+
+
+        mensajeBox.getChildren().addAll(instruccionesLabel, importanteLabel, importanteLabel2,tareasLabel, eventosLabel, tareasYeventosLabel,buttonTarea,buttonEvento, listaTareas, listEventos);
 
         ListView<Evento> listaEventosMes = new ListView<>();
         ListView<Tarea> listaTareasMes = new ListView<>();
@@ -220,7 +222,7 @@ public class GUIVista {
         VBox contenedorListas = new VBox(10);
         contenedorListas.setAlignment(Pos.CENTER);
         contenedorListas.setPadding(new Insets(10));
-        contenedorListas.getChildren().addAll(new Label("Eventos del Mes"), listaEventosMes, new Label("Tareas del Mes"), listaTareasMes);
+        contenedorListas.getChildren().addAll(new Label("Eventos"), listaEventosMes, new Label("Tareas"), listaTareasMes);
 
         GridPane root = new GridPane();
         root.setPadding(new Insets(10));
@@ -239,7 +241,7 @@ public class GUIVista {
         root.add(contenedorListas, 1, 0, 1, GridPane.REMAINING); //listas de eventos y tareas
 
 
-        Scene scene = new Scene(root, 955, 550);
+        Scene scene = new Scene(root, 955, 700);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Calendario");
         primaryStage.show();
@@ -651,10 +653,6 @@ public class GUIVista {
     }
 
 
-
-
-
-
     //POP-UP
     public void mostrarDetallesTarea(Tarea tarea) {
         Stage stage = new Stage();
@@ -755,31 +753,30 @@ public class GUIVista {
         });
     }
 
-
-//    Codigo de ventanas emergente para agregar evento/tarea, sirve, pero queda algo desprolijo
-
-    public Scene gridlayout(ListView<Tarea> listaTareas, ListView<Evento> listEventos) {
-
-        VBox layout = new VBox(10);
-        layout.setPadding(new Insets(10));
-
-        layout.getChildren().addAll(agregarTareaButton,agregarEventoButton,listaTareas, listEventos);
-
-
-        Scene scene = new Scene(layout, 300, 400);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-        return scene;
-    }
-
-
-    public Scene Escena() {
-
-        agregarTareaButton.setOnAction(e -> mostrarVentanaAgregarTarea());
-        agregarEventoButton.setOnAction(e -> mostrarVentanaAgregarEvento());
-        ingresarTareaConVencimiento();
-        ingresarTareaDiaCompleto();
-        ingresarEvento();
-        return gridlayout(controlador.obtenerListaTareas(), controlador.obtenerListaEventos());
-    }
+////    Codigo de ventanas emergente para agregar evento/tarea, sirve, pero queda algo desprolijo
+//
+//    public Scene gridlayout(ListView<Tarea> listaTareas, ListView<Evento> listEventos) {
+//
+//        VBox layout = new VBox(10);
+//        layout.setPadding(new Insets(10));
+//
+//        layout.getChildren().addAll(agregarTareaButton,agregarEventoButton,listaTareas, listEventos);
+//
+//
+//        Scene scene = new Scene(layout, 300, 400);
+//        primaryStage.setScene(scene);
+//        primaryStage.show();
+//        return scene;
+//    }
+//
+//
+//    public Scene Escena() {
+//
+//        agregarTareaButton.setOnAction(e -> mostrarVentanaAgregarTarea());
+//        agregarEventoButton.setOnAction(e -> mostrarVentanaAgregarEvento());
+//        ingresarTareaConVencimiento();
+//        ingresarTareaDiaCompleto();
+//        ingresarEvento();
+//        return gridlayout(controlador.obtenerListaTareas(), controlador.obtenerListaEventos());
+//    }
 }
