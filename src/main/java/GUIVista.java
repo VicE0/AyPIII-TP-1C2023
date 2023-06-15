@@ -11,79 +11,67 @@ import javafx.stage.Stage;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class GUIVista {
     private GUIControlador controlador;
 
-    private CreadorDeEventos eventoSemanalCreado;
-    private CreadorDeEventos eventoMensualCreado;
-    private CreadorDeEventos eventoAnualCreado;
-    private CreadorDeEventos eventoDiaCompletoCreado;
+    private final CreadorDeEventos eventoSemanalCreado;
+    private final CreadorDeEventos eventoMensualCreado;
+    private final CreadorDeEventos eventoAnualCreado;
+    private final CreadorDeEventos eventoDiaCompletoCreado;
 
 
-    private GridPane calendarioGrid;
-    private Label mesAnioActualLabel;
-    private Stage primaryStage;
+    private final GridPane calendarioGrid;
+    private final Stage primaryStage;
 
-    private Label tituloLabel;
-    private Label descripcionLabel;
-    private Label fechaInicioLabel;
-    private Label horarioInicioLabel;
-    private Label fechaVencimientoLabel;
-    private Label fechaFinLabel;
-    private Label horarioFinLabel;
-    private Label horarioVencimientoLabel;
-    private Label maxOcurrenciasPermitidasLabel;
-    private Label intervaloLabel;
+    private final Label mesAnioActualLabel;
+    private final Label tituloLabel;
+    private final Label descripcionLabel;
+    private final Label fechaInicioLabel;
+    private final Label horarioInicioLabel;
+    private final Label fechaVencimientoLabel;
+    private final Label fechaFinLabel;
+    private final Label horarioFinLabel;
+    private final Label horarioVencimientoLabel;
+    private final Label maxOcurrenciasPermitidasLabel;
+    private final Label intervaloLabel;
+    private final  Label tipoRepeticionLabel;
+    private final Label tipoAlarmaLabel;
+    private final Label tipoEventoLabel;
+    private final Label horasYMinutosLabel;
+    private final Label fechaAlarmaLabel;
+    private final Label intervaloAlarmaLabel;
 
-    private Label tipoRepeticionLabel;
+    private final Button agregarTareaButton;
+    private final Button agregarTareaConVencimientoButton;
+    private final Button agregarEventoButton;
+    private final Button agregarEventoTerminadoButton;
+    private final Button agregarTareaDiaCompletoButton;
+    private final Button agregarAlarmaButton;
 
-    private Button agregarTareaButton;
-    private Button agregarTareaConVencimientoButton;
-    private Button agregarEventoButton;
+    private final TextField intervaloAlarmaTextField;
+    private final TextField horaInicioAlarmaTextField;
+    private final TextField minutosInicioAlarmaTextField;
+    private final TextField tituloField;
+    private final TextField descripcionField;
+    private final TextField horarioInicioTextField;
+    private final TextField minutosInicioTextField;
+    private final TextField horarioVencimientoTextField;
+    private final TextField minutosVencimientoTextField;
+    private final TextField horarioFinTextField;
+    private final TextField minutosFinTextField;
+    private final TextField maxOcurrenciasPermitidasTextField;
+    private final TextField intervaloTextField;
 
-    private Button agregarEventoTerminadoButton;
-    private Button agregarTareaDiaCompletoButton;
+    private final DatePicker fechaInicioPicker;
+    private final DatePicker fechaVencimientoSinHoraPicker;
+    private final DatePicker fechaFinSinHoraPicker;
+    private final DatePicker fechaAlarma;
 
-    private Button agregarAlarmaButton;
-    private Label intervaloAlarmaLabel;
-    private TextField intervaloAlarmaTextField;
-    private Label fechaAlarmaLabel;
-    private DatePicker fechaAlarma;
-    private Label horasYMinutosLabel;
-    private TextField horaInicioAlarmaTextField;
-    private TextField minutosInicioAlarmaTextField;
-    private Label tipoAlarmaLabel;
-    private ChoiceBox <String> tipoAlarmaChoiceBox;
-
-
-
-    private TextField tituloField;
-    private TextField descripcionField;
-    private TextField horarioInicioTextField;
-    private TextField minutosInicioTextField;
-    private TextField horarioVencimientoTextField;
-    private TextField minutosVencimientoTextField;
-    private TextField horarioFinTextField;
-    private TextField minutosFinTextField;
-    private TextField maxOcurrenciasPermitidasTextField;
-    private TextField intervaloTextField;
-    private TextField diasSemanaRepeticionTextField;
-
-    private Label tipoEventoLabel;
-
-    private ChoiceBox<String> tipoEventoChoiceBox;
-    private DatePicker fechaInicioPicker;
-    private DatePicker fechaVencimientoSinHoraPicker;
-    private DatePicker fechaFinSinHoraPicker;
-
-    private ChoiceBox<Repeticion> tipoRepeticionChoiceBox;
-
-
+    private final ChoiceBox<Repeticion> tipoRepeticionChoiceBox;
+    private final ChoiceBox<String> tipoEventoChoiceBox;
+    private final ChoiceBox <String> tipoAlarmaChoiceBox;
 
     public GUIVista(Stage primaryStage, GridPane calendarioGrid, Label mesAnioActualLabel) {
 
@@ -167,15 +155,6 @@ public class GUIVista {
         this.controlador = controlador;
     }
 
-    public Scene Escena() {
-
-        agregarTareaButton.setOnAction(e -> mostrarVentanaAgregarTarea());
-        agregarEventoButton.setOnAction(e -> mostrarVentanaAgregarEvento());
-        ingresarTareaConVencimiento();
-        ingresarTareaDiaCompleto();
-        ingresarEvento();
-        return gridlayout(controlador.obtenerListaTareas(), controlador.obtenerListaEventos());
-    }
 
     public void mostrarCalendarioCompleto(Stage primaryStage) {
 
@@ -279,8 +258,8 @@ public class GUIVista {
                             "Descripción: " + evento.obtenerDescripcion() + "\n" +
                             "Fecha de Inicio: " + evento.obtenerFechaInicio() + "\n" +
                             "Fecha Fin: " + evento.obtenerFechaFin() + "\n" +
-                            "Tipo de repeticion: " + evento.obtenerTipoRepeticion()+ "\n" +
-                            "Alamas:" + evento.obtenerAlarmasEvento() + "\n" ) ;
+                            "Tipo de repeticion: " + evento.obtenerTipoRepeticion() + "\n" +
+                            "Alamas:" + evento.obtenerAlarmasEvento() + "\n");
                 }
             }
         });
@@ -307,7 +286,7 @@ public class GUIVista {
                             "Fecha de Vencimiento: " + tarea.obtenerFechaVencimiento() + "\n" +
                             "Esta completa:" + tarea.estaCompleta() + "\n" +
                             "Es de dia completo: " + (tarea.getClass()) + "\n" +
-                            "Alamas:" + tarea.obtenerAlarmas() + "\n" ) ;
+                            "Alamas:" + tarea.obtenerAlarmas() + "\n");
                 }
             }
         });
@@ -403,7 +382,7 @@ public class GUIVista {
                 Alert alertaError = new Alert(Alert.AlertType.ERROR);
             }
             if (evento != null) {
-                if (tipoAlarmaChoiceBox.getValue() == "Notificacion"){
+                if (Objects.equals(tipoAlarmaChoiceBox.getValue(), "Notificacion")){
                     Alarma alarma = new AlarmaFechaAbsoluta(fechaAlarma.getValue().atTime(horaInicio,minutosInicio), notificacion);
                     controlador.eventoAgregarAlarma(evento, alarma);
                 }
@@ -411,7 +390,7 @@ public class GUIVista {
 
 
             } else {
-                if (tipoAlarmaChoiceBox.getValue() == "Notificacion") {
+                if (Objects.equals(tipoAlarmaChoiceBox.getValue(), "Notificacion")) {
                     Alarma alarma = new AlarmaFechaAbsoluta(fechaAlarma.getValue().atTime(horaInicio,minutosInicio), notificacion);
                     controlador.tareaAgregarAlarma(tarea, alarma);
                 }
@@ -440,7 +419,7 @@ public class GUIVista {
         }
         Efecto efecto;
 
-        if (tipoAlarmaChoiceBox.getValue() == "Notificacion"){
+        if (Objects.equals(tipoAlarmaChoiceBox.getValue(), "Notificacion")){
             efecto = new Notificacion();
         } else {
             efecto = null;
@@ -482,26 +461,13 @@ public class GUIVista {
                 descripcion = tareaConVencimeitno.obtenerDescripcion();
             }
 
-
             String horarioInicioText = horarioInicioTextField.getText();
-//            if (horarioInicioText.isEmpty()){
-//                horarioInicioText = Integer.toString(tareaConVencimeitno.obtenerFechaInicio().getHour());
-//            }
 
             String minutosInicioText = minutosInicioTextField.getText();
-//            if (minutosInicioText.isEmpty()){
-//                minutosInicioText = Integer.toString(tareaConVencimeitno.obtenerFechaInicio().getMinute());
-//            }
 
             String horarioVencimientoText = horarioVencimientoTextField.getText();
-//            if (horarioVencimientoText.isEmpty()){
-//                horarioVencimientoText = Integer.toString(tareaConVencimeitno.obtenerFechaVencimiento().getHour());
-//            }
 
             String minutosVencimientoText = minutosVencimientoTextField.getText();
-//            if (minutosVencimientoText.isEmpty()){
-//                minutosVencimientoText = Integer.toString(tareaConVencimeitno.obtenerFechaVencimiento().getMinute());
-//            }
 
             int horaInicio;
             int minutosInicio;
@@ -572,24 +538,12 @@ public class GUIVista {
                 descripcion = eventoDiario.obtenerDescripcion();
             }
             String horarioInicioText = horarioInicioTextField.getText();
-//            if (horarioInicioText.isEmpty()){
-//                horarioInicioText = Integer.toString(eventoDiario.obtenerFechaInicio().getHour());
-//            }
 
             String minutosInicioText = minutosInicioTextField.getText();
-//            if (minutosInicioText.isEmpty()){
-//                minutosInicioText = Integer.toString(tareaConVencimeitno.obtenerFechaInicio().getMinute());
-//            }
 
             String horarioFinText = horarioFinTextField.getText();
-//            if (horarioVencimientoText.isEmpty()){
-//                horarioVencimientoText = Integer.toString(tareaConVencimeitno.obtenerFechaVencimiento().getHour());
-//            }
 
             String minutosFinText = minutosFinTextField.getText();
-//            if (minutosVencimientoText.isEmpty()){
-//                minutosVencimientoText = Integer.toString(tareaConVencimeitno.obtenerFechaVencimiento().getMinute());
-//            }
 
             int horaInicio;
             int minutosInicio;
@@ -800,6 +754,10 @@ public class GUIVista {
 
         });
     }
+
+
+//    Codigo de ventanas emergente para agregar evento/tarea, sirve, pero queda algo desprolijo
+
     public Scene gridlayout(ListView<Tarea> listaTareas, ListView<Evento> listEventos) {
 
         VBox layout = new VBox(10);
@@ -812,5 +770,16 @@ public class GUIVista {
         primaryStage.setScene(scene);
         primaryStage.show();
         return scene;
+    }
+
+
+    public Scene Escena() {
+
+        agregarTareaButton.setOnAction(e -> mostrarVentanaAgregarTarea());
+        agregarEventoButton.setOnAction(e -> mostrarVentanaAgregarEvento());
+        ingresarTareaConVencimiento();
+        ingresarTareaDiaCompleto();
+        ingresarEvento();
+        return gridlayout(controlador.obtenerListaTareas(), controlador.obtenerListaEventos());
     }
 }

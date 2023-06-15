@@ -1,9 +1,7 @@
-
 import javafx.collections.FXCollections;
 import javafx.geometry.HPos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -16,22 +14,22 @@ import java.util.stream.IntStream;
 public class GUIControlador {
 
     private Calendario calendario;
-    private Tarea tareaDiaCompleto;
-    private Tarea tareaConVencimiento;
-    private CreadorDeEventos eventoDiarioCreado;
+    private final Tarea tareaDiaCompleto;
+    private final Tarea tareaConVencimiento;
+    private final CreadorDeEventos eventoDiarioCreado;
 
-    private Evento eventoDiario;
-    private GUIVista vista;
-    private ListView<Tarea> listaTareas;
-    private ListView<Evento> listaEventos;
+    private final Evento eventoDiario;
+    private final GUIVista vista;
+    private final ListView<Tarea> listaTareas;
+    private final ListView<Evento> listaEventos;
 
-    private  List<Evento> eventosMesActual ;
-    private  List<Tarea> tareasMesActual;
+    private final List<Evento> eventosMesActual ;
+    private final List<Tarea> tareasMesActual;
 
     private YearMonth mesAnioActual;
-    private Label mesAnioActualLabel;
+    private final Label mesAnioActualLabel;
 
-    private GridPane calendarioGrid;
+    private final GridPane calendarioGrid;
 
     public GUIControlador(Calendario calendario, GUIVista vista, GridPane calendarioGrid, Label mesAnioActualLabel) {
         this.calendario = calendario;
@@ -81,9 +79,6 @@ public class GUIControlador {
         calendario.agregarTarea(tarea);
         vista.mostrarListaTareas(calendario.obtenerTareas());
         Calendario.guardarCalendarioEnArchivo(calendario, "calendario.json");
-//
-//        vista.gridlayout(listaTareas);
-//        vista.limpiarCampos();
     }
 
 
@@ -141,11 +136,11 @@ public class GUIControlador {
         int diaMes = 1;
         int fila = 1;
 
-        while (diaMes <= mesAnioActual.lengthOfMonth()) { //Mientras el dia del mes actual sea menor o igual al numero total de días en el mes actual
+        while (diaMes <= mesAnioActual.lengthOfMonth()) { //Mientras el día del mes actual sea menor o igual al número total de días en el mes actual
 
             int columna = (comienzoDiaSemana + diaMes - 2) % 7; //Formatea la columna donde se colocara el dia
 
-            columna = (columna < 0) ? columna + 7 : columna; //Si la operacion anterior dio negativa => diaMes actual está antes del primer día de la semana
+            columna = (columna < 0) ? columna + 7 : columna; //Si la operacion anterior dio negativa → diaMes actual está antes del primer día de la semana
 
             Label diaLabel = new Label(String.valueOf(diaMes));
             calendarioGrid.add(diaLabel, columna, fila);
@@ -271,8 +266,8 @@ public class GUIControlador {
             for (Evento evento : eventosDelDia) {
                 tituloPopUp.append(evento.obtenerTitulo()).append("\n");
                 tituloPopUp.append(evento.obtenerDescripcion()).append("\n");
-                tituloPopUp.append(("Inicio: ") + evento.obtenerFechaInicio()).append("\n");
-                tituloPopUp.append(("Fin: ") + evento.obtenerFechaFin()).append("\n");
+                tituloPopUp.append(("Inicio: ")).append(evento.obtenerFechaInicio()).append("\n");
+                tituloPopUp.append(("Fin: ")).append(evento.obtenerFechaFin()).append("\n");
             }
             mostrarMensaje("Eventos ", tituloPopUp.toString());
 
@@ -293,8 +288,8 @@ public class GUIControlador {
             for (Tarea tarea : tareasDelDia) {
                 tituloPopUp.append(tarea.obtenerTitulo()).append("\n");
                 tituloPopUp.append(tarea.obtenerDescripcion()).append("\n");
-                tituloPopUp.append(("Inicio: ") + tarea.obtenerFechaInicio()).append("\n");
-                tituloPopUp.append(("Vencimiento: ") + tarea.obtenerFechaVencimiento()).append("\n");
+                tituloPopUp.append(("Inicio: ")).append(tarea.obtenerFechaInicio()).append("\n");
+                tituloPopUp.append(("Vencimiento: ")).append(tarea.obtenerFechaVencimiento()).append("\n");
 
                 if (tarea.estaCompleta()) {
                     tituloPopUp.append("Tarea completada \n");
