@@ -3,10 +3,8 @@ import javafx.collections.FXCollections;
 import javafx.geometry.HPos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.TextStyle;
@@ -27,6 +25,9 @@ public class GUIControlador {
     private ListView<Tarea> listaTareas;
     private ListView<Evento> listaEventos;
 
+    private  List<Evento> eventosMesActual ;
+    private  List<Tarea> tareasMesActual;
+
     private YearMonth mesAnioActual;
     private Label mesAnioActualLabel;
 
@@ -39,6 +40,8 @@ public class GUIControlador {
 
         this.listaTareas = new ListView<>();
         this.listaEventos = new ListView<>();
+        this.eventosMesActual = new ArrayList<>();
+        this.tareasMesActual = new ArrayList<>();
 
         this.tareaDiaCompleto = new TareaDiaCompleto();
         this.tareaConVencimiento = new TareaConVencimiento();
@@ -48,7 +51,6 @@ public class GUIControlador {
         this.calendarioGrid = calendarioGrid;
         this.eventoDiarioCreado = new CreadorEventosDiarios();
         this.mesAnioActual = YearMonth.now();
-        ;
 
     }
 
@@ -173,7 +175,34 @@ public class GUIControlador {
             }
 
             diaMes++;
+            LocalDate ultimoDia = mesAnioActual.atDay(mesAnioActual.lengthOfMonth());
+            crearListaEventosYTareasEnFecha(primerDiaMes,ultimoDia);
+
         }
+    }
+
+
+    public void crearListaEventosYTareasEnFecha( LocalDate primerDia,LocalDate ultimoDia ){
+        actualizarEventosYTareasMesActual();
+
+        eventosMesActual.addAll(calendario.obtenerEventosEntreFechas(primerDia, ultimoDia));
+        tareasMesActual.addAll(calendario.obtenerTareasEntreFechas(primerDia, ultimoDia));
+    }
+
+    public  List<Evento> obtenerEventosMesActual(){
+        return this.eventosMesActual;
+    }
+
+    public  List<Tarea> obtenerTareasMesActual(){
+        return this.tareasMesActual;
+    }
+
+    public void actualizarEventosYTareasMesActual() {
+        eventosMesActual.clear();
+        eventosMesActual.addAll(obtenerEventosMesActual());
+
+        tareasMesActual.clear();
+        tareasMesActual.addAll(obtenerTareasMesActual());
     }
 
     private boolean tieneEventosEnFecha(LocalDate fechaDeseada) {
@@ -319,6 +348,5 @@ public class GUIControlador {
     public void cerrarAplicacion() {
         Calendario.guardarCalendarioEnArchivo(calendario, "calendario.json");
     }
-
 
 }

@@ -181,6 +181,17 @@ public class Calendario implements Serializable {
         return eventosEnRango;
     }
 
+    public ArrayList<Tarea> obtenerTareasEntreFechas(LocalDate fechaA, LocalDate fechaB) {
+        ArrayList<Tarea> tareasEnRango = new ArrayList<>();
+        for (Tarea tarea : this.tareas) {
+            LocalDate fechaTareas = tarea.obtenerFechaInicio().toLocalDate();
+            if (fechaTareas.isAfter(fechaA) && fechaTareas.isBefore(fechaB)) {
+                tareasEnRango.add(tarea);
+            }
+        }
+        return tareasEnRango;
+    }
+
     public static String serializarCalendario(Calendario calendario) {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());

@@ -6,11 +6,8 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
-
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -21,7 +18,6 @@ import java.util.Set;
 
 public class GUIVista {
     private GUIControlador controlador;
-
 
     private CreadorDeEventos eventoSemanalCreado;
     private CreadorDeEventos eventoMensualCreado;
@@ -86,7 +82,6 @@ public class GUIVista {
     private DatePicker fechaFinSinHoraPicker;
 
     private ChoiceBox<Repeticion> tipoRepeticionChoiceBox;
-
 
 
 
@@ -206,6 +201,9 @@ public class GUIVista {
         Label importanteLabel = new Label("IMPORTANTE: Los eventos y tareas se cargan exitosamente, sin embargo hay que refrescar el mes (avanzando o retrocediendo el mes) para ver el color");
         importanteLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: darkslategrey;");
 
+        Label importanteLabel2 = new Label("La lista de eventos y tareas se refresca una vez que se cierra y se vuelve a abrir la ventana");
+        importanteLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: darkslategrey;");
+
         Label tareasLabel = new Label("Las tareas son resaltadas con celeste");
         tareasLabel.setStyle("-fx-font-weight: bold; -fx-background-color: lightblue;");
 
@@ -230,15 +228,35 @@ public class GUIVista {
         ingresarTareaConVencimiento();
         ingresarTareaDiaCompleto();
         ingresarEvento();
-        mensajeBox.getChildren().addAll(instruccionesLabel, importanteLabel,tareasLabel, eventosLabel, tareasYeventosLabel,buttonTarea,buttonEvento);
+        mensajeBox.getChildren().addAll(instruccionesLabel, importanteLabel, importanteLabel2,tareasLabel, eventosLabel, tareasYeventosLabel,buttonTarea,buttonEvento);
 
+        ListView<Evento> listaEventosMes = new ListView<>();
+        ListView<Tarea> listaTareasMes = new ListView<>();
+
+        listaEventosMes.setItems(FXCollections.observableArrayList(controlador.obtenerEventosMesActual()));
+        listaTareasMes.setItems(FXCollections.observableArrayList(controlador.obtenerTareasMesActual()));
+
+
+        VBox contenedorListas = new VBox(10);
+        contenedorListas.setAlignment(Pos.CENTER);
+        contenedorListas.setPadding(new Insets(10));
+        contenedorListas.getChildren().addAll(new Label("Eventos del Mes"), listaEventosMes, new Label("Tareas del Mes"), listaTareasMes);
 
         GridPane root = new GridPane();
         root.setPadding(new Insets(10));
         root.setAlignment(Pos.TOP_CENTER);
+
+        //Para que la lista de eventos y tareas se añadan al costado y no abajo
+        ColumnConstraints columna1 = new ColumnConstraints();
+        ColumnConstraints columna2 = new ColumnConstraints();
+        columna2.setHgrow(Priority.ALWAYS);
+
+        root.getColumnConstraints().addAll(columna1, columna2);
+
         root.add(headerBox, 0, 0);
         root.add(calendarioGrid, 0, 1);
-        root.add(mensajeBox, 0, 2); // Agregar el mensaje debajo del calendario
+        root.add(mensajeBox, 0, 2); //mensajes abajo del calendario
+        root.add(contenedorListas, 1, 0, 1, GridPane.REMAINING); //listas de eventos y tareas
 
 
         Scene scene = new Scene(root, 955, 550);
@@ -737,7 +755,6 @@ public class GUIVista {
         stage.setScene(scene);
         stage.show();
     }
-
 
 
     public void limpiarCampos() {
