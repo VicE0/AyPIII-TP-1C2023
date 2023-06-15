@@ -35,9 +35,7 @@ public class GUI extends Application {
         interfazIngresoDatos.show();
 
         //Cuando se cierra, guarda todo en el archivo
-        primaryStage.setOnCloseRequest(event -> {
-            controlador.cerrarAplicacion();
-        });
+        primaryStage.setOnCloseRequest(event -> controlador.cerrarAplicacion());
 
 
     }

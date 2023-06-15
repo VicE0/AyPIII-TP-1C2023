@@ -79,7 +79,7 @@ public class GUIControlador {
 
     public void agregarTarea(Tarea tarea) {
         calendario.agregarTarea(tarea);
-        vista.mostarListaTareas(calendario.obtenerTareas());
+        vista.mostrarListaTareas(calendario.obtenerTareas());
         Calendario.guardarCalendarioEnArchivo(calendario, "calendario.json");
 //
 //        vista.gridlayout(listaTareas);
@@ -97,7 +97,9 @@ public class GUIControlador {
     }
 
     public void tareaAgregarAlarma(Tarea tarea, Alarma alarma) {
+        alarma.activarAlarma(alarma.obtenerFechaYHora());
         tarea.agregarAlarma(alarma);
+
 
     }
 
