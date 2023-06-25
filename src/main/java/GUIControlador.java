@@ -1,11 +1,18 @@
 import javafx.collections.FXCollections;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -16,7 +23,7 @@ public class GUIControlador {
     private Calendario calendario;
     private final Tarea tareaDiaCompleto;
     private final Tarea tareaConVencimiento;
-
+    private final List<GUIVistaObserver> observadores;
 
 
     private final GUIVista vista;
@@ -30,6 +37,7 @@ public class GUIControlador {
     private final Label mesAnioActualLabel;
 
     private final GridPane calendarioGrid;
+
 
     public GUIControlador(Calendario calendario, GUIVista vista, GridPane calendarioGrid, Label mesAnioActualLabel) {
         this.calendario = calendario;
@@ -50,7 +58,14 @@ public class GUIControlador {
 
         this.mesAnioActual = YearMonth.now();
 
+        this.observadores = new ArrayList<>();
+
     }
+
+    public void registrarObservador(GUIVistaObserver observador) {
+        observadores.add(observador);
+    }
+
 
     public ListView<Tarea> obtenerListaTareas() {
         this.listaTareas.setItems(FXCollections.observableArrayList(calendario.obtenerTareas()));
@@ -127,8 +142,11 @@ public class GUIControlador {
                     GridPane.setHalignment(diaDeSemanaLabel, HPos.CENTER);
                 });
 
+
         LocalDate primerDiaMes = mesAnioActual.atDay(1);
+
         int comienzoDiaSemana = primerDiaMes.getDayOfWeek().getValue();
+
 
         int diaMes = 1;
         int fila = 1;
@@ -174,6 +192,78 @@ public class GUIControlador {
 
         }
     }
+
+    //Muestra las semanas solo con eventos, tareas o eventos y tareas
+    public void mostrarSemanasConEventosYTareas() {
+        calendarioGrid.getChildren().clear();
+
+        String[] diasSemana = {"Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"};
+
+        IntStream.range(0, 7)
+                .forEach(columna -> {
+                    Label diaDeSemanaLabel = new Label(diasSemana[columna]);
+                    diaDeSemanaLabel.setStyle("-fx-font-weight: bold;");
+
+                    calendarioGrid.add(diaDeSemanaLabel, columna, 0);
+                    GridPane.setHalignment(diaDeSemanaLabel, HPos.CENTER);
+                });
+
+        LocalDate primerDiaMes = mesAnioActual.atDay(1);
+        LocalDate ultimoDiaMes = mesAnioActual.atDay(mesAnioActual.lengthOfMonth());
+
+        int comienzoDiaSemana = primerDiaMes.getDayOfWeek().getValue();
+
+        int diaMes = 1;
+        int fila = 1;
+        boolean semanaConEventosYTareas = false;
+
+        while (diaMes <= mesAnioActual.lengthOfMonth()) {
+            int columna = (comienzoDiaSemana + diaMes - 2) % 7;
+            columna = (columna < 0) ? columna + 7 : columna;
+
+            LocalDate fechaDeseada = mesAnioActual.atDay(diaMes);
+
+            if (tieneEventosEnFecha(fechaDeseada) || tieneTareasEnFecha(fechaDeseada)) {
+                semanaConEventosYTareas = true;
+            }
+
+            if (semanaConEventosYTareas) {
+                Label diaLabel = new Label(String.valueOf(diaMes));
+                calendarioGrid.add(diaLabel, columna, fila);
+                GridPane.setHalignment(diaLabel, HPos.CENTER);
+
+                if (tieneEventosEnFecha(fechaDeseada)) {
+                    diaLabel.setStyle("-fx-font-weight: bold; -fx-background-color: lightsalmon;");
+                }
+
+                if (tieneTareasEnFecha(fechaDeseada)) {
+                    diaLabel.setStyle("-fx-font-weight: bold; -fx-background-color: lightblue;");
+                }
+
+                if (tieneEventosYTareasEnFecha(fechaDeseada)) {
+                    diaLabel.setStyle("-fx-font-weight: bold; -fx-background-color: greenyellow;");
+                }
+
+                int finalDiaMes = diaMes;
+                diaLabel.setOnMouseClicked(e -> {
+                    mostrarEventosDelDia(finalDiaMes);
+                    mostrarTareasDelDia(finalDiaMes);
+                });
+
+                if (columna == 6) {
+                    fila++;
+                }
+            }
+
+            if (columna == 6) {
+                semanaConEventosYTareas = false;
+            }
+
+            diaMes++;
+        }
+    }
+
+
 
 
     public void crearListaEventosYTareasEnFecha( LocalDate primerDia,LocalDate ultimoDia ){
@@ -322,6 +412,126 @@ public class GUIControlador {
         return TareasDia;
     }
 
+    public void mostrarListaEventos(ListView<Evento> listaEventosMes){
+        listaEventosMes.setCellFactory(event -> new ListCell<>() {
+            @Override
+            protected void updateItem(Evento evento, boolean empty) {
+                super.updateItem(evento, empty);
+                if (empty || evento == null) {
+                    setText(null);
+                } else {
+                    setText("Evento:" + "\n" + "Título: " + evento.obtenerTitulo() + "\n" +
+                            "Descripción: " + evento.obtenerDescripcion() + "\n" +
+                            "Fecha de Inicio: " + evento.obtenerFechaInicio() + "\n" +
+                            "Fecha Fin: " + evento.obtenerFechaFin() + "\n" +
+                            "Tipo de repeticion: " + evento.obtenerTipoRepeticion() + "\n" +
+                            "Alamas:" + evento.obtenerAlarmasEvento() + "\n");
+                }
+            }
+        });
+        listaEventosMes.setOnMouseClicked(event -> {
+            Evento eventoSeleccionado = listaEventosMes.getSelectionModel().getSelectedItem();
+            if (eventoSeleccionado != null) {
+                vista.mostrarDetallesEvento(eventoSeleccionado);
+            }
+
+        });
+
+    }
+
+
+    public void mostrarListaTareas(ListView<Tarea> listaTareasMes){
+        listaTareasMes.setCellFactory(task -> new ListCell<>() {
+            @Override
+            protected void updateItem(Tarea tarea, boolean empty) {
+                super.updateItem(tarea, empty);
+                if (empty || tarea == null) {
+                    setText(null);
+                } else {
+                    setText("Tarea:" + "\n" + "Título: " + tarea.obtenerTitulo() + "\n" +
+                            "Descripción: " + tarea.obtenerDescripcion() + "\n" +
+                            "Fecha de Inicio: " + tarea.obtenerFechaInicio() + "\n" +
+                            "Fecha de Vencimiento: " + tarea.obtenerFechaVencimiento() + "\n" +
+                            "Esta completa:" + tarea.estaCompleta() + "\n" +
+                            "Es de dia completo: " + (tarea.getClass()) + "\n" +
+                            "Alamas:" + tarea.obtenerAlarmas() + "\n");
+                }
+            }
+        });
+
+        listaTareasMes.setOnMouseClicked(event -> {
+            Tarea tareaSeleccionada = listaTareasMes.getSelectionModel().getSelectedItem();
+            if (tareaSeleccionada != null) {
+                vista.mostrarDetallesTarea(tareaSeleccionada);
+            }
+
+        });
+    }
+
+
+
+    public void mostrarVentanaConEventosDelMes(){
+        Stage ventanaAgregarEvento = new Stage();
+        ventanaAgregarEvento.setTitle("Eventos del mes");
+        VBox layout = new VBox(5);
+        layout.setPadding(new Insets(5));
+        ListView<Evento> listaEventosMes = new ListView<>();
+        listaEventosMes.setItems(FXCollections.observableArrayList(obtenerEventosMesActual()));
+        mostrarListaEventos(listaEventosMes);
+        layout.getChildren().addAll(new Label("Eventos del mes"),listaEventosMes);
+
+        Scene scene = new Scene(layout);
+        ventanaAgregarEvento.setScene(scene);
+        ventanaAgregarEvento.show();
+
+    }
+    public void mostrarVentanaConTareasDelMes(){
+        Stage ventanaAgregarTarea = new Stage();
+        ventanaAgregarTarea.setTitle("Tareas del mes");
+        VBox layout = new VBox(5);
+        layout.setPadding(new Insets(5));
+        ListView<Tarea> listaTareasMes = new ListView<>();
+        listaTareasMes.setItems(FXCollections.observableArrayList(obtenerTareasMesActual()));
+        mostrarListaTareas(listaTareasMes);
+        layout.getChildren().addAll(new Label("Tareas del mes"),listaTareasMes);
+
+        Scene scene = new Scene(layout);
+        ventanaAgregarTarea.setScene(scene);
+        ventanaAgregarTarea.show();
+    }
+
+
+
+    //Logica de agregar alarmas y actualizar el objeto /UI que luego puede ser mostrado
+    public void mostrarVentanaAgregarAlarma(Tarea tarea,Evento evento){
+        Stage ventanaAgregarEvento= new Stage();
+        ventanaAgregarEvento.setTitle("Agregar Alarma");
+        VBox layout = new VBox(5);
+        layout.setPadding(new Insets(5));
+        Button conIntervalo = new Button("Horario absoluto");
+
+        conIntervalo.setOnAction(e-> vista.mostrarVentanaAgregarAlarmaFechaAbsouluta(tarea, evento));
+
+        Button conHoraAbsoluto = new Button("Con Intervalo");
+        conHoraAbsoluto.setOnAction(e-> vista.mostrarVentanaAgregarAlarmaIntervalo(tarea, evento));
+
+        layout.getChildren().addAll(conIntervalo,conHoraAbsoluto);
+        Scene scene = new Scene(layout);
+        ventanaAgregarEvento.setScene(scene);
+        ventanaAgregarEvento.show();
+
+    }
+
+
+
+    //Logica para mostrar mensajes al usuario en la GUI
+    public void mostrarMensajeAlarmaAgregada(){
+        Alert alertaAgregada = new Alert(Alert.AlertType.INFORMATION);
+        alertaAgregada.setTitle("Alarma agregada");
+        alertaAgregada.setHeaderText("La alarma se agrego correctamente");
+        alertaAgregada.showAndWait();
+    }
+
 
     private void mostrarMensaje(String titulo, String contenido) {
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
@@ -331,6 +541,8 @@ public class GUIControlador {
         alerta.showAndWait();
     }
 
+
+    //Metodos pertenecientes a la serializacion del calendario
     public void iniciarAplicacion() {
         calendario = Calendario.cargarCalendarioDesdeArchivo("calendario.json");
         if (calendario == null) {

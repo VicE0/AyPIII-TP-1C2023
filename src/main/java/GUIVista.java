@@ -14,7 +14,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.*;
 
-public class GUIVista {
+public class GUIVista implements GUIVistaObserver{
     private GUIControlador controlador;
 
 
@@ -114,10 +114,10 @@ public class GUIVista {
         this.tipoRepeticionLabel = new Label("Tipo de repetición:");
         this.tipoRepeticionChoiceBox = new ChoiceBox<>();
         tipoRepeticionChoiceBox.getItems().addAll(Repeticion.values());
+
         this.tipoEventoLabel = new Label("Tipo de evento");
         tipoEventoChoiceBox = new ChoiceBox<>();
         tipoEventoChoiceBox.getItems().addAll("Evento dia completo","Evento Diario", "Evento Semanal", "Evento Mensual", "Evento Anual");
-
 
 
         this.intervaloAlarmaLabel = new Label("Intervalo en minutos:");
@@ -151,14 +151,29 @@ public class GUIVista {
 
 
 
-
-
-
-
     }
+
 
     public void setControlador(GUIControlador controlador) {
         this.controlador = controlador;
+    }
+
+    @Override
+    public void actualizar() {
+        controlador.crearCalendario();
+        controlador.actualizarLabel();
+    }
+
+    private void notificarCambioMesAnterior() {
+        controlador.mostrarMesAnterior();
+    }
+
+    private void notificarCambioMesSiguiente() {
+        controlador.mostrarMesSiguiente();
+    }
+
+    private void mostrarVistaASemanal(){
+        controlador.mostrarSemanasConEventosYTareas();
     }
 
 
@@ -170,14 +185,18 @@ public class GUIVista {
         headerBox.setPadding(new Insets(10));
 
         Button mesAnteriorBoton = new Button("<<");
-        mesAnteriorBoton.setOnAction(e -> controlador.mostrarMesAnterior());
+        mesAnteriorBoton.setOnAction(e -> notificarCambioMesAnterior());
 
         Button mesSiguienteBoton = new Button(">>");
-        mesSiguienteBoton.setOnAction(e -> controlador.mostrarMesSiguiente());
+        mesSiguienteBoton.setOnAction(e -> notificarCambioMesSiguiente());
+
+        Button vistaSemanalButton = new Button("Vista Semanal");
+        vistaSemanalButton.setOnAction(e -> mostrarVistaASemanal());
 
         mesAnioActualLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
         controlador.actualizarLabel();
-        headerBox.getChildren().addAll(mesAnteriorBoton, mesAnioActualLabel, mesSiguienteBoton);
+        headerBox.getChildren().addAll(mesAnteriorBoton, mesAnioActualLabel, mesSiguienteBoton,vistaSemanalButton);
+
 
 
         Label instruccionesLabel = new Label("Haz clic en un día para obtener informacion sobre los eventos y tareas creados");
@@ -215,16 +234,19 @@ public class GUIVista {
 
 
         ListView<Evento> listaEventosTotales = controlador.obtenerListaEventos();
-        mostrarListaEventos(listaEventosTotales);
-        ListView<Tarea> listaTareasTotales = controlador.obtenerListaTareas();
-        mostrarListaTareas(listaTareasTotales);
+        controlador.mostrarListaEventos(listaEventosTotales);
 
+        ListView<Tarea> listaTareasTotales = controlador.obtenerListaTareas();
+        controlador.mostrarListaTareas(listaTareasTotales);
 
 
         Button verListadoTareas = new Button("Ver tareas del mes");
-        verListadoTareas.setOnAction( e -> mostrarVentanaConTareasDelMes());
+        verListadoTareas.setOnAction( e -> controlador.mostrarVentanaConTareasDelMes());
+
         Button verListadoEventos = new Button("Ver eventos del mes");
-        verListadoEventos.setOnAction(e -> mostrarVentanaConEventosDelMes());
+        verListadoEventos.setOnAction(e -> controlador.mostrarVentanaConEventosDelMes());
+
+
         VBox contenedorListas = new VBox(10);
         contenedorListas.setAlignment(Pos.CENTER);
         contenedorListas.setPadding(new Insets(10));
@@ -254,93 +276,6 @@ public class GUIVista {
     }
 
 
-
-    private void mostrarListaEventos(ListView<Evento> listaEventosMes){
-        listaEventosMes.setCellFactory(event -> new ListCell<>() {
-            @Override
-            protected void updateItem(Evento evento, boolean empty) {
-                super.updateItem(evento, empty);
-                if (empty || evento == null) {
-                    setText(null);
-                } else {
-                    setText("Evento:" + "\n" + "Título: " + evento.obtenerTitulo() + "\n" +
-                            "Descripción: " + evento.obtenerDescripcion() + "\n" +
-                            "Fecha de Inicio: " + evento.obtenerFechaInicio() + "\n" +
-                            "Fecha Fin: " + evento.obtenerFechaFin() + "\n" +
-                            "Tipo de repeticion: " + evento.obtenerTipoRepeticion() + "\n" +
-                            "Alamas:" + evento.obtenerAlarmasEvento() + "\n");
-                }
-            }
-        });
-        listaEventosMes.setOnMouseClicked(event -> {
-            Evento eventoSeleccionado = listaEventosMes.getSelectionModel().getSelectedItem();
-            if (eventoSeleccionado != null) {
-                mostrarDetallesEvento(eventoSeleccionado);
-            }
-
-        });
-
-    }
-
-    private void mostrarListaTareas(ListView<Tarea> listaTareasMes){
-        listaTareasMes.setCellFactory(task -> new ListCell<>() {
-            @Override
-            protected void updateItem(Tarea tarea, boolean empty) {
-                super.updateItem(tarea, empty);
-                if (empty || tarea == null) {
-                    setText(null);
-                } else {
-                    setText("Tarea:" + "\n" + "Título: " + tarea.obtenerTitulo() + "\n" +
-                            "Descripción: " + tarea.obtenerDescripcion() + "\n" +
-                            "Fecha de Inicio: " + tarea.obtenerFechaInicio() + "\n" +
-                            "Fecha de Vencimiento: " + tarea.obtenerFechaVencimiento() + "\n" +
-                            "Esta completa:" + tarea.estaCompleta() + "\n" +
-                            "Es de dia completo: " + (tarea.getClass()) + "\n" +
-                            "Alamas:" + tarea.obtenerAlarmas() + "\n");
-                }
-            }
-        });
-
-        listaTareasMes.setOnMouseClicked(event -> {
-            Tarea tareaSeleccionada = listaTareasMes.getSelectionModel().getSelectedItem();
-            if (tareaSeleccionada != null) {
-                mostrarDetallesTarea(tareaSeleccionada);
-            }
-
-        });
-    }
-
-    public void mostrarVentanaConEventosDelMes(){
-        Stage ventanaAgregarEvento = new Stage();
-        ventanaAgregarEvento.setTitle("Eventos del mes");
-        VBox layout = new VBox(5);
-        layout.setPadding(new Insets(5));
-        ListView<Evento> listaEventosMes = new ListView<>();
-        listaEventosMes.setItems(FXCollections.observableArrayList(controlador.obtenerEventosMesActual()));
-        mostrarListaEventos(listaEventosMes);
-        layout.getChildren().addAll(new Label("Eventos del mes"),listaEventosMes);
-
-        Scene scene = new Scene(layout);
-        ventanaAgregarEvento.setScene(scene);
-        ventanaAgregarEvento.show();
-
-    }
-    public void mostrarVentanaConTareasDelMes(){
-        Stage ventanaAgregarTarea = new Stage();
-        ventanaAgregarTarea.setTitle("Tareas del mes");
-        VBox layout = new VBox(5);
-        layout.setPadding(new Insets(5));
-        ListView<Tarea> listaTareasMes = new ListView<>();
-        listaTareasMes.setItems(FXCollections.observableArrayList(controlador.obtenerTareasMesActual()));
-        mostrarListaTareas(listaTareasMes);
-        layout.getChildren().addAll(new Label("Tareas del mes"),listaTareasMes);
-
-        Scene scene = new Scene(layout);
-        ventanaAgregarTarea.setScene(scene);
-        ventanaAgregarTarea.show();
-    }
-
-
     public void mostrarVentanaAgregarTarea() {
         Stage ventanaAgregarTarea = new Stage();
         ventanaAgregarTarea.setTitle("Agregar Tarea");
@@ -352,10 +287,13 @@ public class GUIVista {
                 fechaVencimientoLabel, fechaVencimientoSinHoraPicker, horarioVencimientoLabel,
                 horarioVencimientoTextField, minutosVencimientoTextField, agregarTareaConVencimientoButton,agregarTareaDiaCompletoButton);
 
+
         Scene scene = new Scene(layout);
         ventanaAgregarTarea.setScene(scene);
         ventanaAgregarTarea.show();
     }
+
+
 
     public void mostrarVentanaAgregarEvento(){
         Stage ventanaAgregarEvento= new Stage();
@@ -374,136 +312,6 @@ public class GUIVista {
         ventanaAgregarEvento.setScene(scene);
         ventanaAgregarEvento.show();
     }
-    public void mostrarVentanaAgregarAlarma(Tarea tarea,Evento evento){
-        Stage ventanaAgregarEvento= new Stage();
-        ventanaAgregarEvento.setTitle("Agregar Alarma");
-        VBox layout = new VBox(5);
-        layout.setPadding(new Insets(5));
-        Button conIntervalo = new Button("Horario absoluto");
-
-        conIntervalo.setOnAction(e-> mostrarVentanaAgregarAlarmaFechaAbsouluta(tarea, evento));
-
-        Button conHoraAbsoluto = new Button("Con Intervalo");
-        conHoraAbsoluto.setOnAction(e-> mostrarVentanaAgregarAlarmaIntervalo(tarea, evento));
-
-        layout.getChildren().addAll(conIntervalo,conHoraAbsoluto);
-        Scene scene = new Scene(layout);
-        ventanaAgregarEvento.setScene(scene);
-        ventanaAgregarEvento.show();
-
-    }
-
-
-    public void mostrarVentanaAgregarAlarmaFechaAbsouluta(Tarea tarea, Evento evento){
-        Stage ventanaAgregarEvento= new Stage();
-        ventanaAgregarEvento.setTitle("Agregar Alarma");
-        VBox layout = new VBox(5);
-        layout.setPadding(new Insets(5));
-        Button agregar = new Button("Agregar");
-        Efecto notificacion = new Notificacion();
-
-
-
-        agregar.setOnAction(e -> {
-
-            int minutosInicio = 0;
-            int horaInicio = 0;
-            
-
-            try {
-                
-                minutosInicio = Integer.parseInt(minutosInicioAlarmaTextField.getText());
-                horaInicio = Integer.parseInt(horaInicioAlarmaTextField.getText());
-                
-
-            } catch (NumberFormatException ex) {
-                Alert alertaError = new Alert(Alert.AlertType.ERROR);
-                alertaError.setTitle("Error");
-                alertaError.setHeaderText("Se produjo un error al agregar la alarma");
-                alertaError.setContentText("Por favor, intentalo nuevamente");
-                alertaError.showAndWait();
-            }
-            if (evento != null) {
-                if (Objects.equals(tipoAlarmaChoiceBox.getValue(), "Notificacion")){
-                    Alarma alarma = new AlarmaFechaAbsoluta(fechaAlarma.getValue().atTime(horaInicio,minutosInicio), notificacion);
-                    controlador.eventoAgregarAlarma(evento, alarma);
-                    mostrarMensajeAlarmaAgregada();
-                    ventanaAgregarEvento.close();
-                }
-
-
-
-            } else {
-                if (Objects.equals(tipoAlarmaChoiceBox.getValue(), "Notificacion")) {
-                    Alarma alarma = new AlarmaFechaAbsoluta(fechaAlarma.getValue().atTime(horaInicio,minutosInicio), notificacion);
-                    controlador.tareaAgregarAlarma(tarea, alarma);
-                    mostrarMensajeAlarmaAgregada();
-                    ventanaAgregarEvento.close();
-                }
-            }
-        });
-        layout.getChildren().addAll(tipoAlarmaLabel,tipoAlarmaChoiceBox,fechaAlarmaLabel,fechaAlarma,horasYMinutosLabel,horaInicioAlarmaTextField,minutosInicioAlarmaTextField,agregar);
-        Scene scene = new Scene(layout);
-        ventanaAgregarEvento.setScene(scene);
-        ventanaAgregarEvento.show();
-    }
-
-
-
-
-    public void mostrarVentanaAgregarAlarmaIntervalo(Tarea tarea, Evento evento){
-        Stage ventanaAgregarAlarma= new Stage();
-        ventanaAgregarAlarma.setTitle("Agregar Alarma");
-        VBox layout = new VBox(5);
-        layout.setPadding(new Insets(5));
-        Button agregar = new Button("Agregar");
-        int intervalo = 0;
-        try {
-
-            intervalo = Integer.parseInt(intervaloTextField.getText());
-
-        }catch (NumberFormatException e){
-            intervaloAlarmaTextField.clear();
-        }
-        Efecto efecto;
-
-        if (Objects.equals(tipoAlarmaChoiceBox.getValue(), "Notificacion")){
-            efecto = new Notificacion();
-        } else {
-            efecto = null;
-        }
-        int finalIntervalo = intervalo;
-        agregar.setOnAction(e -> {
-
-            if (evento != null) {
-
-                Alarma alarma = new AlarmaIntervalo(evento.obtenerFechaInicio(), finalIntervalo, efecto);
-                controlador.eventoAgregarAlarma(evento, alarma);
-                mostrarMensajeAlarmaAgregada();
-                ventanaAgregarAlarma.close();
-
-            } else {
-                Alarma alarma = new AlarmaIntervalo(tarea.obtenerFechaInicio(), finalIntervalo, efecto);
-                controlador.tareaAgregarAlarma(tarea, alarma);
-                mostrarMensajeAlarmaAgregada();
-                ventanaAgregarAlarma.close();
-            }
-        });
-
-        layout.getChildren().addAll(tipoAlarmaLabel,tipoAlarmaChoiceBox,intervaloAlarmaLabel,intervaloAlarmaTextField,agregar);
-        Scene scene = new Scene(layout);
-        ventanaAgregarAlarma.setScene(scene);
-        ventanaAgregarAlarma.show();
-
-    }
-
-    public void mostrarMensajeAlarmaAgregada(){
-        Alert alertaAgregada = new Alert(Alert.AlertType.INFORMATION);
-        alertaAgregada.setTitle("Alarma agregada");
-        alertaAgregada.setHeaderText("La alarma se agrego correctamente");
-        alertaAgregada.showAndWait();
-    }
-
 
 
     public void ingresarTareaConVencimiento() {
@@ -589,8 +397,6 @@ public class GUIVista {
 
 
         agregarEventoTerminadoButton.setOnAction(e ->{
-
-
 
             String titulo = tituloField.getText();
 
@@ -683,13 +489,13 @@ public class GUIVista {
 
     public void mostarListaEventos() {
         ListView<Evento> listaEventos = controlador.obtenerListaEventos();
-        mostrarListaEventos(listaEventos);
+        controlador.mostrarListaEventos(listaEventos);
     }
     public void mostrarListaTareasPorLista() {
 
         ListView<Tarea> listaTareas = controlador.obtenerListaTareas();
 
-        mostrarListaTareas(listaTareas);
+        controlador.mostrarListaTareas(listaTareas);
     }
 
     //POP-UP
@@ -710,7 +516,7 @@ public class GUIVista {
 
 
         estaCompletaCheckBox.setOnAction(e -> tarea.marcarComoCompleta());
-        agregarAlarmaButton.setOnAction(e -> mostrarVentanaAgregarAlarma(tarea,null));
+        agregarAlarmaButton.setOnAction(e -> controlador.mostrarVentanaAgregarAlarma(tarea,null));
 
         layout.getChildren().addAll(tituloLabel, descripcionLabel, fechaInicioLabel, fechaVencimientoLabel,
                 estaCompletaCheckBox,alarmas,agregarAlarmaButton);
@@ -735,7 +541,7 @@ public class GUIVista {
         Label tipoRepeticionLabel = new Label("Tipo de repeticion: " + evento.obtenerTipoRepeticion());
         Label alarmas = new Label("Alarmas" + evento.obtenerAlarmasEvento());
 
-        agregarAlarmaButton.setOnAction(e -> mostrarVentanaAgregarAlarma(null,evento));
+        agregarAlarmaButton.setOnAction(e -> controlador.mostrarVentanaAgregarAlarma(null,evento));
 
         layout.getChildren().addAll(tituloLabel, descripcionLabel, fechaInicioLabel, fechaVencimientoLabel,
                 fechaFinLabel,tipoRepeticionLabel,alarmas,agregarAlarmaButton);
@@ -744,6 +550,120 @@ public class GUIVista {
         stage.setScene(scene);
         stage.show();
     }
+
+
+
+    public void mostrarVentanaAgregarAlarmaFechaAbsouluta(Tarea tarea, Evento evento){
+
+        Stage ventanaAgregarEvento= new Stage();
+        ventanaAgregarEvento.setTitle("Agregar Alarma");
+        VBox layout = new VBox(5);
+        layout.setPadding(new Insets(5));
+        Button agregar = new Button("Agregar");
+
+        Efecto notificacion = new Notificacion();
+
+        agregar.setOnAction(e -> {
+
+            int minutosInicio = 0;
+            int horaInicio = 0;
+
+
+            try {
+                minutosInicio = Integer.parseInt(minutosInicioAlarmaTextField.getText());
+                horaInicio = Integer.parseInt(horaInicioAlarmaTextField.getText());
+
+            } catch (NumberFormatException ex) {
+
+                Alert alertaError = new Alert(Alert.AlertType.ERROR);
+                alertaError.setTitle("Error");
+                alertaError.setHeaderText("Se produjo un error al agregar la alarma");
+                alertaError.setContentText("Por favor, intentalo nuevamente");
+                alertaError.showAndWait();
+            }
+
+            if (evento != null) {
+                if (Objects.equals(tipoAlarmaChoiceBox.getValue(), "Notificacion")){
+                    Alarma alarma = new AlarmaFechaAbsoluta(fechaAlarma.getValue().atTime(horaInicio,minutosInicio), notificacion);
+                    controlador.eventoAgregarAlarma(evento, alarma);
+                    controlador.mostrarMensajeAlarmaAgregada();
+
+                    ventanaAgregarEvento.close();
+                }
+
+
+            } else {
+                if (Objects.equals(tipoAlarmaChoiceBox.getValue(), "Notificacion")) {
+                    Alarma alarma = new AlarmaFechaAbsoluta(fechaAlarma.getValue().atTime(horaInicio,minutosInicio), notificacion);
+                    controlador.tareaAgregarAlarma(tarea, alarma);
+                    controlador.mostrarMensajeAlarmaAgregada();
+
+                    ventanaAgregarEvento.close();
+                }
+            }
+        });
+
+        layout.getChildren().addAll(tipoAlarmaLabel,tipoAlarmaChoiceBox,fechaAlarmaLabel,fechaAlarma,horasYMinutosLabel,horaInicioAlarmaTextField,minutosInicioAlarmaTextField,agregar);
+        Scene scene = new Scene(layout);
+        ventanaAgregarEvento.setScene(scene);
+        ventanaAgregarEvento.show();
+    }
+
+
+    //Por alguna razon, tira intervalo negativo :[
+    public void mostrarVentanaAgregarAlarmaIntervalo(Tarea tarea, Evento evento){
+
+        Stage ventanaAgregarAlarma= new Stage();
+        ventanaAgregarAlarma.setTitle("Agregar Alarma");
+        VBox layout = new VBox(5);
+        layout.setPadding(new Insets(5));
+        Button agregar = new Button("Agregar");
+
+
+        agregar.setOnAction(e -> {
+            int intervalo = 0;
+
+            Efecto efecto;
+            try {
+                intervalo = Integer.parseInt(intervaloAlarmaTextField.getText());
+
+            }catch (NumberFormatException nf){
+
+                Alert alertaError = new Alert(Alert.AlertType.ERROR);
+                alertaError.setTitle("Error");
+                alertaError.setHeaderText("Se produjo un error al agregar la alarma");
+                alertaError.setContentText("Por favor, intentalo nuevamente");
+                alertaError.showAndWait();
+            }
+
+            if (Objects.equals(tipoAlarmaChoiceBox.getValue(), "Notificacion")){
+                efecto = new Notificacion();
+            } else {
+                efecto = null;
+            }
+
+            int finalIntervalo = intervalo;
+
+                Alarma alarma;
+                if (evento != null) {
+                    alarma = new AlarmaIntervalo(evento.obtenerFechaInicio(), finalIntervalo, efecto);
+                    controlador.eventoAgregarAlarma(evento, alarma);
+
+                } else {
+                    alarma = new AlarmaIntervalo(tarea.obtenerFechaInicio(), finalIntervalo, efecto);
+                    controlador.tareaAgregarAlarma(tarea, alarma);
+                }
+                controlador.mostrarMensajeAlarmaAgregada();
+                ventanaAgregarAlarma.close();
+        });
+
+        layout.getChildren().addAll(tipoAlarmaLabel,tipoAlarmaChoiceBox,intervaloAlarmaLabel,intervaloAlarmaTextField,agregar);
+        Scene scene = new Scene(layout);
+        ventanaAgregarAlarma.setScene(scene);
+        ventanaAgregarAlarma.show();
+
+    }
+
 
 
     public void limpiarCampos() {
