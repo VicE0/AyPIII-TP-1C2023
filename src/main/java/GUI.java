@@ -19,21 +19,15 @@ public class GUI extends Application {
         GUIVista vista = new GUIVista(calendarioGrid, mesAnioActualLabel);
         GUIControlador controlador = new GUIControlador(calendario, vista, calendarioGrid, mesAnioActualLabel);
 
-
-        controlador.registrarObservador(vista);
-
         //Lee desde el archivo
         controlador.iniciarAplicacion();
+        controlador.registrarObservador(vista);
 
         vista.setControlador(controlador);
 
-        Stage interfazCalendario= new Stage();
+        Stage interfazCalendario = new Stage();
         controlador.crearCalendario();
-
         vista.mostrarCalendarioCompleto(interfazCalendario, controlador.obtenerListaTareas(), controlador.obtenerListaEventos());
-
-        //Cuando se cierra, guarda todo en el archivo
-        primaryStage.setOnCloseRequest(event -> controlador.cerrarAplicacion());
 
 
     }

@@ -104,10 +104,8 @@ public class GUIControlador {
     }
 
     public void tareaAgregarAlarma(Tarea tarea, Alarma alarma) {
-        alarma.activarAlarma(alarma.obtenerFechaYHora());
         tarea.agregarAlarma(alarma);
-
-
+        alarma.activarAlarma(alarma.obtenerFechaYHora());
     }
 
     public void eventoAgregarAlarma(Evento evento, Alarma alarma) {
@@ -209,7 +207,7 @@ public class GUIControlador {
                 });
 
         LocalDate primerDiaMes = mesAnioActual.atDay(1);
-        LocalDate ultimoDiaMes = mesAnioActual.atDay(mesAnioActual.lengthOfMonth());
+
 
         int comienzoDiaSemana = primerDiaMes.getDayOfWeek().getValue();
 
@@ -256,11 +254,13 @@ public class GUIControlador {
             }
 
             if (columna == 6) {
-                semanaConEventosYTareas = false;
+                semanaConEventosYTareas = false; //Reseteo para cada semana
             }
-
             diaMes++;
+
         }
+
+
     }
 
 
@@ -486,10 +486,12 @@ public class GUIControlador {
 
     }
     public void mostrarVentanaConTareasDelMes(){
+
         Stage ventanaAgregarTarea = new Stage();
         ventanaAgregarTarea.setTitle("Tareas del mes");
         VBox layout = new VBox(5);
         layout.setPadding(new Insets(5));
+
         ListView<Tarea> listaTareasMes = new ListView<>();
         listaTareasMes.setItems(FXCollections.observableArrayList(obtenerTareasMesActual()));
         mostrarListaTareas(listaTareasMes);
@@ -516,6 +518,7 @@ public class GUIControlador {
         conHoraAbsoluto.setOnAction(e-> vista.mostrarVentanaAgregarAlarmaIntervalo(tarea, evento));
 
         layout.getChildren().addAll(conIntervalo,conHoraAbsoluto);
+
         Scene scene = new Scene(layout);
         ventanaAgregarEvento.setScene(scene);
         ventanaAgregarEvento.show();

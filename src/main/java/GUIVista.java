@@ -179,6 +179,8 @@ public class GUIVista implements GUIVistaObserver{
 
     public void mostrarCalendarioCompleto(Stage primaryStage, ListView<Tarea> listaTareas, ListView<Evento> listEventos) {
 
+
+
         HBox headerBox = new HBox(10);
 
         headerBox.setAlignment(Pos.CENTER);
@@ -196,8 +198,6 @@ public class GUIVista implements GUIVistaObserver{
         mesAnioActualLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
         controlador.actualizarLabel();
         headerBox.getChildren().addAll(mesAnteriorBoton, mesAnioActualLabel, mesSiguienteBoton,vistaSemanalButton);
-
-
 
         Label instruccionesLabel = new Label("Haz clic en un día para obtener informacion sobre los eventos y tareas creados");
         instruccionesLabel.setStyle("-fx-font-size: 14px;");
@@ -219,19 +219,18 @@ public class GUIVista implements GUIVistaObserver{
 
         VBox mensajeBox = new VBox(10);
         mensajeBox.setAlignment(Pos.CENTER);
+
         Button buttonTarea = new Button("Agregar Tarea");
         Button buttonEvento = new Button("Agregar Evento");
+
         buttonTarea.setOnAction(e-> mostrarVentanaAgregarTarea());
         buttonEvento.setOnAction(e -> mostrarVentanaAgregarEvento());
-        agregarTareaButton.setOnAction(e -> mostrarVentanaAgregarTarea());
-        agregarEventoButton.setOnAction(e -> mostrarVentanaAgregarEvento());
+
         ingresarTareaConVencimiento();
         ingresarTareaDiaCompleto();
         ingresarEvento();
 
-
         mensajeBox.getChildren().addAll(instruccionesLabel, importanteLabel, importanteLabel2,tareasLabel, eventosLabel, tareasYeventosLabel,buttonTarea,buttonEvento, listaTareas, listEventos);
-
 
         ListView<Evento> listaEventosTotales = controlador.obtenerListaEventos();
         controlador.mostrarListaEventos(listaEventosTotales);
@@ -268,11 +267,13 @@ public class GUIVista implements GUIVistaObserver{
         root.add(mensajeBox, 0, 2); //mensajes abajo del calendario
         root.add(contenedorListas, 1, 0, 1, GridPane.REMAINING); //listas de eventos y tareas
 
-
         Scene scene = new Scene(root, 955, 700);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Calendario");
         primaryStage.show();
+
+
+        primaryStage.setOnCloseRequest(event -> controlador.cerrarAplicacion());
     }
 
 
@@ -500,6 +501,8 @@ public class GUIVista implements GUIVistaObserver{
 
     //POP-UP
     public void mostrarDetallesTarea(Tarea tarea) {
+
+
         Stage stage = new Stage();
         stage.setTitle("Detalles de la Tarea");
 
@@ -512,10 +515,17 @@ public class GUIVista implements GUIVistaObserver{
         Label fechaVencimientoLabel = new Label("Fecha de vencimiento: " + tarea.obtenerFechaVencimiento());
         CheckBox estaCompletaCheckBox = new CheckBox("Completada");
         estaCompletaCheckBox.setSelected(tarea.estaCompleta());
+
         Label alarmas = new Label("Alarmas" + tarea.obtenerAlarmas());
 
+        estaCompletaCheckBox.setOnAction(e -> {
+            if (estaCompletaCheckBox.isSelected()) {
+                tarea.marcarComoCompleta();
+            } else {
+                tarea.marcarComoIncompleta();
+            }
+        });
 
-        estaCompletaCheckBox.setOnAction(e -> tarea.marcarComoCompleta());
         agregarAlarmaButton.setOnAction(e -> controlador.mostrarVentanaAgregarAlarma(tarea,null));
 
         layout.getChildren().addAll(tituloLabel, descripcionLabel, fechaInicioLabel, fechaVencimientoLabel,
@@ -524,6 +534,7 @@ public class GUIVista implements GUIVistaObserver{
         Scene scene = new Scene(layout);
         stage.setScene(scene);
         stage.show();
+
     }
 
     //POP-UP
@@ -542,7 +553,7 @@ public class GUIVista implements GUIVistaObserver{
         Label alarmas = new Label("Alarmas" + evento.obtenerAlarmasEvento());
 
         agregarAlarmaButton.setOnAction(e -> controlador.mostrarVentanaAgregarAlarma(null,evento));
-
+        
         layout.getChildren().addAll(tituloLabel, descripcionLabel, fechaInicioLabel, fechaVencimientoLabel,
                 fechaFinLabel,tipoRepeticionLabel,alarmas,agregarAlarmaButton);
 
@@ -683,30 +694,4 @@ public class GUIVista implements GUIVistaObserver{
     }
 
 
-////    Codigo de ventanas emergente para agregar evento/tarea, sirve, pero queda algo desprolijo
-//
-//    public Scene gridlayout(ListView<Tarea> listaTareas, ListView<Evento> listEventos) {
-//
-//        VBox layout = new VBox(10);
-//        layout.setPadding(new Insets(10));
-//
-//        layout.getChildren().addAll(agregarTareaButton,agregarEventoButton,listaTareas, listEventos);
-//
-//
-//        Scene scene = new Scene(layout, 300, 400);
-//        primaryStage.setScene(scene);
-//        primaryStage.show();
-//        return scene;
-//    }
-//
-//
-//    public Scene Escena() {
-//
-//        agregarTareaButton.setOnAction(e -> mostrarVentanaAgregarTarea());
-//        agregarEventoButton.setOnAction(e -> mostrarVentanaAgregarEvento());
-//        ingresarTareaConVencimiento();
-//        ingresarTareaDiaCompleto();
-//        ingresarEvento();
-//        return gridlayout(controlador.obtenerListaTareas(), controlador.obtenerListaEventos());
-//    }
 }
