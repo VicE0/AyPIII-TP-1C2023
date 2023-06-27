@@ -38,9 +38,7 @@ public class GUIVista implements GUIVistaObserver{
     private final Label fechaAlarmaLabel;
     private final Label intervaloAlarmaLabel;
 
-    private final Button agregarTareaButton;
     private final Button agregarTareaConVencimientoButton;
-    private final Button agregarEventoButton;
     private final Button agregarEventoTerminadoButton;
     private final Button agregarTareaDiaCompletoButton;
     private final Button agregarAlarmaButton;
@@ -142,8 +140,7 @@ public class GUIVista implements GUIVistaObserver{
         this.minutosInicioAlarmaTextField = new TextField();
 
 
-        this.agregarTareaButton = new Button("Agregar Tarea");
-        this.agregarEventoButton = new Button("Agregar Evento");
+
         this.agregarTareaConVencimientoButton = new Button(("Agregar Tarea Con Vencimiento"));
         this.agregarTareaDiaCompletoButton = new Button("Agregar Tarea Día Completo");
         this.agregarEventoTerminadoButton = new Button("Agregar");
@@ -438,6 +435,9 @@ public class GUIVista implements GUIVistaObserver{
             }
             int ocurrencias = Integer.parseInt(maxOcurrenciasPermitidasTextField.getText());
             Repeticion repeticiones = tipoRepeticionChoiceBox.getValue();
+            if (repeticiones == null){
+                repeticiones = Repeticion.HASTA_OCURRENCIAS;
+            }
             int intervalo = Integer.parseInt(intervaloTextField.getText());
             String tipo = tipoEventoChoiceBox.getValue();
             DayOfWeek diaUno = diasSemanaChoiceBox.getValue();
@@ -455,7 +455,7 @@ public class GUIVista implements GUIVistaObserver{
                     mostrarAlertaEventoTareaAgregado("Evento", "evento");
                     limpiarCampos();
                 }
-                case ("Evento Semanal") -> {
+                case ("Evento Semanal" ) -> {
                     ConstructorEventos eventoSemanalConstruido = new ConstructorEventosSemanales(titulo, descripcion, fechaInicioPicker.getValue().atTime(horaInicio, minutosInicio), fechaFinSinHoraPicker.getValue().atTime(horaFin, minutosFin), ocurrencias, repeticiones, Set.of(diaUno, diaDos));
                     controlador.agregarEvento(eventoSemanalConstruido);
                     mostrarAlertaEventoTareaAgregado("Evento", "evento");
@@ -585,12 +585,7 @@ public class GUIVista implements GUIVistaObserver{
                 horaInicio = Integer.parseInt(horaInicioAlarmaTextField.getText());
 
             } catch (NumberFormatException ex) {
-
-                Alert alertaError = new Alert(Alert.AlertType.ERROR);
-                alertaError.setTitle("Error");
-                alertaError.setHeaderText("Se produjo un error al agregar la alarma");
-                alertaError.setContentText("Por favor, intentalo nuevamente");
-                alertaError.showAndWait();
+                controlador.mostrarMensajeErrorALarma();
             }
 
             if (evento != null) {
@@ -621,7 +616,7 @@ public class GUIVista implements GUIVistaObserver{
     }
 
 
-    //Por alguna razon, tira intervalo negativo :[
+
     public void mostrarVentanaAgregarAlarmaIntervalo(Tarea tarea, Evento evento){
 
         Stage ventanaAgregarAlarma= new Stage();
@@ -639,12 +634,7 @@ public class GUIVista implements GUIVistaObserver{
                 intervalo = Integer.parseInt(intervaloAlarmaTextField.getText());
 
             }catch (NumberFormatException nf){
-
-                Alert alertaError = new Alert(Alert.AlertType.ERROR);
-                alertaError.setTitle("Error");
-                alertaError.setHeaderText("Se produjo un error al agregar la alarma");
-                alertaError.setContentText("Por favor, intentalo nuevamente");
-                alertaError.showAndWait();
+                controlador.mostrarMensajeErrorALarma();
             }
 
             if (Objects.equals(tipoAlarmaChoiceBox.getValue(), "Notificacion")){
@@ -655,17 +645,17 @@ public class GUIVista implements GUIVistaObserver{
 
             int finalIntervalo = intervalo;
 
-                Alarma alarma;
-                if (evento != null) {
-                    alarma = new AlarmaIntervalo(evento.obtenerFechaInicio(), finalIntervalo, efecto);
-                    controlador.eventoAgregarAlarma(evento, alarma);
+            Alarma alarma;
+            if (evento != null) {
+                alarma = new AlarmaIntervalo(evento.obtenerFechaInicio(), finalIntervalo, efecto);
+                controlador.eventoAgregarAlarma(evento, alarma);
 
-                } else {
-                    alarma = new AlarmaIntervalo(tarea.obtenerFechaInicio(), finalIntervalo, efecto);
-                    controlador.tareaAgregarAlarma(tarea, alarma);
-                }
-                controlador.mostrarMensajeAlarmaAgregada();
-                ventanaAgregarAlarma.close();
+            } else {
+                alarma = new AlarmaIntervalo(tarea.obtenerFechaInicio(), finalIntervalo, efecto);
+                controlador.tareaAgregarAlarma(tarea, alarma);
+            }
+            controlador.mostrarMensajeAlarmaAgregada();
+            ventanaAgregarAlarma.close();
         });
 
         layout.getChildren().addAll(tipoAlarmaLabel,tipoAlarmaChoiceBox,intervaloAlarmaLabel,intervaloAlarmaTextField,agregar);
@@ -680,6 +670,10 @@ public class GUIVista implements GUIVistaObserver{
     public void limpiarCampos() {
         List<TextField> camposTexto = Arrays.asList(tituloField, descripcionField, horarioInicioTextField, minutosInicioTextField, horarioVencimientoTextField, minutosVencimientoTextField,horarioFinTextField,minutosFinTextField);
         camposTexto.forEach(TextField::clear);
+
+        if (tipoRepeticionChoiceBox != null){
+            tipoRepeticionChoiceBox.setValue(null);
+        }
 
         if (fechaInicioPicker != null) {
             fechaInicioPicker.setValue(null);

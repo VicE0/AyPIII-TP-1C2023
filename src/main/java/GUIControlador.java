@@ -7,12 +7,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
-import java.time.temporal.TemporalAdjusters;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -110,6 +108,7 @@ public class GUIControlador {
 
     public void eventoAgregarAlarma(Evento evento, Alarma alarma) {
         evento.agregarAlarmaEvento(alarma);
+        alarma.activarAlarma(alarma.obtenerFechaYHora());
     }
 
     public void mostrarMesAnterior() {
@@ -454,7 +453,7 @@ public class GUIControlador {
                             "Fecha de Vencimiento: " + tarea.obtenerFechaVencimiento() + "\n" +
                             "Esta completa:" + tarea.estaCompleta() + "\n" +
                             "Es de dia completo: " + (tarea.getClass()) + "\n" +
-                            "Alamas:" + tarea.obtenerAlarmas() + "\n");
+                            "Alamas:" + tarea.obtenerAlarmas() + "\n" );
                 }
             }
         });
@@ -535,6 +534,13 @@ public class GUIControlador {
         alertaAgregada.showAndWait();
     }
 
+    public void mostrarMensajeErrorALarma(){
+        Alert alertaError = new Alert(Alert.AlertType.ERROR);
+        alertaError.setTitle("Error");
+        alertaError.setHeaderText("Se produjo un error al agregar la alarma");
+        alertaError.setContentText("Por favor, intentalo nuevamente");
+        alertaError.showAndWait();
+    }
 
     private void mostrarMensaje(String titulo, String contenido) {
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);

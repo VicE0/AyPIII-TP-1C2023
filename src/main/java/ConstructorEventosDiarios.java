@@ -124,7 +124,6 @@ public class ConstructorEventosDiarios implements ConstructorEventos{
                 }
                 return proximosEventos;
             }
-
             default -> {
                 return proximosEventos;
             }
