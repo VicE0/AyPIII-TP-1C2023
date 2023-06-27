@@ -21,7 +21,6 @@ public class GUI extends Application {
 
         //Lee desde el archivo
         controlador.iniciarAplicacion();
-        controlador.registrarObservador(vista);
 
         vista.setControlador(controlador);
 
@@ -32,10 +31,4 @@ public class GUI extends Application {
 
     }
 
-
-    //Logica implementada en el calendario completo, funciona, pero queda algo desprolijo
-//        Stage interfazIngresoDatos = new Stage();
-//        interfazIngresoDatos.setTitle("Ventana de ingreso de datos");
-//        interfazIngresoDatos.setScene(vista.Escena());
-//        interfazIngresoDatos.show();
 }

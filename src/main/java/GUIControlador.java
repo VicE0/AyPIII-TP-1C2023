@@ -7,6 +7,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.TextStyle;
@@ -16,12 +17,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.IntStream;
 
-public class GUIControlador {
+public class GUIControlador implements GUIObserver{
 
-    private Calendario calendario;
+    private Calendario calendario; //Modelo
     private final Tarea tareaDiaCompleto;
     private final Tarea tareaConVencimiento;
-    private final List<GUIVistaObserver> observadores;
 
 
     private final GUIVista vista;
@@ -56,13 +56,9 @@ public class GUIControlador {
 
         this.mesAnioActual = YearMonth.now();
 
-        this.observadores = new ArrayList<>();
-
+        this.vista.agregarObservador(this);
     }
 
-    public void registrarObservador(GUIVistaObserver observador) {
-        observadores.add(observador);
-    }
 
 
     public ListView<Tarea> obtenerListaTareas() {
@@ -84,14 +80,14 @@ public class GUIControlador {
     }
 
 
-
+    @Override
     public void agregarTarea(Tarea tarea) {
         calendario.agregarTarea(tarea);
         vista.mostrarListaTareasPorLista();
         Calendario.guardarCalendarioEnArchivo(calendario, "calendario.json");
     }
 
-
+    @Override
     public void agregarEvento(ConstructorEventos constructorEventos) {
 
         ArrayList<Evento> proximosEventos = calendario.proximosEventos(constructorEventos);
@@ -111,12 +107,14 @@ public class GUIControlador {
         alarma.activarAlarma(alarma.obtenerFechaYHora());
     }
 
+    @Override
     public void mostrarMesAnterior() {
         mesAnioActual = mesAnioActual.minusMonths(1);
         crearCalendario();
         actualizarLabel();
     }
 
+    @Override
     public void mostrarMesSiguiente() {
         mesAnioActual = mesAnioActual.plusMonths(1);
         crearCalendario();
@@ -191,6 +189,7 @@ public class GUIControlador {
     }
 
     //Muestra las semanas solo con eventos, tareas o eventos y tareas
+    @Override
     public void mostrarSemanasConEventosYTareas() {
         calendarioGrid.getChildren().clear();
 
@@ -264,23 +263,22 @@ public class GUIControlador {
 
 
 
-
-    public void crearListaEventosYTareasEnFecha( LocalDate primerDia,LocalDate ultimoDia ){
+    private void crearListaEventosYTareasEnFecha( LocalDate primerDia,LocalDate ultimoDia ){
         actualizarEventosYTareasMesActual();
 
         eventosMesActual.addAll(calendario.obtenerEventosEntreFechas(primerDia, ultimoDia));
         tareasMesActual.addAll(calendario.obtenerTareasEntreFechas(primerDia, ultimoDia));
     }
 
-    public  List<Evento> obtenerEventosMesActual(){
+    private  List<Evento> obtenerEventosMesActual(){
         return this.eventosMesActual;
     }
 
-    public  List<Tarea> obtenerTareasMesActual(){
+    private  List<Tarea> obtenerTareasMesActual(){
         return this.tareasMesActual;
     }
 
-    public void actualizarEventosYTareasMesActual() {
+    private void actualizarEventosYTareasMesActual() {
         eventosMesActual.clear();
         eventosMesActual.addAll(obtenerEventosMesActual());
 
@@ -338,7 +336,7 @@ public class GUIControlador {
         mesAnioActualLabel.setText(mesAnioMensaje);
     }
 
-    public void mostrarEventosDelDia(int diaMes) {
+    private void mostrarEventosDelDia(int diaMes) {
 
         LocalDate diaSeleccionado = mesAnioActual.atDay(diaMes);
         List<Evento> eventosDelDia = obtenerEventosDelDia(diaSeleccionado);
@@ -360,7 +358,7 @@ public class GUIControlador {
         }
     }
 
-    public void mostrarTareasDelDia(int diaMes) {
+    private void mostrarTareasDelDia(int diaMes) {
 
         LocalDate diaSeleccionado = mesAnioActual.atDay(diaMes);
         List<Tarea> tareasDelDia = obtenerTareasDelDia(diaSeleccionado);
@@ -411,6 +409,8 @@ public class GUIControlador {
         return TareasDia;
     }
 
+
+    @Override
     public void mostrarListaEventos(ListView<Evento> listaEventosMes){
         listaEventosMes.setCellFactory(event -> new ListCell<>() {
             @Override
@@ -438,7 +438,7 @@ public class GUIControlador {
 
     }
 
-
+    @Override
     public void mostrarListaTareas(ListView<Tarea> listaTareasMes){
         listaTareasMes.setCellFactory(task -> new ListCell<>() {
             @Override
@@ -470,6 +470,7 @@ public class GUIControlador {
 
 
     public void mostrarVentanaConEventosDelMes(){
+
         Stage ventanaAgregarEvento = new Stage();
         ventanaAgregarEvento.setTitle("Eventos del mes");
         VBox layout = new VBox(5);
@@ -484,6 +485,8 @@ public class GUIControlador {
         ventanaAgregarEvento.show();
 
     }
+
+
     public void mostrarVentanaConTareasDelMes(){
 
         Stage ventanaAgregarTarea = new Stage();
@@ -560,6 +563,69 @@ public class GUIControlador {
         }
     }
 
+    @Override
+    public void gestionarRepeticion(Repeticion repeticionSeleccionada, VBox layout, TextField maxOcurrenciasPermitidasTextField, TextField intervaloTextField, Label intervaloLabel, Label maxOcurrenciasPermitidasLabel, Label tipoRepeticionLabel, ChoiceBox<Repeticion> tipoRepeticionChoiceBox) {
+
+        if (repeticionSeleccionada != Repeticion.HASTA_OCURRENCIAS) {
+
+            if (repeticionSeleccionada == Repeticion.INFINITA) {
+                maxOcurrenciasPermitidasTextField.setText("99"); //POR TEMAS DE MEMORIA, EL TIPO DE REPETICION INFINITO ES DE 99 OCURRENCIAS
+
+            } else if (repeticionSeleccionada == Repeticion.SIN_REPETICION) {
+
+                intervaloTextField.setText("1");
+                maxOcurrenciasPermitidasTextField.setText("1");
+                layout.getChildren().removeAll(intervaloLabel, intervaloTextField);
+            }
+            // En los casos anteriores no se deberian mostrar al usuario, ya que son redundantes, pero se deben setear por temas de parametros de cada objeto evento
+            layout.getChildren().removeAll(maxOcurrenciasPermitidasLabel, maxOcurrenciasPermitidasTextField);
+
+        } else {
+
+            if (!layout.getChildren().contains(maxOcurrenciasPermitidasLabel)) {
+                int indiceLabel = layout.getChildren().indexOf(tipoRepeticionLabel);
+                int indiceText = layout.getChildren().indexOf(tipoRepeticionChoiceBox);
+                layout.getChildren().add(indiceLabel, maxOcurrenciasPermitidasLabel);
+                layout.getChildren().add(indiceText, maxOcurrenciasPermitidasTextField);
+            }
+        }
+    }
+    @Override
+    public void gestionarTipoEvento(String tipoEventoSeleccionado, VBox layout, Button agregarEventoTerminadoButton, TextField intervaloTextField, Label intervaloLabel, Label diaSemanaLabel, Label tipoRepeticionLabel, ChoiceBox<DayOfWeek> diasSemanaChoiceBox, ChoiceBox<DayOfWeek> diasSemanaChoiceBoxDos, ChoiceBox<Repeticion> tipoRepeticionChoiceBox) {
+
+        boolean esEventoSemanal = tipoEventoSeleccionado.equals("Evento Semanal");
+        boolean esEventoDiaCompleto = tipoEventoSeleccionado.equals("Evento dia completo");
+
+        if (!esEventoSemanal) {
+
+            if (!layout.getChildren().contains(intervaloLabel)) { //Por si primero el usuario setea las repeticiones y se elimina el campo
+
+                int indiceLabel = layout.getChildren().indexOf(tipoRepeticionLabel);
+                int indiceText = layout.getChildren().indexOf(tipoRepeticionChoiceBox);
+                layout.getChildren().add(indiceLabel, intervaloLabel);
+                layout.getChildren().add(indiceText, intervaloTextField);
+            }
+
+            layout.getChildren().removeAll(diaSemanaLabel, diasSemanaChoiceBox, diasSemanaChoiceBoxDos);
+
+            if (esEventoDiaCompleto) {
+                layout.getChildren().removeAll(intervaloLabel, intervaloTextField);
+            }
+
+        } else {
+            layout.getChildren().removeAll(intervaloLabel, intervaloTextField);
+
+            if (!layout.getChildren().contains(diaSemanaLabel)) {
+                int agregarLabelIndex = layout.getChildren().indexOf(agregarEventoTerminadoButton);
+                layout.getChildren().add(agregarLabelIndex, diasSemanaChoiceBoxDos);
+                layout.getChildren().add(agregarLabelIndex, diasSemanaChoiceBox);
+                layout.getChildren().add(agregarLabelIndex, diaSemanaLabel);
+            }
+            //Si el usuario pone Evento Semanal, entonces el intervalo no es necesario, ya que simplemente opera con los días de semana a elegir
+        }
+    }
+
+    @Override
     public void cerrarAplicacion() {
         Calendario.guardarCalendarioEnArchivo(calendario, "calendario.json");
     }

@@ -14,9 +14,9 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.*;
 
-public class GUIVista implements GUIVistaObserver{
+public class GUIVista{
     private GUIControlador controlador;
-
+    private final List<GUIObserver> observadores = new ArrayList<>();
 
     private final GridPane calendarioGrid;
 
@@ -140,14 +140,10 @@ public class GUIVista implements GUIVistaObserver{
         this.minutosInicioAlarmaTextField = new TextField();
 
 
-
         this.agregarTareaConVencimientoButton = new Button(("Agregar Tarea Con Vencimiento"));
         this.agregarTareaDiaCompletoButton = new Button("Agregar Tarea Día Completo");
         this.agregarEventoTerminadoButton = new Button("Agregar");
         this.agregarAlarmaButton = new Button("Agregar Alarma");
-
-
-
     }
 
 
@@ -155,28 +151,72 @@ public class GUIVista implements GUIVistaObserver{
         this.controlador = controlador;
     }
 
-    @Override
-    public void actualizar() {
-        controlador.crearCalendario();
-        controlador.actualizarLabel();
+
+    public void agregarObservador(GUIObserver observador) {
+        observadores.add(observador);
+    }
+
+
+    private void notificarCambioMesSiguiente() {
+        for (GUIObserver observador : observadores) {
+            observador.mostrarMesSiguiente();
+        }
+
     }
 
     private void notificarCambioMesAnterior() {
-        controlador.mostrarMesAnterior();
+        for (GUIObserver observador : observadores) {
+            observador.mostrarMesAnterior();
+        }
+
+    }
+    private void notificarVistaASemanal(){
+        for (GUIObserver observador : observadores) {
+            observador.mostrarSemanasConEventosYTareas();
+        }
     }
 
-    private void notificarCambioMesSiguiente() {
-        controlador.mostrarMesSiguiente();
+    private void notificarMostrarListaTareas(ListView<Tarea> listaTareasTotales){
+        for (GUIObserver observador : observadores) {
+            observador.mostrarListaTareas(listaTareasTotales);
+        }
     }
 
-    private void mostrarVistaASemanal(){
-        controlador.mostrarSemanasConEventosYTareas();
+    private void notificarMostrarListaEventos(ListView<Evento> listaEventosTotales){
+        for (GUIObserver observador : observadores) {
+            observador.mostrarListaEventos(listaEventosTotales);
+        }
+    }
+    private void notificarGestionarTipoEvento(String tipoEventoSeleccionado, VBox layout) {
+        for (GUIObserver observador : observadores) {
+            observador.gestionarTipoEvento(tipoEventoSeleccionado, layout, agregarEventoTerminadoButton, intervaloTextField, intervaloLabel,diaSemanaLabel, tipoRepeticionLabel, diasSemanaChoiceBox, diasSemanaChoiceBoxDos, tipoRepeticionChoiceBox );
+        }
+    }
+    private void notificarGestionarRepeticion(Repeticion repeticionSeleccionada, VBox layout){
+        for (GUIObserver observador : observadores) {
+            observador.gestionarRepeticion(repeticionSeleccionada, layout, maxOcurrenciasPermitidasTextField, intervaloTextField, intervaloLabel, maxOcurrenciasPermitidasLabel, tipoRepeticionLabel,  tipoRepeticionChoiceBox);
+        }
     }
 
+    private void notificarCerrarAplicacion(){
+        for (GUIObserver observador : observadores) {
+            observador.cerrarAplicacion();
+        }
+    }
+
+    private void notificarAgregarTarea(Tarea tarea){
+        for (GUIObserver observador : observadores) {
+            observador.agregarTarea(tarea);
+        }
+    }
+
+    private void notificarAgregarEvento(ConstructorEventos constructorEventos){
+        for (GUIObserver observador : observadores) {
+            observador.agregarEvento(constructorEventos);
+        }
+    }
 
     public void mostrarCalendarioCompleto(Stage primaryStage, ListView<Tarea> listaTareas, ListView<Evento> listEventos) {
-
-
 
         HBox headerBox = new HBox(10);
 
@@ -190,9 +230,10 @@ public class GUIVista implements GUIVistaObserver{
         mesSiguienteBoton.setOnAction(e -> notificarCambioMesSiguiente());
 
         Button vistaSemanalButton = new Button("Vista Semanal");
-        vistaSemanalButton.setOnAction(e -> mostrarVistaASemanal());
+        vistaSemanalButton.setOnAction(e -> notificarVistaASemanal());
 
         mesAnioActualLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
+
         controlador.actualizarLabel();
         headerBox.getChildren().addAll(mesAnteriorBoton, mesAnioActualLabel, mesSiguienteBoton,vistaSemanalButton);
 
@@ -230,10 +271,10 @@ public class GUIVista implements GUIVistaObserver{
         mensajeBox.getChildren().addAll(instruccionesLabel, importanteLabel, importanteLabel2,tareasLabel, eventosLabel, tareasYeventosLabel,buttonTarea,buttonEvento, listaTareas, listEventos);
 
         ListView<Evento> listaEventosTotales = controlador.obtenerListaEventos();
-        controlador.mostrarListaEventos(listaEventosTotales);
+        notificarMostrarListaEventos(listaEventosTotales);
 
         ListView<Tarea> listaTareasTotales = controlador.obtenerListaTareas();
-        controlador.mostrarListaTareas(listaTareasTotales);
+        notificarMostrarListaTareas(listaTareasTotales);
 
 
         Button verListadoTareas = new Button("Ver tareas del mes");
@@ -270,7 +311,7 @@ public class GUIVista implements GUIVistaObserver{
         primaryStage.show();
 
 
-        primaryStage.setOnCloseRequest(event -> controlador.cerrarAplicacion());
+        primaryStage.setOnCloseRequest(event -> notificarCerrarAplicacion());
     }
 
 
@@ -294,17 +335,31 @@ public class GUIVista implements GUIVistaObserver{
 
 
     public void mostrarVentanaAgregarEvento(){
+
         Stage ventanaAgregarEvento= new Stage();
         ventanaAgregarEvento.setTitle("Agregar Evento");
         VBox layout = new VBox(5);
         layout.setPadding(new Insets(5));
 
-
         layout.getChildren().addAll(tipoEventoLabel,tipoEventoChoiceBox,tituloLabel, tituloField, descripcionLabel, descripcionField, fechaInicioLabel,
                 fechaInicioPicker, horarioInicioLabel, horarioInicioTextField, minutosInicioTextField,
-                fechaFinLabel, fechaFinSinHoraPicker, horarioFinLabel, horarioFinTextField, minutosFinTextField, maxOcurrenciasPermitidasLabel,
+                fechaFinLabel, fechaFinSinHoraPicker, horarioFinLabel, horarioFinTextField, minutosFinTextField,tipoRepeticionLabel, tipoRepeticionChoiceBox, maxOcurrenciasPermitidasLabel,
                 maxOcurrenciasPermitidasTextField,intervaloLabel, intervaloTextField,
-                tipoRepeticionLabel, tipoRepeticionChoiceBox,diaSemanaLabel,diasSemanaChoiceBox,diasSemanaChoiceBoxDos,agregarEventoTerminadoButton);
+                diaSemanaLabel,diasSemanaChoiceBox,diasSemanaChoiceBoxDos,agregarEventoTerminadoButton);
+
+
+        tipoEventoChoiceBox.setOnAction(e -> {
+            String tipoEventoSeleccionado = tipoEventoChoiceBox.getValue();
+            notificarGestionarTipoEvento(tipoEventoSeleccionado, layout);
+        });
+
+
+        //Al usuario solo le interesan las ocurrencias cuando necesita el tipo de repeticion HASTA_OCURRENCIAS
+        tipoRepeticionChoiceBox.setOnAction(e -> {
+            Repeticion repeticionSeleccionada = tipoRepeticionChoiceBox.getValue();
+            notificarGestionarRepeticion(repeticionSeleccionada, layout);
+        });
+
 
         Scene scene = new Scene(layout);
         ventanaAgregarEvento.setScene(scene);
@@ -312,7 +367,8 @@ public class GUIVista implements GUIVistaObserver{
     }
 
 
-    public void ingresarTareaConVencimiento() {
+
+    private void ingresarTareaConVencimiento() {
 
         Tarea tareaConVencimeitno = controlador.obtenerObjetoTareaConVencimiento();
 
@@ -360,7 +416,7 @@ public class GUIVista implements GUIVistaObserver{
                 return;
             }
 
-            controlador.agregarTarea(new TareaConVencimiento(titulo, descripcion, fechaInicioPicker.getValue().atTime(horaInicio, minutosInicio), fechaVencimientoSinHoraPicker.getValue().atTime(horaVencimiento, minutosVencimiento)));
+            notificarAgregarTarea(new TareaConVencimiento(titulo, descripcion, fechaInicioPicker.getValue().atTime(horaInicio, minutosInicio), fechaVencimientoSinHoraPicker.getValue().atTime(horaVencimiento, minutosVencimiento)));
             mostrarAlertaEventoTareaAgregado("Tarea","tarea");
 
             limpiarCampos();
@@ -368,7 +424,7 @@ public class GUIVista implements GUIVistaObserver{
 
     }
 
-    public void ingresarTareaDiaCompleto() {
+    private void ingresarTareaDiaCompleto() {
 
         Tarea tareaDiaCompleto = controlador.obtenerObjetoTareaDiaCompleto();
 
@@ -387,12 +443,13 @@ public class GUIVista implements GUIVistaObserver{
             LocalDate fechaInicio = fechaInicioPicker.getValue();
             controlador.agregarTarea(new TareaDiaCompleto(titulo, descripcion, fechaInicio));
             mostrarAlertaEventoTareaAgregado("Tarea","tarea");
+
             limpiarCampos();
         });
 
     }
-    public void ingresarEvento(){
 
+    private void ingresarEvento(){
 
         agregarEventoTerminadoButton.setOnAction(e ->{
 
@@ -409,7 +466,6 @@ public class GUIVista implements GUIVistaObserver{
             String minutosFinText = minutosFinTextField.getText();
 
 
-
             int horaInicio;
             int minutosInicio;
             int horaFin;
@@ -422,6 +478,7 @@ public class GUIVista implements GUIVistaObserver{
                 minutosFin = Integer.parseInt(minutosFinText);
 
             } catch (NumberFormatException ex) {
+
                 Alert alertaError = new Alert(Alert.AlertType.ERROR);
                 alertaError.setTitle("Error");
                 alertaError.setHeaderText("Se produjo un error al agregar el evento");
@@ -434,42 +491,46 @@ public class GUIVista implements GUIVistaObserver{
                 return;
             }
             int ocurrencias = Integer.parseInt(maxOcurrenciasPermitidasTextField.getText());
+
             Repeticion repeticiones = tipoRepeticionChoiceBox.getValue();
             if (repeticiones == null){
                 repeticiones = Repeticion.HASTA_OCURRENCIAS;
             }
+
             int intervalo = Integer.parseInt(intervaloTextField.getText());
             String tipo = tipoEventoChoiceBox.getValue();
             DayOfWeek diaUno = diasSemanaChoiceBox.getValue();
             DayOfWeek diaDos = diasSemanaChoiceBoxDos.getValue();
+
             switch (tipo) {
+
                 case ("Evento dia completo") -> {
-                    ConstructorEventos eventoDiaCompletoConstruido = new ConstructorEventosDiaCompleto(titulo, descripcion, fechaInicioPicker.getValue().atTime(horaInicio, minutosInicio), fechaFinSinHoraPicker.getValue().atTime(horaFin, minutosFin), intervalo, repeticiones);
-                    controlador.agregarEvento(eventoDiaCompletoConstruido);
+                    ConstructorEventos eventoDiaCompletoConstruido = new ConstructorEventosDiaCompleto(titulo, descripcion, fechaInicioPicker.getValue().atTime(horaInicio, minutosInicio), fechaFinSinHoraPicker.getValue().atTime(horaFin, minutosFin), ocurrencias, repeticiones);
+                    notificarAgregarEvento(eventoDiaCompletoConstruido);
                     mostrarAlertaEventoTareaAgregado("Evento", "evento");
                     limpiarCampos();
                 }
                 case ("Evento Diario") -> {
                     ConstructorEventos eventoDiarioConstruido = new ConstructorEventosDiarios(titulo, descripcion, fechaInicioPicker.getValue().atTime(horaInicio, minutosInicio), fechaFinSinHoraPicker.getValue().atTime(horaFin, minutosFin), ocurrencias, repeticiones, intervalo);
-                    controlador.agregarEvento(eventoDiarioConstruido);
+                    notificarAgregarEvento(eventoDiarioConstruido);
                     mostrarAlertaEventoTareaAgregado("Evento", "evento");
                     limpiarCampos();
                 }
                 case ("Evento Semanal" ) -> {
                     ConstructorEventos eventoSemanalConstruido = new ConstructorEventosSemanales(titulo, descripcion, fechaInicioPicker.getValue().atTime(horaInicio, minutosInicio), fechaFinSinHoraPicker.getValue().atTime(horaFin, minutosFin), ocurrencias, repeticiones, Set.of(diaUno, diaDos));
-                    controlador.agregarEvento(eventoSemanalConstruido);
+                    notificarAgregarEvento(eventoSemanalConstruido);
                     mostrarAlertaEventoTareaAgregado("Evento", "evento");
                     limpiarCampos();
                 }
                 case ("Evento Mensual") -> {
                     ConstructorEventos eventoMensualConstruido = new ConstructorEventosMensuales(titulo, descripcion, fechaInicioPicker.getValue().atTime(horaInicio, minutosInicio), fechaFinSinHoraPicker.getValue().atTime(horaFin, minutosFin), ocurrencias, repeticiones, intervalo);
-                    controlador.agregarEvento(eventoMensualConstruido);
+                    notificarAgregarEvento(eventoMensualConstruido);
                     mostrarAlertaEventoTareaAgregado("Evento", "evento");
                     limpiarCampos();
                 }
                 case ("Evento Anual") -> {
                     ConstructorEventos eventoAnualConstruido = new ConstructorEventosAnuales(titulo, descripcion, fechaInicioPicker.getValue().atTime(horaInicio, minutosInicio), fechaFinSinHoraPicker.getValue().atTime(horaFin, minutosFin), ocurrencias, repeticiones, intervalo);
-                    controlador.agregarEvento(eventoAnualConstruido);
+                    notificarAgregarEvento(eventoAnualConstruido);
                     mostrarAlertaEventoTareaAgregado("Evento", "evento");
                     limpiarCampos();
                 }
@@ -492,6 +553,8 @@ public class GUIVista implements GUIVistaObserver{
         ListView<Evento> listaEventos = controlador.obtenerListaEventos();
         controlador.mostrarListaEventos(listaEventos);
     }
+
+
     public void mostrarListaTareasPorLista() {
 
         ListView<Tarea> listaTareas = controlador.obtenerListaTareas();
@@ -501,7 +564,6 @@ public class GUIVista implements GUIVistaObserver{
 
     //POP-UP
     public void mostrarDetallesTarea(Tarea tarea) {
-
 
         Stage stage = new Stage();
         stage.setTitle("Detalles de la Tarea");
@@ -539,6 +601,7 @@ public class GUIVista implements GUIVistaObserver{
 
     //POP-UP
     public void mostrarDetallesEvento(Evento evento) {
+
         Stage stage = new Stage();
         stage.setTitle("Detalles de la Tarea");
 
@@ -667,7 +730,7 @@ public class GUIVista implements GUIVistaObserver{
 
 
 
-    public void limpiarCampos() {
+    private void limpiarCampos() {
         List<TextField> camposTexto = Arrays.asList(tituloField, descripcionField, horarioInicioTextField, minutosInicioTextField, horarioVencimientoTextField, minutosVencimientoTextField,horarioFinTextField,minutosFinTextField);
         camposTexto.forEach(TextField::clear);
 
@@ -686,6 +749,5 @@ public class GUIVista implements GUIVistaObserver{
             fechaFinSinHoraPicker.setValue(null);
         }
     }
-
 
 }
