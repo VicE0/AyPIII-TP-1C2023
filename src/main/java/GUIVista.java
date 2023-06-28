@@ -216,6 +216,19 @@ public class GUIVista{
         }
     }
 
+    private void notificarSemanaAnterior(){
+        for (GUIObserver observador : observadores) {
+            observador.semanaAnterior();
+        }
+    }
+
+    private void notificarSemanaSiguiente(){
+        for (GUIObserver observador : observadores) {
+            observador.semanaSiguiente();
+        }
+    }
+
+    
     public void mostrarCalendarioCompleto(Stage primaryStage, ListView<Tarea> listaTareas, ListView<Evento> listEventos) {
 
         HBox headerBox = new HBox(10);
@@ -231,6 +244,12 @@ public class GUIVista{
 
         Button vistaSemanalButton = new Button("Vista Semanal");
         vistaSemanalButton.setOnAction(e -> notificarVistaASemanal());
+
+        Button anteriorButton = new Button("< Semana Anterior ");
+        anteriorButton.setOnAction(event -> notificarSemanaAnterior());
+
+        Button siguienteButton = new Button("Semana Siguiente >");
+        siguienteButton.setOnAction(event -> notificarSemanaSiguiente());
 
         mesAnioActualLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
 
@@ -268,7 +287,7 @@ public class GUIVista{
         ingresarTareaDiaCompleto();
         ingresarEvento();
 
-        mensajeBox.getChildren().addAll(instruccionesLabel, importanteLabel, importanteLabel2,tareasLabel, eventosLabel, tareasYeventosLabel,buttonTarea,buttonEvento, listaTareas, listEventos);
+        mensajeBox.getChildren().addAll(instruccionesLabel, importanteLabel, importanteLabel2,tareasLabel, eventosLabel, tareasYeventosLabel,buttonTarea,buttonEvento, listaTareas, listEventos, siguienteButton, anteriorButton);
 
         ListView<Evento> listaEventosTotales = controlador.obtenerListaEventos();
         notificarMostrarListaEventos(listaEventosTotales);

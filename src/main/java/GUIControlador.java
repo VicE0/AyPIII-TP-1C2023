@@ -1,3 +1,5 @@
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -10,18 +12,23 @@ import javafx.stage.Stage;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.IntStream;
+
 
 public class GUIControlador implements GUIObserver{
 
     private Calendario calendario; //Modelo
     private final Tarea tareaDiaCompleto;
     private final Tarea tareaConVencimiento;
+    private LocalDate fechaActual;
+    private final StringProperty fechaActualString;
 
 
     private final GUIVista vista;
@@ -50,13 +57,16 @@ public class GUIControlador implements GUIObserver{
         this.tareaDiaCompleto = new TareaDiaCompleto();
         this.tareaConVencimiento = new TareaConVencimiento();
 
-
         this.mesAnioActualLabel = mesAnioActualLabel;
         this.calendarioGrid = calendarioGrid;
 
         this.mesAnioActual = YearMonth.now();
 
         this.vista.agregarObservador(this);
+
+        this.fechaActual = LocalDate.now();
+        this.fechaActualString = new SimpleStringProperty();
+
     }
 
 
@@ -188,9 +198,9 @@ public class GUIControlador implements GUIObserver{
         }
     }
 
-    //Muestra las semanas solo con eventos, tareas o eventos y tareas
-    @Override
-    public void mostrarSemanasConEventosYTareas() {
+
+
+    private void calendarioSemanalGrid() {
         calendarioGrid.getChildren().clear();
 
         String[] diasSemana = {"Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"};
@@ -204,64 +214,57 @@ public class GUIControlador implements GUIObserver{
                     GridPane.setHalignment(diaDeSemanaLabel, HPos.CENTER);
                 });
 
-        LocalDate primerDiaMes = mesAnioActual.atDay(1);
 
-
-        int comienzoDiaSemana = primerDiaMes.getDayOfWeek().getValue();
-
-        int diaMes = 1;
+        LocalDate comienzoSemana = fechaActual.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        LocalDate finSemana = fechaActual.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
         int fila = 1;
-        boolean semanaConEventosYTareas = false;
 
-        while (diaMes <= mesAnioActual.lengthOfMonth()) {
-            int columna = (comienzoDiaSemana + diaMes - 2) % 7;
-            columna = (columna < 0) ? columna + 7 : columna;
-
-            LocalDate fechaDeseada = mesAnioActual.atDay(diaMes);
-
-            if (tieneEventosEnFecha(fechaDeseada) || tieneTareasEnFecha(fechaDeseada)) {
-                semanaConEventosYTareas = true;
+        for (LocalDate fecha = comienzoSemana; fecha.isBefore(finSemana.plusDays(1)); fecha = fecha.plusDays(1)) {
+            Label fechaLabel = new Label(fecha.format(DateTimeFormatter.ofPattern("d")));
+            calendarioGrid.add(fechaLabel, fecha.getDayOfWeek().getValue() - 1, fila);
+            if (tieneEventosEnFecha(fecha)) {
+                fechaLabel.setStyle("-fx-font-weight: bold; -fx-background-color: lightsalmon;");
             }
 
-            if (semanaConEventosYTareas) {
-                Label diaLabel = new Label(String.valueOf(diaMes));
-                calendarioGrid.add(diaLabel, columna, fila);
-                GridPane.setHalignment(diaLabel, HPos.CENTER);
-
-                if (tieneEventosEnFecha(fechaDeseada)) {
-                    diaLabel.setStyle("-fx-font-weight: bold; -fx-background-color: lightsalmon;");
-                }
-
-                if (tieneTareasEnFecha(fechaDeseada)) {
-                    diaLabel.setStyle("-fx-font-weight: bold; -fx-background-color: lightblue;");
-                }
-
-                if (tieneEventosYTareasEnFecha(fechaDeseada)) {
-                    diaLabel.setStyle("-fx-font-weight: bold; -fx-background-color: greenyellow;");
-                }
-
-                int finalDiaMes = diaMes;
-                diaLabel.setOnMouseClicked(e -> {
-                    mostrarEventosDelDia(finalDiaMes);
-                    mostrarTareasDelDia(finalDiaMes);
-                });
-
-                if (columna == 6) {
-                    fila++;
-                }
+            if (tieneTareasEnFecha(fecha)) {
+                fechaLabel.setStyle("-fx-font-weight: bold; -fx-background-color: lightblue;");
             }
 
-            if (columna == 6) {
-                semanaConEventosYTareas = false; //Reseteo para cada semana
+            if (tieneEventosYTareasEnFecha(fecha)) {
+                fechaLabel.setStyle("-fx-font-weight: bold; -fx-background-color: greenyellow;");
             }
-            diaMes++;
 
+
+            fila++;
+            int finalDiaSemana = fecha.getDayOfMonth();
+            fechaLabel.setOnMouseClicked(e -> {
+
+                mostrarEventosDelDia(finalDiaSemana);
+                mostrarTareasDelDia(finalDiaSemana);
+            });
         }
-
 
     }
 
+    //Muestra las semanas
+    @Override
+    public void mostrarSemanasConEventosYTareas() {
+       calendarioGrid.getChildren().clear();
+       calendarioSemanalGrid();
+    }
 
+    @Override
+    public void semanaAnterior() {
+        fechaActual = fechaActual.minusWeeks(1);
+        fechaActualString.set(fechaActual.format(DateTimeFormatter.ofPattern("MMMM yyyy")));
+        mostrarSemanasConEventosYTareas();
+    }
+    @Override
+    public void semanaSiguiente() {
+        fechaActual = fechaActual.plusWeeks(1);
+        fechaActualString.set(fechaActual.format(DateTimeFormatter.ofPattern("MMMM yyyy")));
+        mostrarSemanasConEventosYTareas();
+    }
 
     private void crearListaEventosYTareasEnFecha( LocalDate primerDia,LocalDate ultimoDia ){
         actualizarEventosYTareasMesActual();

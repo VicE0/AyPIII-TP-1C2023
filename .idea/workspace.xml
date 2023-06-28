@@ -9,8 +9,8 @@
       <change beforePath="$PROJECT_DIR$/calendario.json" beforeDir="false" afterPath="$PROJECT_DIR$/calendario.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/GUIControlador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUIControlador.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUIObserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUIObserver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/GUIVista.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUIVista.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/GUIVistaObserver.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,8 +21,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JUnit3 Test Class" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
