@@ -70,6 +70,10 @@ public abstract class Tarea {
     public void marcarComoCompleta(){
         this.estaCompleta = true;
     }
+    public void marcarComoIncompleta(){
+        this.estaCompleta = false;
+    }
+
     public void agregarAlarma(Alarma alarma){
         alarmas.add(alarma);
     }

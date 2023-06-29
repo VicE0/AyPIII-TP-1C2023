@@ -20,7 +20,7 @@ public class TareaDiaCompleto extends Tarea {
 
 
     public  TareaDiaCompleto(){
-        super("","");
+        super("Tarea dia Completo","-");
 
     }
 

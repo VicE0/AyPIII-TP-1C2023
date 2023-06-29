@@ -1,4 +1,6 @@
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.List;
 
 public class Calendario implements Serializable {
 
@@ -178,7 +181,18 @@ public class Calendario implements Serializable {
         return eventosEnRango;
     }
 
-    public String serializarCalendario(Calendario calendario) {
+    public ArrayList<Tarea> obtenerTareasEntreFechas(LocalDate fechaA, LocalDate fechaB) {
+        ArrayList<Tarea> tareasEnRango = new ArrayList<>();
+        for (Tarea tarea : this.tareas) {
+            LocalDate fechaTareas = tarea.obtenerFechaInicio().toLocalDate();
+            if (fechaTareas.isAfter(fechaA) && fechaTareas.isBefore(fechaB)) {
+                tareasEnRango.add(tarea);
+            }
+        }
+        return tareasEnRango;
+    }
+
+    public static String serializarCalendario(Calendario calendario) {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
 
@@ -211,6 +225,30 @@ public class Calendario implements Serializable {
     }
 
 
+    public static Calendario cargarCalendarioDesdeArchivo(String nombreArchivo) {
+        try {
+            String informacionSerializada = Files.readString(Paths.get(nombreArchivo));
+            return deserializarCalendario(informacionSerializada);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static void guardarCalendarioEnArchivo(Calendario calendario, String nombreArchivo) {
+        String informacionSerializada = Calendario.serializarCalendario(calendario);
+        if (informacionSerializada != null) {
+            try {
+                Files.write(Paths.get(nombreArchivo), informacionSerializada.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+
 //METODOS DE SERIALIZACION/DESERIALIZACION QUE UTILIZAN EL ARCHIVO
 //    public void serializarCalendario(String nombreArchivo) {
 //        ObjectMapper objectMapper = new ObjectMapper();
@@ -238,7 +276,8 @@ public class Calendario implements Serializable {
 //
 //        return null;
 //    }
-}
+
+
 
 
 

@@ -15,10 +15,10 @@ public class TareaConVencimiento extends Tarea{
     private LocalDateTime fechaVencimiento;
 
     public TareaConVencimiento(){
-        super("","");
+        super("Tarea con Vencimiento","-");
     }
     public TareaConVencimiento(LocalDateTime fechaInicio){
-        super("Tarea sin titulo","");
+        super("Tarea sin titulo","-");
         this.fechaInicio = fechaInicio;
         this.fechaVencimiento = this.fechaInicio.plusDays(1);
 
